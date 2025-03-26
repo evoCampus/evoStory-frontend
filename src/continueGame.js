@@ -1,0 +1,10 @@
+import "./Game.css";
+
+export default function Settings({ onBack }) {
+  return (
+    <div className="container">
+      <h1 className="title">Continue game</h1>
+      <button className="settingsBtn" onClick={onBack}>Back to starting screen</button>
+    </div>
+  );
+}
