@@ -1,6 +1,6 @@
 import "./Game.css";
 
-export default function Settings({ onBack }) {
+export default function NewGame({ onBack }) {
   return (
     <div className="container">
       <h1 className="title">New Game</h1>
