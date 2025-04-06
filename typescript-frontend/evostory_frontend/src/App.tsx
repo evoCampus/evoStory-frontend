@@ -15,26 +15,25 @@ export default function App() {
       {page === "menu" && (
         <>
           <h1 className="title">Name of the Game</h1>
-          <button className="btn" onClick={() => setPage("continue")}>
-            Continue
-          </button>
-          <button className="btn" onClick={() => setPage("newGame")}>
-            New Game
-          </button>
-          <button className="btn" onClick={() => setPage("settings")}>
-            Settings
-          </button>
-          <button className="btn" onClick={() => setPage("endingScreen")}>
-            Ending screen test
-          </button>
+          <button className="btn" onClick={() => setPage("continue")}>Continue</button>
+          <button className="btn" onClick={() => setPage("newGame")}>New Game</button>
+          <button className="btn" onClick={() => setPage("settings")}>Settings</button>
+          <button className="btn" onClick={() => setPage("endingScreen")}>Ending screen test</button>
         </>
       )}
 
       {page === "continue" && <ContinueGame onBack={() => setPage("menu")} />}
       {page === "newGame" && <NewGame onBack={() => setPage("menu")} />}
       {page === "settings" && <Settings onBack={() => setPage("menu")} />}
-      {page === "endingScreen" && <EndingScreen onBack={() => setPage("menu")} />}
+      {page === "endingScreen" && (
+        <EndingScreen
+          goToNewGame={() => setPage("newGame")}
+          goToMenu={() => setPage("menu")}
+        />
+      )}
     </div>
   );
 }
+
+
 
