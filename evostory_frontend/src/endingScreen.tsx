@@ -7,7 +7,7 @@ type EndingScreenProps = {
 
 export default function EndingScreen({ goToNewGame, goToMenu }: EndingScreenProps) {
   return (
-    <div className="container">
+    <div className="container endingScreenContainer">
       <h1 className="gameEndingText">Game over</h1>
       <button className="btn" onClick={goToNewGame}>New Game</button>
       <button className="btn" onClick={goToMenu}>Back to starting screen</button>

@@ -6,7 +6,7 @@ type NewGameProps = {
 
 export default function NewGame({ onBack }: NewGameProps) {
   return (
-    <div className="container">
+    <div className="container newGameContainer">
       <h1 className="title">New Game</h1>
       <button className="btn" onClick={onBack}>
         Back to starting screen

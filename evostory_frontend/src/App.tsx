@@ -12,7 +12,7 @@ export default function App() {
   const [page, setPage] = useState<Page>("menu");
 
   return (
-    <div className="container">
+    <div className="container mainPageContainer">
       {page === "menu" && (
         <>
           <h1 className="title">Name of the Game</h1>
@@ -32,15 +32,25 @@ export default function App() {
         </>
       )}
 
-      {page === "continue" && <ContinueGame onBack={() => setPage("menu")} />}
-      {page === "newGame" && <NewGame onBack={() => setPage("menu")} />}
-      {page === "settings" && <Settings onBack={() => setPage("menu")} />}
-      {page === "endingScreen" && (
-        <EndingScreen
-          goToNewGame={() => setPage("newGame")}
-          goToMenu={() => setPage("menu")}
-        />
-      )}
+      {(() => {
+        switch (page) {
+          case "continue":
+            return <ContinueGame onBack={() => setPage("menu")} />;
+          case "newGame":
+            return <NewGame onBack={() => setPage("menu")} />;
+          case "settings":
+            return <Settings onBack={() => setPage("menu")} />;
+          case "endingScreen":
+            return (
+              <EndingScreen
+                goToNewGame={() => setPage("newGame")}
+                goToMenu={() => setPage("menu")}
+              />
+            );
+          default:
+            return null;
+        }
+      })()}
     </div>
   );
 }

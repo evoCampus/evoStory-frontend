@@ -12,13 +12,13 @@ export default function Settings({ onBack }: SettingsProps) {
   const [showControls, setShowControls] = useState(false);
 
   return (
-    <div className="container">
+    <div className="container settingsContainer">
       <h1 className="title">Settings</h1>
 
       <DifficultySelector />
       <VolumeSlider />
 
-      <button className="btn" onClick={() => setShowControls(!showControls)}>
+      <button className="btn" onClick={() => setShowControls(prev => !prev)}>
         {showControls ? "Hide Controls" : "Show Controls"}
       </button>
 

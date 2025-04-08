@@ -7,11 +7,11 @@ type Difficulty = typeof difficulties[number];
 export default function DifficultySelector() {
   const [index, setIndex] = useState(1); 
 
-  const goLeft = () => {
+  const decrease = () => {
     setIndex((prev) => (prev > 0 ? prev - 1 : prev));
   };
 
-  const goRight = () => {
+  const increase = () => {
     setIndex((prev) => (prev < difficulties.length - 1 ? prev + 1 : prev));
   };
 
@@ -19,13 +19,13 @@ export default function DifficultySelector() {
 
   return (
     <div className="difficulty-selector">
-      <button onClick={goLeft} disabled={index === 0}>
+      <button onClick={decrease} disabled={index <= 0}>
         ◀
       </button>
 
       <span className="difficulty-label">{selectedDifficulty}</span>
 
-      <button onClick={goRight} disabled={index === difficulties.length - 1}>
+      <button onClick={increase} disabled={index === difficulties.length - 1}>
         ▶
       </button>
     </div>
