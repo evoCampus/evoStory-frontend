@@ -14,4 +14,3 @@ export default function EndingScreen({ goToNewGame, goToMenu }: EndingScreenProp
     </div>
   );
 }
-
