@@ -24,7 +24,7 @@ export default function VolumeSlider() {
             max="100"
             value={volume}
             onChange={handleChange}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            className="w-full bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
           />
         </div>
       </div>
