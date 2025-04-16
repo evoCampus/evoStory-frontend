@@ -8,14 +8,6 @@ export default function HomePage() {
     navigate('/chapter');
   };
 
-  const handleNavigateToContinue = () => {
-    navigate('/continue');
-  }
-
-  const handleNavigateToNewGame = () => {
-    navigate('/new');
-  }
-
   const handleNavigateToSettings = () => {
     navigate('/settings');
   }
@@ -35,12 +27,12 @@ export default function HomePage() {
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button 
-            onClick={handleNavigateToContinue} 
+            onClick={handleNavigateToChapter} 
             text="Continue Game" 
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button 
-            onClick={handleNavigateToNewGame} 
+            onClick={handleNavigateToChapter} 
             text="New Game" 
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />

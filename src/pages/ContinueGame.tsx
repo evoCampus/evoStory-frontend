@@ -5,7 +5,7 @@
     const navigate = useNavigate();
 
     const handleNavigateToHome = () => {
-      navigate('/home');
+      navigate('/');
     }
 
     return (
