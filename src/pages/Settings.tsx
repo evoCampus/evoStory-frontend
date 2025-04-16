@@ -1,5 +1,5 @@
-import DifficultySelector from "./DifficultySelector";
-import VolumeSlider from "./Volume";
+import DifficultySelector from "../DifficultySelector";
+import VolumeSlider from "../Volume";
 import { useState } from "react";
 
 type SettingsProps = {

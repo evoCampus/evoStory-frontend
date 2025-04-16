@@ -1,4 +1,4 @@
-import { useState } from "react";
+/*import { useState } from "react";
 
 export default function MainPage() {
 
@@ -62,4 +62,4 @@ export default function MainPage() {
       </div>
     </div>
   );
-}
+}*/
