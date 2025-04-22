@@ -37,6 +37,16 @@ h1 {
   line-height: 1.1;
 }
 
+.roundButton{
+  border-radius: 100%;
+  border: 1px solid transparent;
+}
+
+
+.transparentButton{
+  background-color: transparent;
+}
+/*/
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -44,10 +54,11 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #000001;
   cursor: pointer;
   transition: border-color 0.25s;
-}
+  border-color:steelblue ;
+}*/
 button:hover {
   border-color: #646cff;
 }
@@ -55,7 +66,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
+ 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -67,5 +78,5 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} 
 

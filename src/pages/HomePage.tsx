@@ -1,12 +1,18 @@
 import Button from "../components/Button";
 import { useNavigate } from 'react-router-dom';
+import '../index.css'
 
 export default function HomePage() {
   const navigate = useNavigate();
 
+  
+  const handleNavigateToContinue = () => {
+    navigate('/continue');
+  }
+  
   const handleNavigateToChapter = () => {
     navigate('/chapter');
-  };
+  }
 
   const handleNavigateToSettings = () => {
     navigate('/settings');
@@ -21,15 +27,15 @@ export default function HomePage() {
       <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
         <div className="flex flex-col gap-4">
           <p><strong>The Game</strong></p>
-          <Button 
+          <Button
             onClick={handleNavigateToChapter} 
             text="Chapter Select" 
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button 
-            onClick={handleNavigateToChapter} 
+            onClick={handleNavigateToContinue} 
             text="Continue Game" 
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+            className="w-full py-3 text-white font-medium rounded-lg transition-colors "
           />
           <Button 
             onClick={handleNavigateToChapter} 
