@@ -3,29 +3,29 @@ import { useNavigate } from "react-router-dom";
 
 
 interface BackButtonProps {
-    
+
     className?: string;
-    
+
 }
 
-const HomeButton: React.FC<BackButtonProps> = ({className}) => {
+const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
 
     const navigate = useNavigate();
 
     const handleNavigateToHome = () => {
         navigate('/');
-      }
+    }
 
-    return(
+    return (
         <div className={"mt-auto p-4 text-center"}>
-        <button
-        onClick = {handleNavigateToHome}
-        className={` roundButton text-center ${className || ''}`}
-        >
-        <span>Main</span>
-        </button>
+            <button
+                onClick={handleNavigateToHome}
+                className={` roundButton text-center ${className || ''}`}
+            >
+                <span>Main</span>
+            </button>
         </div>
-        );
+    );
 }
 
 export default HomeButton;
