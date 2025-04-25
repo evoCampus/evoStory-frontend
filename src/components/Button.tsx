@@ -7,7 +7,7 @@ interface BlueButtonProps {
     
 }
 
-const Button: React.FC<BlueButtonProps> = ({ text, onClick, className }) => {
+export const Button: React.FC<BlueButtonProps> = ({ text, onClick, className }) => {
     return (
         <button
             onClick={onClick}
@@ -18,4 +18,3 @@ const Button: React.FC<BlueButtonProps> = ({ text, onClick, className }) => {
     );
 };
 
-export default Button;
