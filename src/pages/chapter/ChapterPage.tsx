@@ -1,7 +1,7 @@
 import '../../index.css';
-import Button from '../../components/Button';
-import Box from './components/ChapterPageBox';
-import HomeButton from '../../components/HomeButton';
+import { Button } from '../../components/Button';
+import { Box } from './components/ChapterPageBox';
+import { HomeButton } from '../../components/HomeButton';
 import { Scene } from "../../mock/mock";
 import Client from "../../mock/client";
 import { useMemo, useState, useEffect } from 'react';
