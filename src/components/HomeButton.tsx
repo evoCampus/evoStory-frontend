@@ -8,7 +8,7 @@ interface BackButtonProps {
 
 }
 
-const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
+export const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
 
     const navigate = useNavigate();
 
@@ -28,4 +28,4 @@ const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
     );
 }
 
-export default HomeButton;
+
