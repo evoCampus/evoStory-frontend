@@ -1,6 +1,6 @@
 import '../../index.css';
 import  Button  from '../../components/Button';
-import  ChapterPageBox from './components/ChapterPageBox';
+import ChapterPageBox from './components/ChapterPageBox';
 import  HomeButton  from '../../components/HomeButton';
 import { Scene } from "../../mock/mock";
 import Client from "../../mock/client";
@@ -23,9 +23,9 @@ function ChapterPage() {
                 <div className="flex items-center justify-center font-bold text-2xl">
                     <span className="text-center">Chapter 1</span>
                 </div>
-                <Box text='' className='rounded-xl bg-linear-to-t from-sky-500/50 to-indigo-500/50 bg-[url(./assets/otherBG.jpg)]' />
+                <ChapterPageBox text='' className='rounded-xl bg-linear-to-t from-sky-500/50 to-indigo-500/50 bg-[url(./assets/otherBG.jpg)]' />
                 {currentScene && (<>
-                    <Box text={currentScene.content.text} className='rounded-xl pr-1.5 pl-1.5 bg-gray-800 ' />
+                    <ChapterPageBox text={currentScene.content.text} className='rounded-xl pr-1.5 pl-1.5 bg-gray-800 ' />
                     <div className='flex  items-center content-center place-content-evenly'>
                         <Button text="Choice 1" className="mt-4" />
                         <Button text="Choice 2" className="mt-4" />
