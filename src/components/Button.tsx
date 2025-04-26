@@ -1,13 +1,12 @@
-import React from 'react';
+import  { JSX } from 'react';
 
 interface BlueButtonProps {
     text: string;
     onClick?: () => void;
     className?: string;
-    
 }
 
-export const Button: React.FC<BlueButtonProps> = ({ text, onClick, className }) => {
+export default function Button({ text, onClick, className }: BlueButtonProps): JSX.Element {
     return (
         <button
             onClick={onClick}
@@ -16,5 +15,4 @@ export const Button: React.FC<BlueButtonProps> = ({ text, onClick, className }) 
             {text}
         </button>
     );
-};
-
+}
