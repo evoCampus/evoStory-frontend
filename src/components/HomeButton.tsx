@@ -1,15 +1,11 @@
-import React from "react";
+import { JSX } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 interface BackButtonProps {
-
     className?: string;
-
 }
 
-export const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
-
+export default function HomeButton({ className }: BackButtonProps): JSX.Element {
     const navigate = useNavigate();
 
     const handleNavigateToHome = () => {
@@ -27,5 +23,3 @@ export const HomeButton: React.FC<BackButtonProps> = ({ className }) => {
         </div>
     );
 }
-
-
