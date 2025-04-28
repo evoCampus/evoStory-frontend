@@ -1,4 +1,5 @@
 import  { JSX } from 'react';
+import  { JSX } from 'react';
 
 interface BlueButtonProps {
     text: string;
@@ -6,6 +7,7 @@ interface BlueButtonProps {
     className?: string;
 }
 
+export default function Button({ text, onClick, className }: BlueButtonProps): JSX.Element {
 export default function Button({ text, onClick, className }: BlueButtonProps): JSX.Element {
     return (
         <button

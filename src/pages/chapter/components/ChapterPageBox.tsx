@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { JSX } from "react";
 
 interface Box {
     text: string;
@@ -12,3 +13,5 @@ export default function ChapterPageBox({ text, className}: Box): JSX.Element {
         </div>
     );
 }
+
+export default ChapterPageBox;

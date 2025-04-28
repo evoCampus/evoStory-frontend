@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { JSX } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface BackButtonProps {
@@ -11,7 +12,9 @@ export default function HomeButton({ className }: BackButtonProps): JSX.Element 
     const handleNavigateToHome = () => {
         navigate('/');
     }
+    }
 
+    return (
     return (
         <div className={"mt-auto p-4 text-center"}>
             <button
@@ -21,5 +24,6 @@ export default function HomeButton({ className }: BackButtonProps): JSX.Element 
                 <span>Main</span>
             </button>
         </div>
+    );
     );
 }
