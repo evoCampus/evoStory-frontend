@@ -1,19 +1,25 @@
 import '../../index.css';
-import Button from '../../components/Button';
-import Box from './components/ChapterPageBox';
-import HomeButton from '../../components/HomeButton';
-import { choices, Scene, scenes } from "../../mock/mock";
+import  Button from '../../components/Button';
+import  ChapterPageBox  from './components/ChapterPageBox';
+import  HomeButton  from '../../components/HomeButton';
+import { Scene, Choice } from "../../mock/mock";
 import Client from "../../mock/client";
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useContext, createContext } from 'react';
 
+
+//useContext
 
 function ChapterPage() {
     const client = useMemo(() => new Client(), []);
     const [currentScene, setCurrentScene] = useState<Scene>();
 
+    const handleChoiceClick = (nextSceneId: string) => {
+        const nextScene = client.getScene(nextSceneId);
+        setCurrentScene(nextScene);
+    };
+
     useEffect(() => {
         const scene = client.getScene("40d9b19b-8285-43a2-9602-bad661c85c45");
-        // other requests if needed
         setCurrentScene(scene);
     }, []);
 
@@ -23,16 +29,15 @@ function ChapterPage() {
                 <div className="flex items-center justify-center font-bold text-2xl">
                     <span className="text-center">Chapter 1</span>
                 </div>
-                <Box text='' className='rounded-xl bg-linear-to-t from-sky-500/50 to-indigo-500/50 bg-[url(./assets/otherBG.jpg)]' />
+                
+                <ChapterPageBox text='' className='rounded-xl bg-linear-to-t from-sky-500/50 to-indigo-500/50 bg-[url(./assets/otherBG.jpg)]  '/>
+                
                 {currentScene && (<>
-                    <Box text={currentScene.content.text} className='rounded-xl pr-1.5 pl-1.5 bg-gray-800 ' />
-                    <div className='flex  items-center content-center place-content-evenly'>
-                        <Button text="Choice 1" className="mt-4" />
-                        <Button text="Choice 2" className="mt-4" />
-                        {currentScene.choices.map(choice => (<Button text={choice.choiceText} className="mt-4" />))}
+                    <ChapterPageBox text={currentScene.content.text} className='rounded-xl pr-1.5 pl-1.5 bg-gray-800' />
+                    <div className='flex items-center content-center place-content-evenly'>
+                        {currentScene.choices.map(choices => (<Button key={choices.id} text={choices.choiceText} className="mt-4" onClick={() => handleChoiceClick(choices.nextSceneId)} />))}
                     </div>
                 </>)}
-
                 <div className='flex justify-center'>
                     <HomeButton />
                 </div>
