@@ -1,4 +1,4 @@
- import HomeButton from "../components/HomeButton.tsx";
+ import  HomeButton from "../components/HomeButton.tsx";
   
   export default function ContinueGame() {
 
@@ -14,9 +14,6 @@
         <div className="flex flex-row items-center justify-center basis-auto w-screen  rounded border-2 border-indigo-200">
           Picture
         </div>
-
-
-
         </div>
 
         <div className="flex-col items-center justify-center">
