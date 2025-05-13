@@ -46,6 +46,7 @@ h1 {
 .transparentButton{
   background-color: transparent;
 }
+
 button:hover {
   border-color: #646cff;
 }

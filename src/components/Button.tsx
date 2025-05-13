@@ -6,6 +6,7 @@ interface BlueButtonProps {
     className?: string;
 }
 
+
 export default function Button({ text, onClick, className }: BlueButtonProps): JSX.Element {
     return (
         <button
