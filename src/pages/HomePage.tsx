@@ -1,10 +1,20 @@
-import  Button  from "../components/Button";
+import Button from "../components/Button";
 import { useNavigate } from 'react-router-dom';
 import '../index.css'
+import { useContext, useEffect } from "react";
+import { ClientContext } from "../App";
 
 export default function HomePage() {
   const navigate = useNavigate();
 
+  const client = useContext(ClientContext);
+
+  useEffect(() => {
+    void (async () => {
+      const stories = await client?.getStories();
+      console.log(stories);
+    })();
+  }, [client]);
 
   const handleNavigateToContinue = () => {
     navigate('/continue');

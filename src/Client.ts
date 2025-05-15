@@ -1,7 +1,10 @@
-import { AxiosInstance } from "axios";
+import axios from "axios";
 import { 
     ChoiceApi, 
     ChoiceDTO,
+    CreateChoiceDTO,
+    CreateSceneDTO,
+    CreateStoryDTO,
     SceneApi, 
     SceneDTO,
     StoryApi,
@@ -14,10 +17,32 @@ export default class Client {
     private readonly sceneAPI: SceneApi;
     private readonly storyAPI: StoryApi;
 
-    constructor (private readonly axiosInstance: AxiosInstance){
+    constructor ()
+    {
+        const axiosInstance = axios.create({
+            baseURL: "http://localhost:5006"
+        });
         this.choiceAPI = new ChoiceApi(undefined, undefined, axiosInstance);
         this.sceneAPI = new SceneApi(undefined, undefined, axiosInstance);
         this.storyAPI = new StoryApi(undefined, undefined, axiosInstance);
+    }
+
+    async getChoices(): Promise<CreateChoiceDTO[]>{
+        const { data } = await this.choiceAPI.getChoices();
+
+        return data;
+    }
+
+    async getScenes(){
+        const { data } = await this.sceneAPI.apiSceneGet();
+
+        return data;
+    }
+
+    async getStories(){
+        const { data } = await this.storyAPI.getStories();
+
+        return data;
     }
 
     async getChoiceById(id: string): Promise<ChoiceDTO>{
@@ -36,5 +61,31 @@ export default class Client {
         const { data } = await this.storyAPI.getStory(id);
 
         return data;
+    }
+    
+    async saveChoice(choice: CreateChoiceDTO): Promise<void>{
+        await this.choiceAPI.createChoice(choice);
+    }
+
+    async saveScene(scene: CreateSceneDTO): Promise<CreateSceneDTO>{
+        const { data } = await this.sceneAPI.apiScenePut(scene);
+
+        return data;
+    }
+
+    async saveStory(story: CreateStoryDTO): Promise<void>{
+        await this.storyAPI.createStory(story);
+    }
+
+    async deleteChoice(id: string): Promise<void>{
+        await this.choiceAPI.deleteChoice(id);
+    }
+
+    async deleteScene(id: string): Promise<void>{
+        await this.sceneAPI.apiSceneDelete(id);
+    }
+
+    async deleteStory(id: string): Promise<void>{
+        await this.storyAPI.deleteStory(id);
     }
 }

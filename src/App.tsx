@@ -5,11 +5,15 @@ import HomePage from './pages/HomePage';
 import Settings from './pages/Settings';
 import EndingScreen from './pages/EndingScreen';
 import ContinueGame from './pages/ContinueGame';
+import { createContext, useMemo } from 'react';
+import Client from './Client';
  
-
+export const ClientContext = createContext<Client | undefined>(undefined);
 
 export default function App() {
-  return (
+    const client = useMemo(() => new Client(), []); 
+    return (
+    <ClientContext.Provider value={client}>
       <Router>
           <Routes>
               <Route path="/" element={<HomePage />} />
@@ -20,5 +24,6 @@ export default function App() {
               <Route path="/ending" element={<EndingScreen />} />
           </Routes>
       </Router>
+    </ClientContext.Provider>
   );
 }
