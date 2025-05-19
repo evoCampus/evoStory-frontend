@@ -33,13 +33,13 @@ export default class Client {
         return data;
     }
 
-    async getScenes(){
+    async getScenes(): Promise<SceneDTO[]>{
         const { data } = await this.sceneAPI.apiSceneGet();
 
         return data;
     }
 
-    async getStories(){
+    async getStories(): Promise<StoryDTO[]>{
         const { data } = await this.storyAPI.getStories();
 
         return data;
@@ -87,5 +87,11 @@ export default class Client {
 
     async deleteStory(id: string): Promise<void>{
         await this.storyAPI.deleteStory(id);
+    }
+
+    async addStoryById(id: string): Promise<StoryDTO>{
+        const { data } = await this.storyAPI.editStory(id);
+
+        return data;
     }
 }
