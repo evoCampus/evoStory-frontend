@@ -27,7 +27,7 @@ export default class Client {
         this.storyAPI = new StoryApi(undefined, undefined, axiosInstance);
     }
 
-    async getChoices(): Promise<CreateChoiceDTO[]>{
+    async getChoices(): Promise<ChoiceDTO[]>{
         const { data } = await this.choiceAPI.getChoices();
 
         return data;

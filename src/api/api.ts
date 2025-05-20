@@ -491,7 +491,7 @@ export const ChoiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getChoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CreateChoiceDTO>>> {
+        async getChoices(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChoiceDTO>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getChoices(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChoiceApi.getChoices']?.[localVarOperationServerIndex]?.url;
@@ -539,7 +539,7 @@ export const ChoiceApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChoices(options?: RawAxiosRequestConfig): AxiosPromise<Array<CreateChoiceDTO>> {
+        getChoices(options?: RawAxiosRequestConfig): AxiosPromise<Array<ChoiceDTO>> {
             return localVarFp.getChoices(options).then((request) => request(axios, basePath));
         },
     };
