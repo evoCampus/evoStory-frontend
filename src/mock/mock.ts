@@ -1,3 +1,4 @@
+
 export const choices: Choice[] = [
     {
         id: "57feb36b-365f-450f-8ba3-848820a5d08e",
@@ -6,7 +7,6 @@ export const choices: Choice[] = [
     }
 
 ];
-
 
 export const scenes: Scene[] = [
     {
@@ -105,3 +105,6 @@ export interface Choice {
     nextSceneId: string;
     choiceText: string;
 }
+
+
+
