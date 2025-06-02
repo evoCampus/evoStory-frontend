@@ -1,18 +1,26 @@
 import Button from "../components/Button";
 import { useNavigate } from 'react-router-dom';
 import '../index.css'
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ClientContext } from "../App";
+import { StoryDTO } from "../api";
 
 export default function HomePage() {
   const navigate = useNavigate();
 
   const client = useContext(ClientContext);
 
+  const [stories, setStories] = useState<StoryDTO[]>([])
+
   useEffect(() => {
     void (async () => {
       const stories = await client?.getStories();
-      console.log(stories);
+      if (stories) {
+        setStories(stories);
+        console.log(stories);
+      }
+
+
     })();
   }, [client]);
 
@@ -21,7 +29,8 @@ export default function HomePage() {
   }
 
   const handleNavigateToChapter = () => {
-    navigate('/chapter');
+    navigate(`/chapter/${stories[0].startingSceneId}`);
+    console.log(stories[0].startingSceneId);
   }
 
   const handleNavigateToSettings = () => {

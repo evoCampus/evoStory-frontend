@@ -294,12 +294,6 @@ export interface StoryDTO {
     'title': string | null;
     /**
      * 
-     * @type {Array<SceneDTO>}
-     * @memberof StoryDTO
-     */
-    'scenes'?: Array<SceneDTO> | null;
-    /**
-     * 
      * @type {string}
      * @memberof StoryDTO
      */

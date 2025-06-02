@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** |  | [default to undefined]
 **title** | **string** |  | [default to undefined]
-**scenes** | [**Array&lt;SceneDTO&gt;**](SceneDTO.md) |  | [optional] [default to undefined]
 **startingSceneId** | **string** |  | [optional] [default to undefined]
 
 ## Example
@@ -18,7 +17,6 @@ import { StoryDTO } from './api';
 const instance: StoryDTO = {
     id,
     title,
-    scenes,
     startingSceneId,
 };
 ```

@@ -17,7 +17,7 @@ export default function App() {
       <Router>
           <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/chapter" element={<ChapterPage />} />
+              <Route path="/chapter/:chapterId" element={<ChapterPage />} />
               <Route path="/continue" element={<ContinueGame />} />
               <Route path="/new" element={<ChapterPage />} />
               <Route path="/settings" element={<Settings />} />
