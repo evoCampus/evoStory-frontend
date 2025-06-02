@@ -25,8 +25,14 @@ export default function HomePage() {
   }, [client]);
 
   const handleNavigateToContinue = () => {
-    navigate('/continue');
-  }
+    const lastSceneId = localStorage.getItem("lastSceneId");
+    if (lastSceneId) {
+        navigate(`/chapter/${lastSceneId}`);
+    } else {
+        navigate(`/chapter/${stories[0].startingSceneId}`);
+    }
+};
+
 
   const handleNavigateToChapter = () => {
     navigate(`/chapter/${stories[0].startingSceneId}`);

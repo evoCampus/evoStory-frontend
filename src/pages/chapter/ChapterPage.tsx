@@ -18,10 +18,12 @@ function ChapterPage() {
         try {
             const nextScene = await client.getSceneById(nextSceneId);
             setCurrentScene(nextScene);
+            localStorage.setItem("lastSceneId", nextSceneId);
         } catch (error) {
             console.error("Error while loading scene:", error);
         }
     };
+
 
     useEffect(() => {
         const loadInitialScene = async () => {
