@@ -1,4 +1,4 @@
-import { User } from "../pages/auth/AuthContext";
+import { User } from "../auth/AuthContext";
 
 const USERS_STORAGE_KEY = 'mockUsers';
 const PASSWORDS_STORAGE_KEY = 'mockPasswords';

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, JSX } from 'react';
-import { addMockUser } from '../../mock/mockUser'; 
+import { addMockUser } from '../mock/mockUser'; 
 
 export interface User {
     username: string;

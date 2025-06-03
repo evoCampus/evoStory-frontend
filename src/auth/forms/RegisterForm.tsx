@@ -1,10 +1,10 @@
-import React, { useState, FormEvent, JSX } from 'react';
-import useAuth from './useAuth';
+import { useState, FormEvent, JSX} from 'react';
+import useAuth from '../useAuth';
 import { useNavigate } from 'react-router-dom';
 
 interface RegisterFormProps {}
 
-export default function RegisterForm({}: RegisterFormProps): React.JSX.Element {
+export default function RegisterForm({}: RegisterFormProps): JSX.Element {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');

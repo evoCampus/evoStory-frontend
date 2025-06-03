@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import HomePage from '../pages/HomePage';
 import DashboardPage from './Dashboard';
-import AuthProvider from './auth/AuthContext';
+import AuthProvider from '../auth/AuthContext';
 import ContinueGame from './ContinueGame';
 import ChapterPage from './chapter/ChapterPage';
 import Settings from './Settings';
 import EndingScreen from './EndingScreen';
 import RegisterPage from './RegisterPage';
-import RequireAuth from './auth/RequireAuth';
+import RequireAuth from '../auth/RequireAuth';
 
 
 export default function AppRouter(): JSX.Element {

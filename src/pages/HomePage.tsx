@@ -22,6 +22,10 @@ export default function HomePage() {
     navigate('/ending');
   }
 
+  const handleNavigateToDashboard = () => {
+    navigate('/dashboard');
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800 ">
       <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
@@ -46,6 +50,11 @@ export default function HomePage() {
             onClick={handleNavigateToSettings}
             text="Settings"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+          />
+          <Button
+          onClick={handleNavigateToDashboard}
+          text="Dashboard"
+          className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button
             onClick={handleNavigateToEnding}

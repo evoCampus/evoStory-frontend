@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import useAuth from './useAuth';
+import useAuth from '../auth/useAuth';
 
 interface LogoutButtonProps {}
 

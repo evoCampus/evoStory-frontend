@@ -1,8 +1,8 @@
 import React, { useState, FormEvent } from 'react';
-import useAuth from './useAuth';
+import useAuth from '../useAuth';
 import { useNavigate } from 'react-router-dom';
 import { mockUsers, mockPasswords } from '../../mock/mockUser';
-import { User } from './AuthContext';
+import { User } from '../AuthContext';
 
 interface LoginFormProps {}
 
