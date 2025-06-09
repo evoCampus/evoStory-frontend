@@ -27,12 +27,12 @@ export default function HomePage() {
   const handleNavigateToContinue = () => {
     const lastSceneId = localStorage.getItem("lastSceneId");
     if (lastSceneId) {
-        navigate(`/chapter/${lastSceneId}`);
+      navigate(`/chapter/${lastSceneId}`);
     } else {
-        navigate(`/chapter/${stories[0].startingSceneId}`);
+      navigate(`/chapter/${stories[0].startingSceneId}`);
+      console.log(stories[0].startingSceneId);
     }
-};
-
+  };
 
   const handleNavigateToChapter = () => {
     navigate(`/chapter/${stories[0].startingSceneId}`);
@@ -43,20 +43,11 @@ export default function HomePage() {
     navigate('/settings');
   }
 
-  const handleNavigateToEnding = () => {
-    navigate('/ending');
-  }
-
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800 ">
       <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
         <div className="flex flex-col gap-4">
           <p><strong>The Game</strong></p>
-          <Button
-            onClick={handleNavigateToChapter}
-            text="Chapter Select"
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
-          />
           <Button
             onClick={handleNavigateToContinue}
             text="Continue Game"
@@ -70,11 +61,6 @@ export default function HomePage() {
           <Button
             onClick={handleNavigateToSettings}
             text="Settings"
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
-          />
-          <Button
-            onClick={handleNavigateToEnding}
-            text="Ending Screen Test"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
         </div>

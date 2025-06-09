@@ -5,7 +5,7 @@ import ChapterPageBox from './components/ChapterPageBox';
 import HomeButton from '../../components/HomeButton';
 import Client from '../../Client';
 import { SceneDTO } from '../../api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -13,17 +13,26 @@ function ChapterPage() {
     const client = useMemo(() => new Client(), []);
     const { chapterId } = useParams();
     const [currentScene, setCurrentScene] = useState<SceneDTO | null>(null);
+    const navigate = useNavigate();
 
     const handleChoiceClick = async (nextSceneId: string) => {
         try {
             const nextScene = await client.getSceneById(nextSceneId);
+            if (!nextScene) {
+                navigate("/ending");
+                return;
+            }
             setCurrentScene(nextScene);
             localStorage.setItem("lastSceneId", nextSceneId);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error while loading scene:", error);
+            if (error?.response?.status === 404) {
+                navigate("/ending");
+            } else {
+                alert("Hiba történt a jelenet betöltésekor.");
+            }
         }
     };
-
 
     useEffect(() => {
         const loadInitialScene = async () => {
