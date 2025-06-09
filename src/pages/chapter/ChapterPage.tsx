@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 
-function ChapterPage() {
+export default function ChapterPage() {
     const client = useMemo(() => new Client(), []);
     const { chapterId } = useParams();
     const [currentScene, setCurrentScene] = useState<SceneDTO | null>(null);
@@ -29,7 +29,7 @@ function ChapterPage() {
             if (error?.response?.status === 404) {
                 navigate("/ending");
             } else {
-                alert("Hiba történt a jelenet betöltésekor.");
+                alert("Error while loading scene.");
             }
         }
     };
@@ -81,6 +81,3 @@ function ChapterPage() {
         </div>
     );
 }
-
-export default ChapterPage;
-
