@@ -19,8 +19,7 @@ export default function HomePage() {
         setStories(stories);
         console.log(stories);
       }
-
-
+      
     })();
   }, [client]);
 
@@ -28,7 +27,7 @@ export default function HomePage() {
     const lastSceneId = localStorage.getItem("lastSceneId");
     if (lastSceneId) {
       navigate(`/chapter/${lastSceneId}`);
-    } else {
+    } else{
       navigate(`/chapter/${stories[0].startingSceneId}`);
       console.log(stories[0].startingSceneId);
     }

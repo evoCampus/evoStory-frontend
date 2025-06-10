@@ -28,6 +28,7 @@ export default function ChapterPage() {
             console.error("Error while loading scene:", error);
             if (error?.response?.status === 404) {
                 navigate("/ending");
+                localStorage.removeItem("lastSceneId");
             } else {
                 alert("Error while loading scene.");
             }
