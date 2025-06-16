@@ -9,11 +9,12 @@ const defaultUsers: User[] = [
     { username: 'janedoe', email: 'jane@example.com', password: 'janepass' }
 ];
 
-const defaultPasswords: { [username: string]: string } = {
-    'testuser': 'password',
-    'admin': 'adminpass',
-    'janedoe': 'janepass'
-};
+type defaultPasswords = Record<string, string>
+const passwords: defaultPasswords = {
+    testuser: 'password',
+    admin: 'adminpass',
+    janedoe: 'janepass'
+}
 
 const loadUsers = (): User[] => {
     try {
