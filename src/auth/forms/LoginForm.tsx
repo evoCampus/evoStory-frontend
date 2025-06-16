@@ -28,7 +28,7 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
         const foundUser = mockUsers.find(user => user.username === username);
 
         if (foundUser && mockPasswords[username] === password) {
-            authContext.login({ username: foundUser.username, email: foundUser.email || undefined });
+            authContext.login({ username: foundUser.username, email: foundUser.email, password: foundUser.password|| undefined });
             navigate('/');
         } else {
             alert('Hibás felhasználónév vagy jelszó.');
