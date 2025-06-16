@@ -28,7 +28,7 @@ export default function RegisterForm({}: RegisterFormProps): JSX.Element {
 
         if (success) {
             alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
-            login({ username, email });
+            login({ username, email, password });
             navigate('/dashboard');
         } else {
             alert('Regisztráció sikertelen. Lehet, hogy a felhasználónév már foglalt.');
