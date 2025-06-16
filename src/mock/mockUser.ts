@@ -4,9 +4,9 @@ const USERS_STORAGE_KEY = 'mockUsers';
 const PASSWORDS_STORAGE_KEY = 'mockPasswords';
 
 const defaultUsers: User[] = [
-    { username: 'testuser', email: 'test@example.com' },
-    { username: 'admin', email: 'admin@example.com' },
-    { username: 'janedoe', email: 'jane@example.com' }
+    { username: 'testuser', email: 'test@example.com', password: 'password' },
+    { username: 'admin', email: 'admin@example.com', password: 'adminpass' },
+    { username: 'janedoe', email: 'jane@example.com', password: 'janepass' }
 ];
 
 const defaultPasswords: { [username: string]: string } = {
@@ -52,7 +52,7 @@ export const addMockUser = (username: string, password: string, email: string): 
         return false;
     }
 
-    const newUser: User = { username, email };
+    const newUser: User = { username, email, password };
 
     mockUsers.push(newUser);
     mockPasswords[username] = password;
