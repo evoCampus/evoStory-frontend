@@ -2,8 +2,8 @@ import React, { createContext, useState, useContext, JSX } from 'react';
 import { addMockUser } from '../mock/mockUser'; 
 
 export interface User {
-    username: string;
-    email: string;
+    username: string | undefined;
+    email: string | undefined;
 }
 
 export interface AuthContextValue {
