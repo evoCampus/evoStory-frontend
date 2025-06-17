@@ -462,7 +462,7 @@ export const ChoiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteChoice(choiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteChoice(choiceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChoiceDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteChoice(choiceId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChoiceApi.deleteChoice']?.[localVarOperationServerIndex]?.url;
@@ -516,7 +516,7 @@ export const ChoiceApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteChoice(choiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteChoice(choiceId: string, options?: RawAxiosRequestConfig): AxiosPromise<ChoiceDTO> {
             return localVarFp.deleteChoice(choiceId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -600,11 +600,44 @@ export const SceneApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @param {CreateSceneDTO} [createSceneDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createScene: async (createSceneDTO?: CreateSceneDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Scene`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createSceneDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} [sceneId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiSceneDelete: async (sceneId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteScene: async (sceneId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Scene`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -634,11 +667,15 @@ export const SceneApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {string} sceneId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiSceneGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Scene`;
+        getScene: async (sceneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sceneId' is not null or undefined
+            assertParamExists('getScene', 'sceneId', sceneId)
+            const localVarPath = `/api/Scene/{sceneId}`
+                .replace(`{${"sceneId"}}`, encodeURIComponent(String(sceneId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -663,48 +700,11 @@ export const SceneApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {CreateSceneDTO} [createSceneDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiScenePut: async (createSceneDTO?: CreateSceneDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getScenes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Scene`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createSceneDTO, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} sceneId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSceneSceneIdGet: async (sceneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'sceneId' is not null or undefined
-            assertParamExists('apiSceneSceneIdGet', 'sceneId', sceneId)
-            const localVarPath = `/api/Scene/{sceneId}`
-                .replace(`{${"sceneId"}}`, encodeURIComponent(String(sceneId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -739,37 +739,26 @@ export const SceneApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} [sceneId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSceneDelete(sceneId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSceneDelete(sceneId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SceneApi.apiSceneDelete']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiSceneGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SceneDTO>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSceneGet(options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SceneApi.apiSceneGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {CreateSceneDTO} [createSceneDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiScenePut(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SceneDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiScenePut(createSceneDTO, options);
+        async createScene(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SceneDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createScene(createSceneDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SceneApi.apiScenePut']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SceneApi.createScene']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [sceneId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteScene(sceneId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SceneDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteScene(sceneId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SceneApi.deleteScene']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -778,10 +767,21 @@ export const SceneApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiSceneSceneIdGet(sceneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SceneDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSceneSceneIdGet(sceneId, options);
+        async getScene(sceneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SceneDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getScene(sceneId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SceneApi.apiSceneSceneIdGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SceneApi.getScene']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getScenes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SceneDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getScenes(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SceneApi.getScenes']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -796,29 +796,21 @@ export const SceneApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {string} [sceneId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSceneDelete(sceneId?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.apiSceneDelete(sceneId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiSceneGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<SceneDTO>> {
-            return localVarFp.apiSceneGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {CreateSceneDTO} [createSceneDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiScenePut(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig): AxiosPromise<SceneDTO> {
-            return localVarFp.apiScenePut(createSceneDTO, options).then((request) => request(axios, basePath));
+        createScene(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig): AxiosPromise<SceneDTO> {
+            return localVarFp.createScene(createSceneDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [sceneId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteScene(sceneId?: string, options?: RawAxiosRequestConfig): AxiosPromise<SceneDTO> {
+            return localVarFp.deleteScene(sceneId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -826,8 +818,16 @@ export const SceneApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiSceneSceneIdGet(sceneId: string, options?: RawAxiosRequestConfig): AxiosPromise<SceneDTO> {
-            return localVarFp.apiSceneSceneIdGet(sceneId, options).then((request) => request(axios, basePath));
+        getScene(sceneId: string, options?: RawAxiosRequestConfig): AxiosPromise<SceneDTO> {
+            return localVarFp.getScene(sceneId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getScenes(options?: RawAxiosRequestConfig): AxiosPromise<Array<SceneDTO>> {
+            return localVarFp.getScenes(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -841,34 +841,24 @@ export const SceneApiFactory = function (configuration?: Configuration, basePath
 export class SceneApi extends BaseAPI {
     /**
      * 
-     * @param {string} [sceneId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SceneApi
-     */
-    public apiSceneDelete(sceneId?: string, options?: RawAxiosRequestConfig) {
-        return SceneApiFp(this.configuration).apiSceneDelete(sceneId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SceneApi
-     */
-    public apiSceneGet(options?: RawAxiosRequestConfig) {
-        return SceneApiFp(this.configuration).apiSceneGet(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @param {CreateSceneDTO} [createSceneDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SceneApi
      */
-    public apiScenePut(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig) {
-        return SceneApiFp(this.configuration).apiScenePut(createSceneDTO, options).then((request) => request(this.axios, this.basePath));
+    public createScene(createSceneDTO?: CreateSceneDTO, options?: RawAxiosRequestConfig) {
+        return SceneApiFp(this.configuration).createScene(createSceneDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [sceneId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SceneApi
+     */
+    public deleteScene(sceneId?: string, options?: RawAxiosRequestConfig) {
+        return SceneApiFp(this.configuration).deleteScene(sceneId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -878,8 +868,18 @@ export class SceneApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SceneApi
      */
-    public apiSceneSceneIdGet(sceneId: string, options?: RawAxiosRequestConfig) {
-        return SceneApiFp(this.configuration).apiSceneSceneIdGet(sceneId, options).then((request) => request(this.axios, this.basePath));
+    public getScene(sceneId: string, options?: RawAxiosRequestConfig) {
+        return SceneApiFp(this.configuration).getScene(sceneId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SceneApi
+     */
+    public getScenes(options?: RawAxiosRequestConfig) {
+        return SceneApiFp(this.configuration).getScenes(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1084,7 +1084,7 @@ export const StoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteStory(storyId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteStory(storyId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoryDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteStory(storyId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StoryApi.deleteStory']?.[localVarOperationServerIndex]?.url;
@@ -1151,7 +1151,7 @@ export const StoryApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteStory(storyId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteStory(storyId: string, options?: RawAxiosRequestConfig): AxiosPromise<StoryDTO> {
             return localVarFp.deleteStory(storyId, options).then((request) => request(axios, basePath));
         },
         /**

@@ -6,6 +6,8 @@ import HomeButton from '../../components/HomeButton';
 import Client from '../../Client';
 import { SceneDTO } from '../../api';
 import { useNavigate, useParams } from 'react-router-dom';
+//import ImageLoader from '../../components/ImageLoader';
+
 
 
 

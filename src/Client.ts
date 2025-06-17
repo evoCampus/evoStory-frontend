@@ -1,11 +1,11 @@
 import axios from "axios";
-import { 
-    ChoiceApi, 
+import {
+    ChoiceApi,
     ChoiceDTO,
     CreateChoiceDTO,
     CreateSceneDTO,
     CreateStoryDTO,
-    SceneApi, 
+    SceneApi,
     SceneDTO,
     StoryApi,
     StoryDTO
@@ -17,8 +17,7 @@ export default class Client {
     private readonly sceneAPI: SceneApi;
     private readonly storyAPI: StoryApi;
 
-    constructor ()
-    {
+    constructor() {
         const axiosInstance = axios.create({
             baseURL: "http://localhost:5006"
         });
@@ -27,71 +26,76 @@ export default class Client {
         this.storyAPI = new StoryApi(undefined, undefined, axiosInstance);
     }
 
-    async getChoices(): Promise<ChoiceDTO[]>{
+    async getChoices(): Promise<ChoiceDTO[]> {
         const { data } = await this.choiceAPI.getChoices();
 
         return data;
     }
 
-    async getScenes(): Promise<SceneDTO[]>{
-        const { data } = await this.sceneAPI.apiSceneGet();
+    async getScenes(): Promise<SceneDTO[]> {
+        const { data } = await this.sceneAPI.getScenes();
 
         return data;
     }
 
-    async getStories(): Promise<StoryDTO[]>{
+    async getStories(): Promise<StoryDTO[]> {
         const { data } = await this.storyAPI.getStories();
 
         return data;
     }
 
-    async getChoiceById(id: string): Promise<ChoiceDTO>{
+    async getChoiceById(id: string): Promise<ChoiceDTO> {
         const { data } = await this.choiceAPI.getChoice(id);
 
         return data;
     }
 
-    async getSceneById(id: string): Promise<SceneDTO>{
-        const { data } = await this.sceneAPI.apiSceneSceneIdGet(id);
+    async getSceneById(id: string): Promise<SceneDTO> {
+        const { data } = await this.sceneAPI.getScene(id);
 
         return data;
     }
 
-    async getStoryById(id: string): Promise<StoryDTO>{
+    async getStoryById(id: string): Promise<StoryDTO> {
         const { data } = await this.storyAPI.getStory(id);
 
         return data;
     }
-    
-    async saveChoice(choice: CreateChoiceDTO): Promise<void>{
+
+    async saveChoice(choice: CreateChoiceDTO): Promise<void> {
         await this.choiceAPI.createChoice(choice);
     }
 
-    async saveScene(scene: CreateSceneDTO): Promise<CreateSceneDTO>{
-        const { data } = await this.sceneAPI.apiScenePut(scene);
+    async saveScene(scene: CreateSceneDTO): Promise<CreateSceneDTO> {
+        const { data } = await this.sceneAPI.createScene(scene);
 
         return data;
     }
 
-    async saveStory(story: CreateStoryDTO): Promise<void>{
+    async saveStory(story: CreateStoryDTO): Promise<void> {
         await this.storyAPI.createStory(story);
     }
 
-    async deleteChoice(id: string): Promise<void>{
+    async deleteChoice(id: string): Promise<void> {
         await this.choiceAPI.deleteChoice(id);
     }
 
-    async deleteScene(id: string): Promise<void>{
-        await this.sceneAPI.apiSceneDelete(id);
+    async deleteScene(id: string): Promise<void> {
+        await this.sceneAPI.deleteScene(id);
     }
 
-    async deleteStory(id: string): Promise<void>{
+    async deleteStory(id: string): Promise<void> {
         await this.storyAPI.deleteStory(id);
     }
 
-    async addStoryById(id: string): Promise<StoryDTO>{
+    async addStoryById(id: string): Promise<StoryDTO> {
         const { data } = await this.storyAPI.editStory(id);
 
         return data;
     }
+
+    async fetchImages(): Promise<string[]> {
+        return ["abc123", "def456", "ghi789", "aaa111"];
+    }
+
 }
