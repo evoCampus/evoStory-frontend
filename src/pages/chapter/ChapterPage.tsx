@@ -6,10 +6,7 @@ import HomeButton from '../../components/HomeButton';
 import Client from '../../Client';
 import { SceneDTO } from '../../api';
 import { useNavigate, useParams } from 'react-router-dom';
-//import ImageLoader from '../../components/ImageLoader';
-
-
-
+import ImageLoader from '../../components/ImageLoader';
 
 export default function ChapterPage() {
     const client = useMemo(() => new Client(), []);
@@ -40,47 +37,47 @@ export default function ChapterPage() {
     useEffect(() => {
         const loadInitialScene = async () => {
             try {
-                const scene = await client.getSceneById(chapterId);
-                setCurrentScene(scene);
+                if (chapterId) {
+                    const scene = await client.getSceneById(chapterId);
+                    setCurrentScene(scene);
+                }
             } catch (error) {
                 console.error("Error while loading first scene:", error);
             }
         };
 
         loadInitialScene();
-    }, [client]);
+    }, [client, chapterId]);
 
     return (
-        <div className="flex-auto items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] pt-50">
-            <div className="flex-auto p-4 mx-auto w-4/5 gap-4 rounded-xl">
-                <div className="flex items-center justify-center font-bold text-2xl">
+        <ImageLoader guid={currentScene?.content?.imageId ?? ''}>
+            <div className="flex-auto p-4 mx-auto w-4/5 gap-4 rounded-xl z-10 relative">
+                <div className="flex items-center justify-center font-bold text-2xl mb-4">
                     <span className="text-center">Chapter 1</span>
                 </div>
 
-                <ChapterPageBox text="" className="rounded-xl bg-linear-to-t from-sky-500/50 to-indigo-500/50 bg-[url(./assets/otherBG.jpg)] shadow-xl/30" />
-
-                {currentScene?.content && (
-                    <>
-                        <ChapterPageBox
-                            text={currentScene.content.text}
-                            className="rounded-xl pr-1.5 pl-1.5 bg-linear-to-t from-gray-800 to-black shadow-xl/30 transition-normal"
-                        />
-                        <div className="flex items-center content-center place-content-evenly">
-                            {currentScene.choices?.map((choice) => (
-                                <Button
-                                    key={choice.id}
-                                    text={choice.choiceText}
-                                    className="mt-4"
-                                    onClick={() => handleChoiceClick(choice.nextSceneId)}
-                                />
-                            ))}
-                        </div>
-                    </>
+                {currentScene?.content?.text && (
+                    <ChapterPageBox
+                        text={currentScene.content.text}
+                        className="rounded-xl pr-1.5 pl-1.5 bg-gradient-to-t from-gray-800 to-black shadow-xl transition-all"
+                    />
                 )}
-                <div className="flex justify-center">
+
+                <div className="flex items-center justify-evenly mt-4 flex-wrap">
+                    {currentScene?.choices?.map((choice) => (
+                        <Button
+                            key={choice.id}
+                            text={choice.choiceText}
+                            className="mt-4"
+                            onClick={() => handleChoiceClick(choice.nextSceneId)}
+                        />
+                    ))}
+                </div>
+
+                <div className="flex justify-center mt-6">
                     <HomeButton />
                 </div>
             </div>
-        </div>
+        </ImageLoader>
     );
 }
