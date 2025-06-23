@@ -9,8 +9,8 @@ const defaultUsers: User[] = [
     { username: 'janedoe', email: 'jane@example.com', password: 'janepass' }
 ];
 
-type defaultPasswords = Record<string, string>
-const passwords: defaultPasswords = {
+
+const passwords: Record<string, string> = {
     testuser: 'password',
     admin: 'adminpass',
     janedoe: 'janepass'
