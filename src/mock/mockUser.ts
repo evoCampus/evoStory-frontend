@@ -29,10 +29,10 @@ const loadUsers = (): User[] => {
 const loadPasswords = (): { [username: string]: string } => {
     try {
         const storedPasswords = localStorage.getItem(PASSWORDS_STORAGE_KEY);
-        return storedPasswords ? JSON.parse(storedPasswords) : defaultPasswords;
+        return storedPasswords ? JSON.parse(storedPasswords) : passwords;
     } catch (e) {
         console.error("Error loading passwords from local storage, using defaults:", e);
-        return defaultPasswords;
+        return passwords;
     }
 };
 
