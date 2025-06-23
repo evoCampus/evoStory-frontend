@@ -1,6 +1,6 @@
 import React, { JSX } from 'react';
 import useAuth from '../auth/useAuth';
-import LogoutButton from '../components/LogoutButton';
+import LogoutButton from './LogoutButton';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 

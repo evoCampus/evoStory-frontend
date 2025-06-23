@@ -4,16 +4,18 @@ const USERS_STORAGE_KEY = 'mockUsers';
 const PASSWORDS_STORAGE_KEY = 'mockPasswords';
 
 const defaultUsers: User[] = [
-    { username: 'testuser', email: 'test@example.com' },
-    { username: 'admin', email: 'admin@example.com' },
-    { username: 'janedoe', email: 'jane@example.com' }
+    { username: 'testuser', email: 'test@example.com', password: 'password' },
+    { username: 'admin', email: 'admin@example.com', password: 'admin' },
+    { username: 'janedoe', email: 'jane@example.com', password: 'janeDoe' }
 ];
 
-const defaultPasswords: { [username: string]: string } = {
-    'testuser': 'password',
-    'admin': 'adminpass',
-    'janedoe': 'janepass'
-};
+
+const passwords: Record<string, string> = {
+    testuser: 'password',
+    admin: 'adminpass',
+    janedoe: 'janepass'
+}
+
 
 const loadUsers = (): User[] => {
     try {
@@ -28,11 +30,11 @@ const loadUsers = (): User[] => {
 const loadPasswords = (): { [username: string]: string } => {
     try {
         const storedPasswords = localStorage.getItem(PASSWORDS_STORAGE_KEY);
-        return storedPasswords ? JSON.parse(storedPasswords) : defaultPasswords;
+        return storedPasswords ? JSON.parse(storedPasswords) : passwords;
     } catch (e) {
         console.error("Error loading passwords from local storage, using defaults:", e);
-        return defaultPasswords;
-    }
+        return passwords;
+    }   
 };
 
 const saveUsers = (users: User[]) => {
@@ -52,7 +54,7 @@ export const addMockUser = (username: string, password: string, email: string): 
         return false;
     }
 
-    const newUser: User = { username, email };
+    const newUser: User = { username, email, password };
 
     mockUsers.push(newUser);
     mockPasswords[username] = password;
