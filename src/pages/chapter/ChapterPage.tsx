@@ -64,14 +64,32 @@ export default function ChapterPage() {
                 )}
 
                 <div className="flex items-center justify-evenly mt-4 flex-wrap">
-                    {currentScene?.choices?.map((choice) => (
+                    {currentScene?.choices && currentScene.choices.length > 0 ? (
+                        currentScene.choices.map((choice) => (
+                            <Button
+                                key={choice.id}
+                                text={choice.choiceText}
+                                className="mt-4"
+                                onClick={() => {
+                                    if (choice.nextSceneId) {
+                                        handleChoiceClick(choice.nextSceneId);
+                                    } else {
+                                        navigate("/ending");
+                                    }
+                                }}
+                            />
+                        ))
+                    ) : (
                         <Button
-                            key={choice.id}
-                            text={choice.choiceText}
+                            text="Tovább"
                             className="mt-4"
-                            onClick={() => handleChoiceClick(choice.nextSceneId)}
+                            onClick={() => {
+                                navigate("/ending");
+                                localStorage.removeItem("lastSceneId");
+                            }}
                         />
-                    ))}
+
+                    )}
                 </div>
 
                 <div className="flex justify-center mt-6">
