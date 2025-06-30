@@ -19,7 +19,7 @@ export default function HomePage() {
         setStories(stories);
         console.log(stories);
       }
-      
+
     })();
   }, [client]);
 
@@ -27,7 +27,7 @@ export default function HomePage() {
     const lastSceneId = localStorage.getItem("lastSceneId");
     if (lastSceneId) {
       navigate(`/chapter/${lastSceneId}`);
-    } else{
+    } else {
       navigate(`/chapter/${stories[0].startingSceneId}`);
       console.log(stories[0].startingSceneId);
     }
@@ -40,6 +40,14 @@ export default function HomePage() {
 
   const handleNavigateToSettings = () => {
     navigate('/settings');
+  }
+
+  const handleNavigateToEnding = () => {
+    navigate('/ending');
+  }
+
+  const handleNavigateToDashboard = () => {
+    navigate('/dashboard');
   }
 
   return (
@@ -60,6 +68,16 @@ export default function HomePage() {
           <Button
             onClick={handleNavigateToSettings}
             text="Settings"
+            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+          />
+          <Button
+            onClick={handleNavigateToDashboard}
+            text="Dashboard"
+            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+          />
+          <Button
+            onClick={handleNavigateToEnding}
+            text="Ending Screen Test"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
         </div>
