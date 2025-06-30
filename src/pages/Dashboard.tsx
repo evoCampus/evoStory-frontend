@@ -54,12 +54,12 @@ export default function DashboardPage({}: DashboardPageProps): JSX.Element {
                                 <Button
                                     onClick={handleNavigateToHome}
                                     text="Home"
-                                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                                 <Button
                                     onClick={handleDeleteAccount}
                                     text="Fiók törlése"
-                                    className="w-full py-3 hover:bg-red-500 text-white font-medium rounded-lg transition-colors"
+                                    className="w-full py-3 hover:bg-red-500 text-white font-medium rounded-lg transition-colors focus:shadow-outlinetransition delay-150 duration-300 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                             </div>
                         </>
@@ -70,7 +70,7 @@ export default function DashboardPage({}: DashboardPageProps): JSX.Element {
                                 <Button
                                     onClick={handleNavigateToLogin}
                                     text="Bejelentkezés"
-                                    className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                                    className="w-full py-3 bg-blue-600 hover:bg-teal-500 text-white font-medium rounded-lg transition-colors"
                                 />
                             </div>
                         </>
