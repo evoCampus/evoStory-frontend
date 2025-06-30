@@ -1,4 +1,3 @@
-import DifficultySelector from "./DifficultySelector";
 import VolumeSlider from "../Volume";
 import { useState } from "react";
 import  HomeButton  from "../components/HomeButton";
@@ -15,7 +14,6 @@ export default function Settings() {
           Settings
         </h1>
         <div className="m-5">
-        <DifficultySelector />
         </div>
 
         <div className="m-5 ">
