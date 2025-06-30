@@ -11,19 +11,23 @@ import Settings from './pages/Settings';
 import EndingScreen from './pages/EndingScreen';
 import RegisterPage from './pages/RegisterPage';
 import RequireAuth from './auth/RequireAuth';
+import { createContext, useMemo } from 'react';
+import Client from './Client';
 
 interface AppProps { }
-
+export const ClientContext = createContext<Client | undefined>(undefined);
 export default function App({ }: AppProps): JSX.Element {
+      const client = useMemo(() => new Client(), []); 
     return (
-            <Router>
+          <ClientContext.Provider value={client}>
+      <Router>
                 <AuthProvider>
                     <Routes>
+                        <Route path="/" element={<RequireAuth> <HomePage /> </RequireAuth>} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
-                        <Route path="/" element={<RequireAuth> <HomePage /> </RequireAuth>} />
                         <Route path="/dashboard" element={<DashboardPage />} />
-                        <Route path="/chapter" element={<ChapterPage />} />
+                        <Route path="/chapter/:chapterId" element={<ChapterPage />} />
                         <Route path="/continue" element={<ContinueGame />} />
                         <Route path="/new" element={<ChapterPage />} />
                         <Route path="/settings" element={<Settings />} />
@@ -33,5 +37,6 @@ export default function App({ }: AppProps): JSX.Element {
                     </Routes>
                 </AuthProvider>
             </Router>
-          );
+            </ClientContext.Provider>
+  );
 }
