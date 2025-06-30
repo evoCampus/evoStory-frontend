@@ -2,9 +2,9 @@ import '../../index.css';
 import Button from '../../components/Button';
 import ChapterPageBox from './components/ChapterPageBox';
 import HomeButton from '../../components/HomeButton';
-import { Scene, Choice } from "../../mock/mock";
+import { Scene } from "../../mock/mock";
 import Client from "../../mock/client";
-import { useMemo, useState, useEffect, useContext, createContext } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 
 //useContext

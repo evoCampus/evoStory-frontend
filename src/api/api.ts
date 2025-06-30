@@ -1247,37 +1247,28 @@ export class StoryApi extends BaseAPI {
     }
 }
 
+
 export interface LoginRequestDTO {
-    userName: string; // A C# oldalon 'UserName'
+    userName: string;
     password: string;
 }
 
-// UserDTO a C# backendből
-// Ez a DTO tér vissza Login, GetUser, GetUsers metódusokból.
-// Nem tartalmaz "Token" mezőt, ahogy a C# kontrollered visszaküldi. [cite: image_1b30f6.png]
 export interface UserDTO {
-    id: string; // Guid string-ként
-    userName: string; // A C# oldalon 'UserName'
+    id: string;
+    userName: string;
     email: string;
 }
 
-// CreateUserDTO a C# backendből (regisztrációs kérés)
 export interface CreateUserDTO {
-    userName: string; // A C# oldalon 'UserName'
+    userName: string;
     email: string;
     password: string;
 }
 
-// --------------------------------------------------------------------------------
-// 2. API Kliens Funkciók - Nincs Token kezelés
-// --------------------------------------------------------------------------------
-
-// Segédfüggvény a fetch hívásokhoz. NEM küld authorization headert.
 async function apiCall<TResponse>(
     endpoint: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     body?: any,
-    // requiresAuth: boolean = false // Ezt eltávolítjuk, mivel nem kezelünk tokent
 ): Promise<TResponse> {
     const headers: HeadersInit = {
         'Accept': 'application/json',
@@ -1286,9 +1277,6 @@ async function apiCall<TResponse>(
     if (body !== undefined) {
         headers['Content-Type'] = 'application/json';
     }
-
-    // A token-alapú Authorization header HÍNYZIK EBBŐL A VERZIÓBÓL.
-    // Ha védett végpontokat hívsz ezzel, azok 401-et fognak visszaadni.
 
     const config: RequestInit = {
         method: method,
@@ -1328,62 +1316,22 @@ async function apiCall<TResponse>(
     }
 }
 
-// --------------------------------------------------------------------------------
-// API Végpontokhoz tartozó Funkciók
-// --------------------------------------------------------------------------------
-
-/**
- * Felhasználó bejelentkezése.
- * POST /api/User/login [cite: image_1b30f6.png]
- * @param data A bejelentkezési adatok (userName, password).
- * @returns A bejelentkezési válasz, ami UserDTO (Id, UserName, Email). [cite: image_1b30f6.png]
- */
 export async function loginUser(data: LoginRequestDTO): Promise<UserDTO> {
     return apiCall<UserDTO>('/api/User/login', 'POST', data);
 }
 
-/**
- * Új felhasználó regisztrálása.
- * PUT /api/User [cite: UserController.cs, CreateUser metódus]
- * @param data A regisztrációs adatok (userName, email, password).
- * @returns A regisztráció után a backend a létrehozott UserDTO-t adja vissza.
- */
 export async function registerUser(data: CreateUserDTO): Promise<UserDTO> {
     return apiCall<UserDTO>('/api/User', 'PUT', data);
 }
 
-/**
- * Az aktuálisan bejelentkezett felhasználó profiljának lekérdezése.
- * GET /api/User [cite: UserController.cs, GetUsers metódus]
- * FIGYELEM: Ez a végpont valószínűleg AUTHORIZÁCIÓT igényel a backend oldalon.
- * Mivel a frontend nem küld tokent, ez a hívás 401 Unauthorized hibát fog adni.
- * @returns A felhasználói profil adatai (UserDTO).
- */
 export async function getCurrentUserProfile(): Promise<UserDTO> {
-    // Nincs 'true' a 'requiresAuth' paraméternél, mert eltávolítottuk
     return apiCall<UserDTO>('/api/User', 'GET');
 }
 
-/**
- * Egy adott felhasználó profiljának lekérdezése ID alapján.
- * GET /api/User/{userId} [cite: UserController.cs, GetUser metódus, image_1b33bd.png]
- * FIGYELEM: Ez a végpont valószínűleg AUTHORIZÁCIÓT igényel a backend oldalon.
- * Mivel a frontend nem küld tokent, ez a hívás 401 Unauthorized hibát fog adni.
- * @param userId A lekérdezendő felhasználó ID-ja.
- * @returns A felhasználói profil adatai (UserDTO).
- */
 export async function getUserProfileById(userId: string): Promise<UserDTO> {
     return apiCall<UserDTO>(`/api/User/${userId}`, 'GET');
 }
 
-/**
- * Felhasználó törlése ID alapján.
- * DELETE /api/User?userId={userId} [cite: UserController.cs, DeleteUser metódus, image_1b33fa.png]
- * FIGYELEM: Ez a végpont valószínűleg AUTHORIZÁCIÓT igényel a backend oldalon.
- * Mivel a frontend nem küld tokent, ez a hívás 401 Unauthorized hibát fog adni.
- * @param userId A törlendő felhasználó ID-ja.
- * @returns Üres válasz (void).
- */
 export async function deleteUser(userId: string): Promise<void> {
     return apiCall<void>(`/api/User?userId=${userId}`, 'DELETE');
 }
