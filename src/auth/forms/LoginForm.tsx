@@ -1,37 +1,31 @@
 import { useState, FormEvent, JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { mockUsers, mockPasswords } from '../../mock/mockUser';
 
 interface LoginFormProps {}
 
 export default function LoginForm({}: LoginFormProps): JSX.Element {
-    const [username, setUsername] = useState<string | undefined>(undefined);
-    const [password, setPassword] = useState<string | undefined>(undefined);
-    const authContext = useAuth();
+    const [username, setUsername] = useState<string>(''); 
+    const [password, setPassword] = useState<string>(''); 
+    const { login } = useAuth(); 
     const navigate = useNavigate();
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => { 
         event.preventDefault();
 
-        if (!authContext) {
-            console.error("AuthContext nem elérhető");
-            alert("Hiba: Hitelesítési szolgáltatás nem elérhető.");
-            return;
-        }
 
-        if (username === undefined || username === '' || password === undefined || password === '') {
+
+        if (username.trim() === '' || password.trim() === '') {
             alert('Kérjük, töltse ki a felhasználónév és jelszó mezőket.');
             return;
         }
 
-        const foundUser = mockUsers.find(user => user.username === username);
+        const loginSuccessful = await login(username, password);
 
-        if (foundUser && mockPasswords[username] === password) {
-            authContext.login({ username: foundUser.username, email: foundUser.email, password: foundUser.password || undefined });
+        if (loginSuccessful) {
             navigate('/');
         } else {
-            alert('Hibás felhasználónév vagy jelszó.');
+            alert('Hibás felhasználónév vagy jelszó. Kérjük, próbálja újra.');
         }
     };
 
@@ -43,8 +37,9 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="text"
                     id="username"
-                    value={username || ''}
+                    value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    required
                 />
             </div>
             <div className='mb-5 mr-5'>
@@ -53,8 +48,9 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="password"
                     id="password"
-                    value={password || ''}
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
             </div>
             <button

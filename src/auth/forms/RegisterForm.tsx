@@ -1,43 +1,36 @@
-import { useState, FormEvent, JSX} from 'react';
-import useAuth from '../useAuth';
+import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
-interface RegisterFormProps {}
-
-export default function RegisterForm({}: RegisterFormProps): JSX.Element {
+const RegisterForm: React.FC = () => {
     const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const { register, login } = useAuth(); 
+    const [password, setPassword] = useState<string>('');
+    const { register } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
-        if (password !== confirmPassword) {
-            alert('A jelszavak nem egyeznek!');
-            return;
-        }
-        if (username.length < 3 || password.length < 6) {
-            alert('A felhasználónévnek legalább 3, a jelszónak legalább 6 karakter hosszúnak kell lennie.');
+        if (!username || !email || !password) {
+            alert('Kérjük, töltse ki az összes mezőt.');
             return;
         }
 
-        const success = register(username, password, email);
+        const registrationSuccessful = await register(username, password, email);
 
-        if (success) {
+        if (registrationSuccessful) {
             alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
-            login({ username, email, password });
-            navigate('/dashboard');
+            navigate('/login');
         } else {
-            alert('Regisztráció sikertelen. Lehet, hogy a felhasználónév már foglalt.');
+            alert('Sikertelen regisztráció. Kérjük, próbálja újra.');
         }
     };
 
     return (
+        <div>
         <form onSubmit={handleSubmit}>
-            <div className='mb-5'>
+            <div>
                 <label htmlFor="reg-username">Felhasználónév:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
@@ -48,8 +41,8 @@ export default function RegisterForm({}: RegisterFormProps): JSX.Element {
                     required
                 />
             </div>
-            <div className='mb-5'>
-                <label htmlFor="reg-email">E-mail:</label>
+            <div>
+                <label htmlFor="reg-email">Email:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="email"
@@ -59,7 +52,7 @@ export default function RegisterForm({}: RegisterFormProps): JSX.Element {
                     required
                 />
             </div>
-            <div className='mb-5'>
+            <div>
                 <label htmlFor="reg-password">Jelszó:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
@@ -70,18 +63,15 @@ export default function RegisterForm({}: RegisterFormProps): JSX.Element {
                     required
                 />
             </div>
-            <div className='mb-5'>
-                <label htmlFor="reg-confirm-password">Jelszó megerősítése:</label>
-                <input
-                    className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
-                    type="password"
-                    id="reg-confirm-password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
-            </div>
-            <button className='bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500' type="submit">Regisztráció</button>
+            <button
+            className='mt-2 ml-2 items-center bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500'
+            type='submit'>
+            Regisztráció
+            </button>
+            
         </form>
+        </div>
     );
-}
+};
+
+export default RegisterForm;
