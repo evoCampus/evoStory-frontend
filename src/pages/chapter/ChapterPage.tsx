@@ -63,16 +63,34 @@ export default function ChapterPage() {
                             text={currentScene.content.text}
                             className="rounded-xl pr-1.5 pl-1.5 bg-linear-to-t from-gray-800 to-black shadow-xl/30 transition-normal"
                         />
-                        <div className="flex items-center content-center place-content-evenly">
-                            {currentScene.choices?.map((choice) => (
-                                <Button
-                                    key={choice.id}
-                                    text={choice.choiceText}
-                                    className="mt-4"
-                                    onClick={() => handleChoiceClick(choice.nextSceneId)}
-                                />
-                            ))}
-                        </div>
+                        <div className="flex items-center justify-evenly mt-4 flex-wrap">
+                    {currentScene?.choices && currentScene.choices.length > 0 ? (
+                        currentScene.choices.map((choice) => (
+                            <Button
+                                key={choice.id}
+                                text={choice.choiceText}
+                                className="mt-4"
+                                onClick={() => {
+                                    if (choice.nextSceneId) {
+                                        handleChoiceClick(choice.nextSceneId);
+                                    } else {
+                                        navigate("/ending");
+                                    }
+                                }}
+                            />
+                        ))
+                    ) : (
+                        <Button
+                            text="Tovább"
+                            className="mt-4"
+                            onClick={() => {
+                                navigate("/ending");
+                                localStorage.removeItem("lastSceneId");
+                            }}
+                        />
+
+                    )}
+                </div>
                     </>
                 )}
                 <div className="flex justify-center">

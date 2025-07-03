@@ -20,7 +20,7 @@ export default class Client {
     constructor ()
     {
         const axiosInstance = axios.create({
-            baseURL: "https://localhost:7090"
+            baseURL: "http://localhost:5006"
         });
         this.choiceAPI = new ChoiceApi(undefined, undefined, axiosInstance);
         this.sceneAPI = new SceneApi(undefined, undefined, axiosInstance);
