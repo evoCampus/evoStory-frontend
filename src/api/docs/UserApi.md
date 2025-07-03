@@ -1,34 +1,35 @@
-# SceneApi
+# UserApi
 
 All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createScene**](#createscene) | **PUT** /api/Scene | |
-|[**deleteScene**](#deletescene) | **DELETE** /api/Scene | |
-|[**getScene**](#getscene) | **GET** /api/Scene/{sceneId} | |
-|[**getScenes**](#getscenes) | **GET** /api/Scene | |
+|[**createUser**](#createuser) | **PUT** /api/User | |
+|[**deleteUser**](#deleteuser) | **DELETE** /api/User | |
+|[**getUser**](#getuser) | **GET** /api/User/{userId} | |
+|[**getUsers**](#getusers) | **GET** /api/User | |
+|[**login**](#login) | **POST** /api/User/login | |
 
-# **createScene**
-> SceneDTO createScene()
+# **createUser**
+> createUser()
 
 
 ### Example
 
 ```typescript
 import {
-    SceneApi,
+    UserApi,
     Configuration,
-    CreateSceneDTO
+    CreateUserDTO
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new SceneApi(configuration);
+const apiInstance = new UserApi(configuration);
 
-let createSceneDTO: CreateSceneDTO; // (optional)
+let createUserDTO: CreateUserDTO; // (optional)
 
-const { status, data } = await apiInstance.createScene(
-    createSceneDTO
+const { status, data } = await apiInstance.createUser(
+    createUserDTO
 );
 ```
 
@@ -36,12 +37,12 @@ const { status, data } = await apiInstance.createScene(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **createSceneDTO** | **CreateSceneDTO**|  | |
+| **createUserDTO** | **CreateUserDTO**|  | |
 
 
 ### Return type
 
-**SceneDTO**
+void (empty response body)
 
 ### Authorization
 
@@ -61,25 +62,25 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **deleteScene**
-> SceneDTO deleteScene()
+# **deleteUser**
+> SceneDTO deleteUser()
 
 
 ### Example
 
 ```typescript
 import {
-    SceneApi,
+    UserApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new SceneApi(configuration);
+const apiInstance = new UserApi(configuration);
 
-let sceneId: string; // (optional) (default to undefined)
+let userId: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.deleteScene(
-    sceneId
+const { status, data } = await apiInstance.deleteUser(
+    userId
 );
 ```
 
@@ -87,7 +88,7 @@ const { status, data } = await apiInstance.deleteScene(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **sceneId** | [**string**] |  | (optional) defaults to undefined|
+| **userId** | [**string**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -112,25 +113,25 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getScene**
-> SceneDTO getScene()
+# **getUser**
+> UserDTO getUser()
 
 
 ### Example
 
 ```typescript
 import {
-    SceneApi,
+    UserApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new SceneApi(configuration);
+const apiInstance = new UserApi(configuration);
 
-let sceneId: string; // (default to undefined)
+let userId: string; // (default to undefined)
 
-const { status, data } = await apiInstance.getScene(
-    sceneId
+const { status, data } = await apiInstance.getUser(
+    userId
 );
 ```
 
@@ -138,12 +139,12 @@ const { status, data } = await apiInstance.getScene(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **sceneId** | [**string**] |  | defaults to undefined|
+| **userId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
 
-**SceneDTO**
+**UserDTO**
 
 ### Authorization
 
@@ -163,22 +164,22 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getScenes**
-> Array<SceneDTO> getScenes()
+# **getUsers**
+> Array<UserDTO> getUsers()
 
 
 ### Example
 
 ```typescript
 import {
-    SceneApi,
+    UserApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new SceneApi(configuration);
+const apiInstance = new UserApi(configuration);
 
-const { status, data } = await apiInstance.getScenes();
+const { status, data } = await apiInstance.getUsers();
 ```
 
 ### Parameters
@@ -187,7 +188,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**Array<SceneDTO>**
+**Array<UserDTO>**
 
 ### Authorization
 
@@ -203,6 +204,58 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **login**
+> UserDTO login()
+
+
+### Example
+
+```typescript
+import {
+    UserApi,
+    Configuration,
+    LoginDTO
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UserApi(configuration);
+
+let loginDTO: LoginDTO; // (optional)
+
+const { status, data } = await apiInstance.login(
+    loginDTO
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **loginDTO** | **LoginDTO**|  | |
+
+
+### Return type
+
+**UserDTO**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

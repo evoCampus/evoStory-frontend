@@ -6,10 +6,10 @@
     return (
       <div className="flex items-center justify-center h-screen w-screen bg-black text-white">
         <div className="text-center">
-          <h1 className="font bold">Game Over</h1>
+          <h1 className="font bold">Vesztettél</h1>
           <Button 
             onClick={handleNavigateToChapter} 
-            text="New Game" 
+            text="Új játék" 
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <HomeButton />
