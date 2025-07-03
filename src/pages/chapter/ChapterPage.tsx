@@ -50,55 +50,53 @@ export default function ChapterPage() {
     }, [client, chapterId]);
 
     return (
-        <ImageLoader guid={currentScene?.content?.imageId ?? "00000000-0000-0000-0000-000000000000"}>
-            <div className="flex-auto p-4 mx-auto w-4/5 gap-4 rounded-xl z-10 relative">
+        <div className="flex-auto items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] pt-50">
 
-                {currentScene?.content?.text && (
-                    <ChapterPageBox
-                        text={currentScene.content.text}
-                        className="rounded-xl pr-1.5 pl-1.5 bg-gradient-to-t from-gray-800 to-black shadow-xl transition-all"
-                    />
-                )}
+            {currentScene?.content?.text && (
+                <ChapterPageBox
+                    text={currentScene.content.text}
+                    className="rounded-xl pr-1.5 pl-1.5 bg-gradient-to-t from-gray-800 to-black shadow-xl transition-all"
+                />
+            )}
 
-                <div className="flex items-center justify-evenly mt-4 flex-wrap">
-                    {currentScene?.choices && currentScene.choices.length > 0 ? (
-                        currentScene.choices.map((choice) => (
-                            <Button
-                                key={choice.id}
-                                text={choice.choiceText}
-                                className="mt-4"
-                                onClick={() => {
-                                    if (choice.nextSceneId) {
-                                        handleChoiceClick(choice.nextSceneId);
-                                    } else {
-                                        navigate("/ending");
-                                    }
-                                }}
-                            />
-                        ))
-                    ) : (
+            <div className="flex items-center justify-evenly mt-4 flex-wrap">
+                {currentScene?.choices && currentScene.choices.length > 0 ? (
+                    currentScene.choices.map((choice) => (
                         <Button
-                            text="Tovább"
+                            key={choice.id}
+                            text={choice.choiceText}
                             className="mt-4"
                             onClick={() => {
-                                navigate("/ending");
-                                localStorage.removeItem("lastSceneId");
+                                if (choice.nextSceneId) {
+                                    handleChoiceClick(choice.nextSceneId);
+                                } else {
+                                    navigate("/ending");
+                                }
                             }}
                         />
-
-                    )}
-                </div>
-
-                <div className="flex justify-center mt-6">
+                    ))
+                ) : (
                     <Button
-                            text="Főoldal"
-                            className="mt-4"
-                            onClick={() => {
-                                navigate("/");
-                            }}
-                        />
-                </div>
+                        text="Tovább"
+                        className="mt-4"
+                        onClick={() => {
+                            navigate("/ending");
+                            localStorage.removeItem("lastSceneId");
+                        }}
+                    />
+
+                )}
             </div>
-        </ImageLoader>
+
+            <div className="flex justify-center mt-6">
+                <Button
+                    text="Főoldal"
+                    className="mt-4"
+                    onClick={() => {
+                        navigate("/");
+                    }}
+                />
+            </div>
+        </div>
     );
 }
