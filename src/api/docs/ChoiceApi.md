@@ -62,7 +62,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteChoice**
-> deleteChoice()
+> ChoiceDTO deleteChoice()
 
 
 ### Example
@@ -92,7 +92,7 @@ const { status, data } = await apiInstance.deleteChoice(
 
 ### Return type
 
-void (empty response body)
+**ChoiceDTO**
 
 ### Authorization
 
@@ -107,7 +107,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**204** | No Content |  -  |
+|**200** | OK |  -  |
 |**404** | Not Found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

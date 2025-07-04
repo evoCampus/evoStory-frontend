@@ -20,7 +20,7 @@ export default class Client {
     constructor ()
     {
         const axiosInstance = axios.create({
-            baseURL: "https://localhost:7090"
+            baseURL: "http://localhost:5006"
         });
         this.choiceAPI = new ChoiceApi(undefined, undefined, axiosInstance);
         this.sceneAPI = new SceneApi(undefined, undefined, axiosInstance);
@@ -34,7 +34,7 @@ export default class Client {
     }
 
     async getScenes(): Promise<SceneDTO[]>{
-        const { data } = await this.sceneAPI.apiSceneGet();
+        const { data } = await this.sceneAPI.getScenes();
 
         return data;
     }
@@ -52,7 +52,7 @@ export default class Client {
     }
 
     async getSceneById(id: string): Promise<SceneDTO>{
-        const { data } = await this.sceneAPI.apiSceneSceneIdGet(id);
+        const { data } = await this.sceneAPI.getScene(id);
 
         return data;
     }
@@ -68,7 +68,7 @@ export default class Client {
     }
 
     async saveScene(scene: CreateSceneDTO): Promise<CreateSceneDTO>{
-        const { data } = await this.sceneAPI.apiScenePut(scene);
+        const { data } = await this.sceneAPI.createScene(scene);
 
         return data;
     }
@@ -82,7 +82,7 @@ export default class Client {
     }
 
     async deleteScene(id: string): Promise<void>{
-        await this.sceneAPI.apiSceneDelete(id);
+        await this.sceneAPI.deleteScene(id);
     }
 
     async deleteStory(id: string): Promise<void>{

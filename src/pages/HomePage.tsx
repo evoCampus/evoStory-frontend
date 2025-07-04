@@ -46,20 +46,20 @@ export default function HomePage() {
     <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800 ">
       <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
         <div className="flex flex-col gap-4">
-          <p><strong>The Game</strong></p>
+          <p><strong>Halvány emlékek</strong></p>
           <Button
             onClick={handleNavigateToContinue}
-            text="Continue Game"
+            text="Játék folytatása"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors "
           />
           <Button
             onClick={handleNavigateToChapter}
-            text="New Game"
+            text="Új játék"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button
             onClick={handleNavigateToSettings}
-            text="Settings"
+            text="Beállítások"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
         </div>
