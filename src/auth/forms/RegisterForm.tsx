@@ -7,23 +7,33 @@ const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { register } = useAuth();
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        setError(null);
+        setSuccessMessage(null);
 
         if (!username || !email || !password) {
-            alert('Kérjük, töltse ki az összes mezőt.');
+            setError('Kérjük, töltse ki az összes mezőt.');
             return;
         }
 
         const registrationSuccessful = await register(username, password, email);
-
+try{
         if (registrationSuccessful) {
-            alert('Sikeres regisztráció! Most már bejelentkezhetsz.');
+            setSuccessMessage('Sikeres regisztráció! Most már bejelentkezhetsz.');
+            setTimeout(() => {
             navigate('/login');
+            }, 2000);
         } else {
-            alert('Sikertelen regisztráció. Kérjük, próbálja újra.');
+            setError('Sikertelen regisztráció. Kérjük, próbálja újra.');
+        }
+    } catch (err: any) {
+            console.error('Register API error:', err);
+            setError('Hiba történt a regisztráció során. Kérjük, próbálja meg később.');
         }
     };
 
@@ -63,11 +73,21 @@ const RegisterForm: React.FC = () => {
                     required
                 />
             </div>
-            <button
-            className='mt-2 ml-2 items-center bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500'
-            type='submit'>
-            Regisztráció
-            </button>
+                {error && (
+            <div className="text-red-600 text-sm mt-2">
+                {error}
+            </div>
+            )}
+            {successMessage && (
+            <div className="text-green-600 text-sm mt-2">
+                {successMessage}
+            </div>
+            )}
+                <button
+                className='mt-2 ml-2 items-center bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-green-500'
+                type='submit'>
+                Regisztráció
+                </button>
             
         </form>
         </div>

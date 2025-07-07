@@ -42,11 +42,14 @@ font-size: larger;
 font-weight: bold;
 }
 
-.roundButton{
-  border-radius: 100%;
-  border: 1px solid transparent;
+.noHover{
+    pointer-events: none;
 }
 
+.title{
+  font-family:serif;
+  font-size: 5em;
+}
 
 .transparentButton{
   background-color: transparent;

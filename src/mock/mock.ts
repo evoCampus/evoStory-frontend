@@ -13,7 +13,7 @@ export const scenes: Scene[] = [
         "id": "40d9b19b-8285-43a2-9602-bad661c85c45",
         "content": {
             "id": "00000000-0000-0000-0000-000000000000",
-            "text": "Kimész az udvarra vagy Bent maradsz és kutakodsz",
+            "text": "3K",
             "soundId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "imageId": "src\assets\otherBG.jpg"
         },
