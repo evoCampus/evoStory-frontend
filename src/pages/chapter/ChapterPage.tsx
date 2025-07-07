@@ -63,16 +63,18 @@ export default function ChapterPage() {
                     currentScene.choices.map((choice) => (
                         <Button
                             key={choice.id}
-                            text={choice.choiceText}
+                            text={choice.choiceText ?? ""}
                             className="mt-4"
                             onClick={() => {
                                 if (choice.nextSceneId) {
                                     handleChoiceClick(choice.nextSceneId);
                                 } else {
                                     navigate("/ending");
+                                    localStorage.removeItem("lastSceneId");
                                 }
                             }}
                         />
+
                     ))
                 ) : (
                     <Button

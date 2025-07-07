@@ -1,13 +1,13 @@
 import  { JSX } from 'react';
 
 interface BlueButtonProps {
-    text: string;
+    text?: string;
     onClick?: () => void;
     className?: string;
 }
 
 
-export default function Button({ text, onClick, className }: BlueButtonProps): JSX.Element {
+export default function Button({ text, onClick, className }: Readonly<BlueButtonProps>): JSX.Element {
     return (
         <button
             onClick={onClick}
