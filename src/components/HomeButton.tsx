@@ -9,7 +9,7 @@ export default function HomeButton({ className }: HomeButtonProps): JSX.Element 
     return (
         <div className={"mt-auto p-4 text-center"}>
             <Link to="/" className={`roundButton text-center ${className || ''}`}>
-                <span>Main</span>
+                <span>Főoldal</span>
             </Link>
         </div>
     );

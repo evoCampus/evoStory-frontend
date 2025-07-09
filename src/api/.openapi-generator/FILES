@@ -11,11 +11,15 @@ docs/CreateChoiceDTO.md
 docs/CreateContentDTO.md
 docs/CreateSceneDTO.md
 docs/CreateStoryDTO.md
+docs/CreateUserDTO.md
 docs/EditStoryDTO.md
+docs/LoginDTO.md
 docs/ProblemDetails.md
 docs/SceneApi.md
 docs/SceneDTO.md
 docs/StoryApi.md
 docs/StoryDTO.md
+docs/UserApi.md
+docs/UserDTO.md
 git_push.sh
 index.ts
