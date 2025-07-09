@@ -27,17 +27,17 @@ export default function HomePage() {
           <Button
             onClick={handleNavigateToContinue}
             text="Játék folytatása"
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+            className=""bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110""
           />
           <Button
             onClick={handleNavigateToChapter}
             text="Új játék"
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+            className=""bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"+"
           />
           <Button
           onClick={handleNavigateToDashboard}
           text="Felhasználói felület"
-          className="w-full py-3 text-white font-medium rounded-lg transition-colors"
+          className=""bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110""
           />
         </div>
       </div>
