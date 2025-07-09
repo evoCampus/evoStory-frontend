@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -81,37 +80,3 @@ input{
   margin-left: 5%;
   color: #242424;
 }
-
-@property --angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.rotating-border::after, .rotating-border::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-image: conic-gradient(from var(--angle), #ff4545, #00ff99, #006aff, #ff0095, #ff4545);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  padding: 3px;
-  border-radius: 10px;
-  animation: 3s spin linear infinite;
-}
-.rotating-border::before {
-  filter: blur(1.5rem);
-  opacity: 0.5;
-}
-@keyframes spin {
-  from {
-    --angle: 0deg;
-  }
-  to {
-    --angle: 360deg;
-  }
-}
-
