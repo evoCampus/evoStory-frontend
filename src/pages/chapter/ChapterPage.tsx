@@ -30,8 +30,6 @@ function ChapterPage() {
                     <span className="text-center">Chapter 1</span>
                 </div>
 
-                <ChapterPageBox text='' className='rounded-xl bg-linear-to-t from-sky-500/50  to-indigo-500/50 bg-[url(./assets/otherBG.jpg)] shadow-xl/30 ' />
-
                 {currentScene && (<>
                     <ChapterPageBox text={currentScene.content.text} className='rounded-xl pr-1.5 pl-1.5 bg-linear-to-t from-gray-800 to-black shadow-xl/30 transition-normal' />
                     <div className='flex items-center content-center place-content-evenly '>
