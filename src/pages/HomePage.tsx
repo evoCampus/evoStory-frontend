@@ -14,10 +14,6 @@ export default function HomePage() {
     navigate('/chapter');
   }
 
-  const handleNavigateToSettings = () => {
-    navigate('/settings');
-  }
-
   const handleNavigateToDashboard = () => {
     navigate('/dashboard');
   }
@@ -36,11 +32,6 @@ export default function HomePage() {
           <Button
             onClick={handleNavigateToChapter}
             text="Új játék"
-            className="w-full py-3 text-white font-medium rounded-lg transition-colors"
-          />
-          <Button
-            onClick={handleNavigateToSettings}
-            text="Beállítások"
             className="w-full py-3 text-white font-medium rounded-lg transition-colors"
           />
           <Button
