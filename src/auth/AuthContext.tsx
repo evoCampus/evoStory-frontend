@@ -1,14 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    loginUser,
-    registerUser,
-    getUserProfileById as apiGetUserProfileById,
-    deleteUser as apiDeleteUser,
-    LoginRequestDTO,
-    UserDTO,
-    CreateUserDTO
-} from '../api/api';
+import { CreateUserDTO, LoginDTO, UserDTO } from '../api/api';
+import { ClientContext } from '../App';
 
 export interface User {
     id: string;
@@ -34,11 +27,15 @@ interface AuthProviderProps {
 export default function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
+    const client = useContext(ClientContext);
 
     const login = async (username: string, password: string): Promise<boolean> => {
         try {
-            const loginCredentials: LoginRequestDTO = { userName: username, password: password };
-            const response: UserDTO = await loginUser(loginCredentials);
+            if(!client){
+                return false;
+            }
+            const loginCredentials: LoginDTO = { userName: username, password: password };
+            const response: UserDTO = await client?.loginUser(loginCredentials);
 
             if (response.id && response.userName && response.email) {
                 setUser({
@@ -66,16 +63,13 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
 
     const register = async (username: string, password: string, email: string): Promise<boolean> => {
         try {
-            const registerData: CreateUserDTO = { userName: username, password: password, email: email };
-            const response: UserDTO = await registerUser(registerData);
-
-            if (response.id && response.userName && response.email) {
-                console.log('Registration successful, user data received.');
-                return true;
-            } else {
-                console.error('Registration failed: Invalid response from API.');
+            if(!client){
                 return false;
             }
+            const registerData: CreateUserDTO = { userName: username, password: password, email: email };
+            await client.registerUser(registerData);
+
+            return true;
         } catch (error) {
             console.error('Error during registration:', error);
             return false;
@@ -84,11 +78,15 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
 
     const getUserProfileById = async (userId: string): Promise<User | null> => {
         try {
-            const userData: UserDTO = await apiGetUserProfileById(userId);
+            if(!client){
+                return null;
+            }
+            const userData: UserDTO = await client.getUser(userId);
+            /*bad type on backend thats why the !*/
             return {
                 id: userData.id,
-                userName: userData.userName,
-                email: userData.email,
+                userName: userData.userName!,
+                email: userData.email!,
             };
         } catch (error) {
             console.error(`Failed to fetch user profile for ID ${userId}:`, error);
@@ -98,7 +96,7 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
 
     const deleteUser = async (userId: string): Promise<boolean> => {
         try {
-            await apiDeleteUser(userId);
+            await client?.deleteUser(userId);
             console.log(`User with ID ${userId} deleted.`);
             if (user?.id === userId) {
                 logout();
