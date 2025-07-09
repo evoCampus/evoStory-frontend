@@ -6,9 +6,6 @@ import { Scene } from "../../mock/mock";
 import Client from "../../mock/client";
 import { useMemo, useState, useEffect } from 'react';
 
-
-//useContext
-
 function ChapterPage() {
     const client = useMemo(() => new Client(), []);
     const [currentScene, setCurrentScene] = useState<Scene>();
