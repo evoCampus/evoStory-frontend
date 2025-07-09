@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/Dashboard'
 import ContinueGame from './pages/ContinueGame';
 import ChapterPage from './pages/chapter/ChapterPage';
-import Settings from './pages/Settings';
 import EndingScreen from './pages/EndingScreen';
 import RegisterPage from './pages/RegisterPage';
 import RequireAuth from './auth/RequireAuth';
@@ -27,7 +26,6 @@ export default function App({ }: AppProps): JSX.Element {
                         <Route path="/chapter" element={<ChapterPage />} />
                         <Route path="/continue" element={<ContinueGame />} />
                         <Route path="/new" element={<ChapterPage />} />
-                        <Route path="/settings" element={<Settings />} />
                         <Route path="/ending" element={<EndingScreen />} />
 
                         <Route path="*" element={<div>404 - Oldal nem található</div>} />
