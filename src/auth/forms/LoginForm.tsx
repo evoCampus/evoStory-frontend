@@ -1,17 +1,18 @@
 import { useState, FormEvent, JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { setCookie, getCookie } from 'typescript-cookie';
 
-interface LoginFormProps {}
+interface LoginFormProps { }
 
-export default function LoginForm({}: LoginFormProps): JSX.Element {
-    const [username, setUsername] = useState<string>(''); 
-    const [password, setPassword] = useState<string>(''); 
-    const { login } = useAuth(); 
+export default function LoginForm({ }: LoginFormProps): JSX.Element {
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const { login } = useAuth();
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: FormEvent) => { 
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setError(null);
 
@@ -20,15 +21,17 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
             return;
         }
 
-        try{
-        const loginSuccessful = await login(username, password);
+        try {
+            const loginSuccessful = await login(username, password);
 
-        if (loginSuccessful) {
-            navigate('/');
-        } else {
-            setError('Hibás felhasználónév vagy jelszó. Kérjük, próbálja újra.');
-        }
-    }   catch (err: any) {
+            if (loginSuccessful) {
+                setCookie("username", username);
+                console.log(`${getCookie("username")} stored`);
+                navigate('/');
+            } else {
+                setError('Hibás felhasználónév vagy jelszó. Kérjük, próbálja újra.');
+            }
+        } catch (err: any) {
 
             console.error('Login API error:', err);
             setError('Hiba történt a bejelentkezés során. Kérjük, próbálja meg később.');
@@ -60,7 +63,7 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
                     required
                 />
             </div>
-             {error && (
+            {error && (
                 <div className="text-red-600 text-sm mt-2">
                     {error}
                 </div>
