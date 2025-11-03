@@ -16,6 +16,7 @@ export interface AuthContextValue {
     register: (username: string, password: string, email: string) => Promise<boolean>;
     getUserProfileById: (userId: string) => Promise<User | null>;
     deleteUser: (userId: string) => Promise<boolean>;
+    isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -26,12 +27,43 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigate = useNavigate();
     const client = useContext(ClientContext);
 
+    useEffect(() => {
+        checkExistingSession();
+    }, []);
+
+    const checkExistingSession = async (): Promise<void> => {
+        try {
+            setIsLoading(true);
+            if (!client) {
+                console.error('Client not available for session check');
+                return;
+            }
+
+            const currentUser: UserDTO = await client.getCurrentUser();
+
+            if (currentUser.id && currentUser.userName && currentUser.email) {
+                setUser({
+                    id: currentUser.id,
+                    userName: currentUser.userName,
+                    email: currentUser.email,
+                });
+                console.log('Existing session found, user automatically logged in.');
+            }
+        } catch (error) {
+            console.log('No existing session found or session invalid.');
+            setUser(null);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const login = async (username: string, password: string): Promise<boolean> => {
         try {
-            if(!client){
+            if (!client) {
                 return false;
             }
             const loginCredentials: LoginDTO = { userName: username, password: password };
@@ -55,15 +87,23 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        console.log('User logged out.');
-        navigate('/login');
+    const logout = async (): Promise<void> => {
+        try {
+            if (client) {
+                await client.logoutUser();
+            }
+            console.log('User logged out, session cookie cleared.');
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            setUser(null);
+            navigate('/login');
+        }
     };
 
     const register = async (username: string, password: string, email: string): Promise<boolean> => {
         try {
-            if(!client){
+            if (!client) {
                 return false;
             }
             const registerData: CreateUserDTO = { userName: username, password: password, email: email };
@@ -78,7 +118,7 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
 
     const getUserProfileById = async (userId: string): Promise<User | null> => {
         try {
-            if(!client){
+            if (!client) {
                 return null;
             }
             const userData: UserDTO = await client.getUser(userId);
@@ -119,6 +159,7 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
         register,
         getUserProfileById,
         deleteUser,
+        isLoading,
     };
 
     return (
