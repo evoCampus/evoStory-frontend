@@ -31,7 +31,7 @@ try{
         } else {
             setError('Sikertelen regisztráció. Kérjük, próbálja újra.');
         }
-    } catch (err: any) {
+    } catch (err: unknown) {
             console.error('Register API error:', err);
             setError('Hiba történt a regisztráció során. Kérjük, próbálja meg később.');
         }

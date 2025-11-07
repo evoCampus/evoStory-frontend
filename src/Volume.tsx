@@ -8,8 +8,8 @@ export default function VolumeSlider() {
   };
 
   return (
-    <div className="flex items-center justify-center w-full text-white">
-      <div className="w-full max-w-md bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6">
+    <div className="h-full text-white">
+      <div className="h-full bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6">
         <div className="flex flex-col gap-4">
           <label
             htmlFor="volume"

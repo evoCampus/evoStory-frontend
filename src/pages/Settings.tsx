@@ -1,4 +1,5 @@
-import VolumeSlider from "../Volume";
+import ThemeToggle from "../components/ThemeToggle";
+import LanguageToggle from "../components/LanguageToggle";
 import { useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +18,13 @@ export default function Settings() {
         <div className="m-5">
         </div>
 
-        <div className="m-5 ">
-          <VolumeSlider />
+        <div className="m-5">
+          <div className="max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ThemeToggle />
+              <LanguageToggle />
+            </div>
+          </div>
         </div>
         <div className="flex items-center justify-center">
           <button

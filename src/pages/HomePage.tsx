@@ -42,6 +42,10 @@ export default function HomePage() {
     navigate('/dashboard');
   }
 
+  const handleNavigateToSettings = () => {
+    navigate('/settings');
+  }
+
   return (
     
     <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800">
@@ -62,6 +66,11 @@ export default function HomePage() {
           <Button
           onClick={handleNavigateToDashboard}
           text="Felhasználói felület"
+          className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+          />
+          <Button
+          onClick={handleNavigateToSettings}
+          text="Beállítások"
           className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
         </div>
