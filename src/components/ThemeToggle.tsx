@@ -58,7 +58,9 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
 
   return (
     <div className="h-full text-white">
-      <div className="h-full bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6 flex items-center">
+      <div className="h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center
+                    [data-theme='dark']:bg-gray-800
+                    [data-theme='light']:bg-gray-200">
         <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">Theme</div>

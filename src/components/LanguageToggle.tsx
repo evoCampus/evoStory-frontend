@@ -24,7 +24,9 @@ export default function LanguageToggle({ className = '', value, onChange }: Read
 
   return (
     <div className="h-full text-white">
-      <div className="h-full bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6">
+      <div className="h-fullrounded-xl shadow-lg p-4 sm:p-6
+      [data-theme='dark']:bg-gray-800
+      [data-theme='light']:bg-gray-200">
         <div className="flex items-center justify-between">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
