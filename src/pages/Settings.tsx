@@ -15,7 +15,7 @@ export default function Settings() {
                 [data-theme='light']:bg-gray-100">
       <div className="flex-col w-full rounded-2xl items-center justify-center
                 [data-theme='dark']:bg-gray-700 
-                [data-theme='light']:bg-white">
+                [data-theme='light']:bg-gray-200">
         <h1 className="font-bold text-center
                 [data-theme='dark']:text-white
                 [data-theme='light']:text-gray-900">

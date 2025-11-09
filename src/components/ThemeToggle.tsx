@@ -16,9 +16,6 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
     const saved = globalThis.localStorage?.getItem?.('theme');
     if (saved === 'dark') return true;
     if (saved === 'light') return false;
-    if (typeof globalThis.matchMedia === 'function') {
-      return !globalThis.matchMedia('(prefers-color-scheme: light)').matches;
-    }
     return true;
   });
 
@@ -26,9 +23,16 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
     if (isControlled) setLocalChecked(!!checked);
   }, [checked, isControlled]);
 
+  useEffect(() => {
+    const docEl = globalThis.document?.documentElement;
+    if (!docEl) return;
+    docEl.dataset.theme = 'dark';
+    docEl.classList.add('dark');
+    docEl.classList.remove('light');
+  }, []);
+
   const checkedState = isControlled ? !!checked : localChecked;
 
-  // keep html attribute/class and localStorage in sync whenever state changes
   useEffect(() => {
     const theme = checkedState ? 'dark' : 'light';
     if (typeof globalThis === 'undefined') return;
@@ -39,7 +43,6 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
     }
     const docEl = globalThis.document?.documentElement;
     if (!docEl) return;
-    // explicitly set the data-theme attribute via dataset (keeps lint happy)
     docEl.dataset.theme = theme;
     if (theme === 'dark') {
       docEl.classList.add('dark');
