@@ -50,7 +50,6 @@ export default function ChapterPage() {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] bg-cover bg-center">
-
             {currentScene?.content?.text && (
                 <ChapterPageBox
                     text={currentScene.content.text}
