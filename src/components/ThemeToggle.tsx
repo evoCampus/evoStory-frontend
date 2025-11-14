@@ -25,29 +25,25 @@ export default function ThemeToggle({
       console.debug('ThemeToggle: failed to read theme from localStorage', e);
     }
 
-    return true; // default to dark
+    return true;
   });
 
-  // Initialize bodyRef to <html>
   useEffect(() => {
     bodyRef.current = document.documentElement;
     if (!bodyRef.current) return;
 
-    // Apply initial theme
     const theme = localChecked ? 'dark' : 'light';
     bodyRef.current.dataset.theme = theme;
     bodyRef.current.classList.add(theme);
     bodyRef.current.classList.remove(theme === 'dark' ? 'light' : 'dark');
   }, []);
 
-  // Sync controlled prop
   useEffect(() => {
     if (isControlled) setLocalChecked(!!checked);
   }, [checked, isControlled]);
 
   const checkedState = isControlled ? !!checked : localChecked;
 
-  // Apply theme changes whenever toggled
   useEffect(() => {
     if (!bodyRef.current) return;
 
