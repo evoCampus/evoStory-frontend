@@ -46,6 +46,50 @@ export default function HomePage() {
     navigate('/settings');
   }
 
+  const [language, setLanguage] = useState<"en" | "hu">(
+    document.documentElement.dataset.language === "en" ? "en" : "hu"
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "data-language"
+        ) {
+          const htmlLang = document.documentElement.dataset.language;
+          if (htmlLang === "en" || htmlLang === "hu") {
+            setLanguage(htmlLang);
+          }
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-language"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const texts = {
+    hu: {
+      continue: "Játék folytatása",
+      newGame: "Új játék",
+      dashboard: "Felhasználói felület",
+      settings: "Beállítások",
+    },
+    en: {
+      continue: "Continue Game",
+      newGame: "New Game",
+      dashboard: "Dashboard",
+      settings: "Settings",
+    },
+  }
+
+  const t = texts[language];
+
   return (
     
     <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800">
@@ -55,22 +99,22 @@ export default function HomePage() {
           <p><strong>Halvány emlékek</strong></p>
           <Button
             onClick={handleNavigateToContinue}
-            text="Játék folytatása"
+            text={t.continue}
             className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
             onClick={handleNavigateToChapter}
-            text="Új játék"
+            text={t.newGame}
             className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
           onClick={handleNavigateToDashboard}
-          text="Felhasználói felület"
+          text={t.dashboard}
           className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
           onClick={handleNavigateToSettings}
-          text="Beállítások"
+          text={t.settings}
           className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
         </div>

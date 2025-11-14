@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   className?: string;
@@ -8,38 +8,68 @@ interface Props {
 
 export default function LanguageToggle({ className = '', value, onChange }: Readonly<Props>) {
   const isControlled = typeof value === 'string';
-  const [localValue, setValue] = useState<'en' | 'hu'>(value ?? 'hu');
+  const bodyRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    if (isControlled && value) setValue(value);
-  }, [value, isControlled]);
+  const [localValue, setLocalValue] = useState<'en' | 'hu'>(() => {
+    if (isControlled && value) return value;
+
+    try {
+      const saved = localStorage.getItem('language');
+      if (saved === 'en' || saved === 'hu') return saved;
+    } catch {
+      // ignore
+    }
+
+    return 'hu';
+  });
 
   const current: 'en' | 'hu' = isControlled && value ? value : localValue;
 
+  useEffect(() => {
+    bodyRef.current = document.documentElement;
+    if (!bodyRef.current) return;
+
+    bodyRef.current.dataset.language = current;
+    bodyRef.current.classList.add(current);
+    bodyRef.current.classList.remove(current === 'en' ? 'hu' : 'en');
+  }, []);
+
+  useEffect(() => {
+    if (!bodyRef.current) return;
+
+    try {
+      localStorage.setItem('language', current);
+    } catch { /* ignore */ }
+
+    bodyRef.current.dataset.language = current;
+    bodyRef.current.classList.add(current);
+    bodyRef.current.classList.remove(current === 'en' ? 'hu' : 'en');
+  }, [current]);
+
   const handleToggle = () => {
     const next = current === 'en' ? 'hu' : 'en';
-    if (!isControlled) setValue(next);
+    if (!isControlled) setLocalValue(next);
     onChange?.(next);
   };
 
   return (
     <div className="h-full text-white">
-      <div className="h-fullrounded-xl shadow-lg p-4 sm:p-6
-      [data-theme='dark']:bg-gray-800
-      [data-theme='light']:bg-gray-200">
-        <div className="flex items-center justify-between">
+      <div className={`h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center bg-gray-200 dark:bg-gray-800`}>
+        <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
               {current === 'hu' ? 'Nyelv' : 'Language'}
             </div>
-            <div className="text-sm text-gray-400">{current === 'hu' ? 'Magyar' : 'English'}</div>
+            <div className="text-sm text-gray-400">
+              {current === 'hu' ? 'Magyar' : 'English'}
+            </div>
           </div>
 
           <button
             type="button"
             onClick={handleToggle}
             aria-pressed={current === 'en'}
-            aria-label={current === 'hu' ? `Nyelv váltása (jelenlegi: ${current})` : `Switch language (current: ${current})`}
+            aria-label={current === 'hu' ? `Nyelv váltása` : `Switch language`}
             className={`inline-flex items-center ${className}`}
           >
             <span className="sr-only">{current === 'hu' ? 'Nyelv váltása' : 'Switch language'}</span>

@@ -1,18 +1,39 @@
-import { JSX } from 'react';
-import { useAuth } from '../auth/AuthContext';
+import { JSX, useState, useEffect } from "react";
 
-interface LogoutButtonProps {}
+export default function LogoutButton(): JSX.Element {
+  const [language, setLanguage] = useState<"hu" | "en">(
+    document.documentElement.dataset.language === "en" ? "en" : "hu"
+  );
 
-export default function LogoutButton({}: LogoutButtonProps): JSX.Element {
-    const { logout } = useAuth();
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const lang = document.documentElement.dataset.language;
+      if (lang === "en" || lang === "hu") {
+        setLanguage(lang);
+      }
+    });
 
-    const handleLogout = () => {
-        logout();
-    };
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-language"],
+    });
 
-    return (
-        <button onClick={handleLogout}
-        className={`bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-gray-600 hover:text-black`}
-        >Kijelentkezés</button>
-    );
+    return () => observer.disconnect();
+  }, []);
+
+  const buttonText = language === "hu" ? "Kijelentkezés" : "Logout";
+
+  return (
+    <button
+      onClick={() => {
+        console.log("Logging out...");
+      }}
+      className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4
+                 transition duration-300 ease-in-out
+                 hover:-translate-y-1 hover:scale-110 hover:bg-gray-600 hover:text-black
+                 focus:outline-none focus:shadow-outline"
+    >
+      {buttonText}
+    </button>
+  );
 }
