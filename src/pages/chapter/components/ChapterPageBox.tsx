@@ -5,9 +5,11 @@ interface Box {
     className?: string;
 }
 
-export default function ChapterPageBox({ text, className}: Box): JSX.Element {
+export default function ChapterPageBox({text}: Box): JSX.Element {
     return (
-        <div className={`flex items-center justify-center h-48 border border-gray-400 mt-4 ${className || ''}`}>
+        <div className={`flex items-center justify-center h-48 border border-gray-400 mt-4 
+        [data-theme='dark']:bg-gray-900
+        [data-theme='light']:bg-gray-200`}>
             <span className="text-center">{text}</span>
         </div>
     );

@@ -54,9 +54,6 @@ export default function ChapterPage() {
             {currentScene?.content?.text && (
                 <ChapterPageBox
                     text={currentScene.content.text}
-                    className="rounded-xl pr-1.5 pl-1.5 
-                    [data-theme='dark']:bg-gray-800
-                    [data-theme='light']:bg-gray-200"
                 />
             )}
 
