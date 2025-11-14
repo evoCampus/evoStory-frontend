@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
   className?: string;
@@ -6,50 +6,67 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function ThemeToggle({ className = '', checked, onClick }: Readonly<Props>) {
+export default function ThemeToggle({
+  className = '',
+  checked,
+  onClick,
+}: Readonly<Props>) {
   const isControlled = typeof checked === 'boolean';
+  const bodyRef = useRef<HTMLElement | null>(null);
 
   const [localChecked, setLocalChecked] = useState<boolean>(() => {
     if (isControlled) return !!checked;
-    const hasGlobal = typeof globalThis !== 'undefined';
-    if (!hasGlobal) return true;
-    const saved = globalThis.localStorage?.getItem?.('theme');
-    if (saved === 'dark') return true;
-    if (saved === 'light') return false;
-    return true;
+
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') return true;
+      if (saved === 'light') return false;
+    } catch (e) {
+      console.debug('ThemeToggle: failed to read theme from localStorage', e);
+    }
+
+    return true; // default to dark
   });
 
+  // Initialize bodyRef to <html>
+  useEffect(() => {
+    bodyRef.current = document.documentElement;
+    if (!bodyRef.current) return;
+
+    // Apply initial theme
+    const theme = localChecked ? 'dark' : 'light';
+    bodyRef.current.dataset.theme = theme;
+    bodyRef.current.classList.add(theme);
+    bodyRef.current.classList.remove(theme === 'dark' ? 'light' : 'dark');
+  }, []);
+
+  // Sync controlled prop
   useEffect(() => {
     if (isControlled) setLocalChecked(!!checked);
   }, [checked, isControlled]);
 
-  useEffect(() => {
-    const docEl = globalThis.document?.documentElement;
-    if (!docEl) return;
-    docEl.dataset.theme = 'dark';
-    docEl.classList.add('dark');
-    docEl.classList.remove('light');
-  }, []);
-
   const checkedState = isControlled ? !!checked : localChecked;
 
+  // Apply theme changes whenever toggled
   useEffect(() => {
+    if (!bodyRef.current) return;
+
     const theme = checkedState ? 'dark' : 'light';
-    if (typeof globalThis === 'undefined') return;
+
     try {
-      globalThis.localStorage?.setItem?.('theme', theme);
+      localStorage.setItem('theme', theme);
     } catch (e) {
-      console.debug?.('ThemeToggle: failed to persist theme', e);
+      console.debug('ThemeToggle: failed to persist theme', e);
     }
-    const docEl = globalThis.document?.documentElement;
-    if (!docEl) return;
-    docEl.dataset.theme = theme;
+
+    bodyRef.current.dataset.theme = theme;
+
     if (theme === 'dark') {
-      docEl.classList.add('dark');
-      docEl.classList.remove('light');
+      bodyRef.current.classList.add('dark');
+      bodyRef.current.classList.remove('light');
     } else {
-      docEl.classList.add('light');
-      docEl.classList.remove('dark');
+      bodyRef.current.classList.add('light');
+      bodyRef.current.classList.remove('dark');
     }
   }, [checkedState]);
 
@@ -61,25 +78,49 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
 
   return (
     <div className="h-full text-white">
-      <div className="h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center
-                    [data-theme='dark']:bg-gray-800
-                    [data-theme='light']:bg-gray-200">
+      <div
+        className="
+          h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center
+          [data-theme='dark']:bg-gray-800
+          [data-theme='light']:bg-gray-200
+        "
+      >
         <div className="flex items-center justify-between w-full">
           <div>
-            <div className="text-lg sm:text-xl font-medium text-gray-300">Theme</div>
-            <div className="text-sm text-gray-400">{checkedState ? 'Dark' : 'Light'}</div>
+            <div className="text-lg sm:text-xl font-medium text-gray-300">
+              Theme
+            </div>
+            <div className="text-sm text-gray-400">
+              {checkedState ? 'Dark' : 'Light'}
+            </div>
           </div>
 
           <button
             type="button"
             onClick={handleClick}
             aria-pressed={checkedState}
-            aria-label={checkedState ? 'Switch to light theme' : 'Switch to dark theme'}
+            aria-label={
+              checkedState ? 'Switch to light theme' : 'Switch to dark theme'
+            }
             className={`inline-flex items-center ${className}`}
           >
-            <span className="sr-only">{checkedState ? 'Switch to light theme' : 'Switch to dark theme'}</span>
-            <div className={`relative w-14 h-8 rounded-full transition-colors duration-200 ${checkedState ? 'bg-indigo-600' : 'bg-gray-300'}`}>
-              <span className={`absolute top-0.5 left-0.5 w-7 h-7 bg-white rounded-full shadow transform transition-transform duration-200 ${checkedState ? 'translate-x-6' : 'translate-x-0'}`} />
+            <span className="sr-only">
+              {checkedState ? 'Switch to light theme' : 'Switch to dark theme'}
+            </span>
+
+            <div
+              className={`
+                relative w-14 h-8 rounded-full transition-colors duration-200
+                ${checkedState ? 'bg-indigo-600' : 'bg-gray-300'}
+              `}
+            >
+              <span
+                className={`
+                  absolute top-0.5 left-0.5 w-7 h-7 bg-white rounded-full shadow
+                  transform transition-transform duration-200
+                  ${checkedState ? 'translate-x-6' : 'translate-x-0'}
+                `}
+              />
             </div>
           </button>
         </div>
@@ -87,4 +128,3 @@ export default function ThemeToggle({ className = '', checked, onClick }: Readon
     </div>
   );
 }
-
