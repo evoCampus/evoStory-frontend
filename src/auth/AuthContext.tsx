@@ -56,6 +56,7 @@ export default function AuthProvider({ children }: AuthProviderProps): JSX.Eleme
         } catch (error) {
             console.log('No existing session found or session invalid.');
             setUser(null);
+            document.cookie = "auth.cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         } finally {
             setIsLoading(false);
         }

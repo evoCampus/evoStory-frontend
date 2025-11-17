@@ -1,7 +1,6 @@
 import { useState, FormEvent, JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { setCookie, getCookie } from 'typescript-cookie';
 
 interface LoginFormProps { }
 
@@ -25,8 +24,6 @@ export default function LoginForm({ }: LoginFormProps): JSX.Element {
             const loginSuccessful = await login(username, password);
 
             if (loginSuccessful) {
-                setCookie("username", username);
-                console.log(`${getCookie("username")} stored`);
                 navigate('/');
             } else {
                 setError('Hibás felhasználónév vagy jelszó. Kérjük, próbálja újra.');
