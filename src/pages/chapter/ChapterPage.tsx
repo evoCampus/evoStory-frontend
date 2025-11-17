@@ -49,7 +49,7 @@ export default function ChapterPage() {
     }, [client, chapterId]);
 
     return (
-        <div className="flex-auto items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] pt-50">
+        <div className="flex-auto items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] pt-50 bg-cover bg-center">
 
             {currentScene?.content?.text && (
                 <ChapterPageBox
