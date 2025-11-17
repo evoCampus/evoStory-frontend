@@ -7,13 +7,21 @@ interface RequireAuthProps {
 }
 
 export default function RequireAuth({ children }: RequireAuthProps): JSX.Element {
-    const { user } = useAuth();
-    const location = useLocation(); 
+    const { user, isLoading } = useAuth();
+    const location = useLocation();
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="text-lg">Betöltés...</div>
+            </div>
+        );
+    }
 
     if (!user) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    
+
     return <>{children}</>;
 }

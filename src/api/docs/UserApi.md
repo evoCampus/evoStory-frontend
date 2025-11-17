@@ -6,9 +6,11 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**createUser**](#createuser) | **PUT** /api/User | |
 |[**deleteUser**](#deleteuser) | **DELETE** /api/User | |
+|[**getCurrentUser**](#getcurrentuser) | **GET** /api/User/current | |
 |[**getUser**](#getuser) | **GET** /api/User/{userId} | |
 |[**getUsers**](#getusers) | **GET** /api/User | |
 |[**login**](#login) | **POST** /api/User/login | |
+|[**logout**](#logout) | **POST** /api/User/logout | |
 
 # **createUser**
 > createUser()
@@ -110,6 +112,50 @@ No authorization required
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
 |**404** | Not Found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCurrentUser**
+> UserDTO getCurrentUser()
+
+
+### Example
+
+```typescript
+import {
+    UserApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UserApi(configuration);
+
+const { status, data } = await apiInstance.getCurrentUser();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+**UserDTO**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+|**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -256,6 +302,49 @@ No authorization required
 |-------------|-------------|------------------|
 |**200** | OK |  -  |
 |**401** | Unauthorized |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **logout**
+> logout()
+
+
+### Example
+
+```typescript
+import {
+    UserApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UserApi(configuration);
+
+const { status, data } = await apiInstance.logout();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
