@@ -4,6 +4,7 @@ import '../index.css'
 import { useContext, useEffect, useState } from "react";
 import { ClientContext } from "../App";
 import { StoryDTO } from "../api";
+import { useTranslation } from 'react-i18next';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -46,49 +47,7 @@ export default function HomePage() {
     navigate('/settings');
   }
 
-  const [language, setLanguage] = useState<"en" | "hu">(
-    document.documentElement.dataset.language === "en" ? "en" : "hu"
-  );
-
-  useEffect(() => {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "data-language"
-        ) {
-          const htmlLang = document.documentElement.dataset.language;
-          if (htmlLang === "en" || htmlLang === "hu") {
-            setLanguage(htmlLang);
-          }
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-language"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const texts = {
-    hu: {
-      continue: "Játék folytatása",
-      newGame: "Új játék",
-      dashboard: "Felhasználói felület",
-      settings: "Beállítások",
-    },
-    en: {
-      continue: "Continue Game",
-      newGame: "New Game",
-      dashboard: "Dashboard",
-      settings: "Settings",
-    },
-  }
-
-  const t = texts[language];
+  const { t } = useTranslation();
 
   return (
     
@@ -96,25 +55,25 @@ export default function HomePage() {
       <p className="title antialiased italic fill-cyan-500 drop-shadow-lg drop-shadow-cyan-500/50"><b><strong>evo<a className="decoration-sky-600 noHover">Story</a></strong></b></p>
       <div className="border-3 border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg fill-cyan-500 drop-shadow-lg drop-shadow-indigo-500/50">
         <div className="flex flex-col gap-4">
-          <p><strong>Halvány emlékek</strong></p>
+          <p><strong>{t('storyTitle')}</strong></p>
           <Button
             onClick={handleNavigateToContinue}
-            text={t.continue}
+            text={t('continue')}
             className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
             onClick={handleNavigateToChapter}
-            text={t.newGame}
+            text={t('newGame')}
             className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
           onClick={handleNavigateToDashboard}
-          text={t.dashboard}
+          text={t('dashboard')}
           className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
           <Button
           onClick={handleNavigateToSettings}
-          text={t.settings}
+          text={t('settings')}
           className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
           />
         </div>

@@ -1,9 +1,10 @@
-import { JSX, useState, useEffect } from 'react';
+import { JSX, useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import LogoutButton from './LogoutButton';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface DashboardPageProps { }
 
@@ -29,75 +30,27 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
         setShowConfirmModal(true);
     };
 
+    const { t } = useTranslation();
+
     const confirmDeleteAccount = async () => {
         if (user) {
             try {
                 await deleteUser(user.id);
 
-                setMessageModalTitle('Siker!');
-                setMessageModalContent('Fiók sikeresen törölve.');
+                setMessageModalTitle(t('success'));
+                setMessageModalContent(t('accountDeleted'));
                 setMessageModalIsSuccess(true);
                 setShowMessageModal(true);
 
             } catch (error: any) {
                 console.error('Hiba a fiók törlésekor:', error);
-                setMessageModalTitle('Hiba!');
-                setMessageModalContent('Hiba történt a fiók törlésekor: ' + (error.message || 'Ismeretlen hiba'));
+                setMessageModalTitle(t('error'));
+                setMessageModalContent(t('deleteError') + (error.message || 'Ismeretlen hiba'));
                 setMessageModalIsSuccess(false);
                 setShowMessageModal(true);
             }
         }
     };
-
-    const [language, setLanguage] = useState<"en" | "hu">(
-        document.documentElement.dataset.language === "en" ? "en" : "hu"
-    );
-
-    useEffect(() => {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (
-                    mutation.type === "attributes" &&
-                    mutation.attributeName === "data-language"
-                ) {
-                    const htmlLang = document.documentElement.dataset.language;
-                    if (htmlLang === "en" || htmlLang === "hu") {
-                        setLanguage(htmlLang);
-                    }
-                }
-            });
-        });
-
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-language"],
-        });
-
-        return () => observer.disconnect();
-    }, []);
-
-    const texts = {
-        hu: {
-            info: "Információk",
-            welcome: "Üdv",
-            email: "E-mail",
-            noUser: "Nincs bejelentkezve.",
-            login: "Bejelentkezés",
-            deleteAccount: "Fiók törlése",
-            home: "Főoldal",
-        },
-        en: {
-            info: "Information",
-            welcome: "Welcome",
-            email: "Email",
-            noUser: "Not logged in.",
-            login: "Login",
-            deleteAccount: "Delete Account",
-            home: "Home",
-        },
-    };
-
-    const t = texts[language];
 
     const displayProfilePicture = `https://ui-avatars.com/api/?name=${user?.userName?.charAt(0) || '?'}&background=random&color=fff&size=96&bold=true`;
 
@@ -105,38 +58,38 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
         <div className="flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-t from-black to-gray-800">
             <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
                 <div className="flex flex-col gap-4 text-white text-center">
-                    <h2 className="text-2xl font-bold mb-4">{t.info}</h2>
+                    <h2 className="text-2xl font-bold mb-4">{t('info')}</h2>
                     {user ? (
                         <>
                             <img
                                 src={displayProfilePicture}
-                                alt="Profilkép"
+                                alt={t('profilePicture')}
                                 className="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-gray-500 object-cover"
                             />
 
-                            <p className="text-lg">{t.welcome}, {user.userName}!</p>
-                            <p className="text-md text-gray-300">{t.email}: {user.email}</p>
+                            <p className="text-lg">{t('welcome')}, {user.userName}!</p>
+                            <p className="text-md text-gray-300">{t('email')}: {user.email}</p>
                             <div className="mt-6 flex flex-col gap-4">
                                 <LogoutButton />
                                 <Button
                                     onClick={handleNavigateToHome}
-                                    text={t.home}
+                                    text={t('home')}
                                     className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                                 <Button
                                     onClick={requestDeleteAccount}
-                                    text={t.deleteAccount}
+                                    text={t('deleteAccount')}
                                     className="bg-blue-600 hover:bg-red-600 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                             </div>
                         </>
                     ) : (
                         <>
-                            <p className="text-lg">{t.noUser}</p>
+                            <p className="text-lg">{t('noUser')}</p>
                             <div className="mt-6">
                                 <Button
                                     onClick={handleNavigateToLogin}
-                                    text={t.login}
+                                    text={t('login')}
                                     className="w-full py-3 bg-blue-600 hover:bg-teal-500 text-white font-medium rounded-lg transition-colors"
                                 />
                             </div>
@@ -148,16 +101,16 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
             <Modal
                 isOpen={showConfirmModal}
                 onClose={() => setShowConfirmModal(false)}
-                title="Fiók törlése"
-                confirmText="Törlés"
+                title={t('deleteAccountTitle')}
+                confirmText={t('deleteAccountConfirm')}
                 onConfirm={confirmDeleteAccount}
-                cancelText="Mégse"
+                cancelText={t('deleteAccountCancel')}
                 onCancel={() => setShowConfirmModal(false)}
                 showConfirmButton={true}
                 showCancelButton={true}
             >
-                <p>Biztosan törölni szeretnéd a fiókodat?</p>
-                <p className="text-sm text-yellow-400 mt-2">Ez a művelet visszavonhatatlan!</p>
+                <p>{t('deleteAccountQuestion')}</p>
+                <p className="text-sm text-yellow-400 mt-2">{t('deleteAccountWarning')}</p>
             </Modal>
 
             <Modal
@@ -166,7 +119,7 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
                 title={messageModalTitle}
                 showConfirmButton={true}
                 showCancelButton={false}
-                confirmText="OK"
+                confirmText={t('ok')}
                 onConfirm={() => setShowMessageModal(false)}
                 modalClassName={messageModalIsSuccess ? 'border-t-4 border-green-500' : 'border-t-4 border-red-500'}
             >

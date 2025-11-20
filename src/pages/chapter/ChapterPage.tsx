@@ -6,12 +6,14 @@ import ChapterPageBox from './components/ChapterPageBox';
 import Client from '../../Client';
 import { SceneDTO } from '../../api';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function ChapterPage() {
     const client = useMemo(() => new Client(), []);
     const { chapterId } = useParams();
     const [currentScene, setCurrentScene] = useState<SceneDTO | null>(null);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleChoiceClick = async (nextSceneId: string) => {
         try {
@@ -28,7 +30,7 @@ export default function ChapterPage() {
                 navigate("/ending");
                 localStorage.removeItem("lastSceneId");
             } else {
-                alert("Error while loading scene.");
+                alert(t('errorLoadingScene'));
             }
         }
     };
@@ -78,7 +80,7 @@ export default function ChapterPage() {
                     ))
                 ) : (
                     <Button
-                        text="Tovább"
+                        text={t('continueButton')}
                         className="mt-4"
                         onClick={() => {
                             navigate("/ending");
@@ -91,7 +93,7 @@ export default function ChapterPage() {
 
             <div className="flex justify-center mt-6">
                 <Button
-                    text="Főoldal"
+                    text={t('home')}
                     className="mt-4"
                     onClick={() => {
                         navigate("/");

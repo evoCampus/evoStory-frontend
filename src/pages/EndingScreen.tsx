@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import { ClientContext } from "../App";
 import { StoryDTO } from "../api";
+import { useTranslation } from 'react-i18next';
 
 export default function EndingScreen() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const client = useContext(ClientContext);
 
@@ -25,15 +27,15 @@ export default function EndingScreen() {
   return (
     <div className="flex items-center justify-center h-screen w-screen bg-black text-white">
       <div className="text-center">
-        <h1 className="font bold">Játék vége</h1>
+        <h1 className="font bold">{t('gameOver')}</h1>
         <Button
           onClick={() => navigate(`/chapter/${stories[0].startingSceneId}`)}
-          text="Új játék"
+          text={t('newGame')}
           className="w-full py-3 text-white font-medium rounded-lg transition-colors"
         />
         <div className="flex justify-center mt-6">
           <Button
-            text="Főoldal"
+            text={t('home')}
             className="mt-4"
             onClick={() => {
               navigate("/");

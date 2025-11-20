@@ -11,6 +11,7 @@ import EndingScreen from './pages/EndingScreen';
 import RegisterPage from './pages/RegisterPage';
 import RequireAuth from './auth/RequireAuth';
 import Settings from './pages/Settings';
+import NotFoundPage from './pages/NotFoundPage';
 import { createContext, useMemo } from 'react';
 import Client from './Client';
 
@@ -34,7 +35,7 @@ export default function App(): JSX.Element {
                         <Route path="/ending" element={<EndingScreen />} />
                         <Route path="/settings" element={<Settings />} />
 
-                        <Route path="*" element={<div>404 - Oldal nem található</div>} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Routes>
                 </AuthProvider>
             </Router>
