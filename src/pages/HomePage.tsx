@@ -48,13 +48,9 @@ export default function HomePage() {
 
   return (
     
-    <div className="flex flex-col items-center justify-center h-screen w-screen 
-    [data-theme='dark']:bg-linear-to-t from-black to-gray-800
-    [data-theme='light']:bg-gray-200">
+    <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
       <p className="title antialiased italic fill-cyan-500 drop-shadow-lg drop-shadow-cyan-500/50"><b><strong>evo<a className="decoration-sky-600 noHover">Story</a></strong></b></p>
-      <div className="border-3 border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg fill-cyan-500 drop-shadow-lg drop-shadow-indigo-500/50
-      [data-theme='dark']:bg-gray-700
-      [data-theme='light']:bg-gray-white">
+      <div className="border-3 border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg fill-cyan-500 drop-shadow-lg drop-shadow-indigo-500/50" style={{ backgroundColor: 'var(--box-bg-light)' }}>
         <div className="flex flex-col gap-4">
           <p><strong>Halvány emlékek</strong></p>
           <Button

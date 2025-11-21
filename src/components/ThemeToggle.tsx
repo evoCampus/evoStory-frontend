@@ -29,14 +29,13 @@ export default function ThemeToggle({
   });
 
   useEffect(() => {
-    bodyRef.current = document.documentElement;
-    if (!bodyRef.current) return;
+    const appElement = document.getElementById('app');
+    if (!appElement) return;
+    bodyRef.current = appElement;
 
     const theme = localChecked ? 'dark' : 'light';
-    bodyRef.current.dataset.theme = theme;
-    bodyRef.current.classList.add(theme);
-    bodyRef.current.classList.remove(theme === 'dark' ? 'light' : 'dark');
-  }, []);
+    appElement.dataset.theme = theme;
+  }, [localChecked]);
 
   useEffect(() => {
     if (isControlled) setLocalChecked(!!checked);
@@ -45,7 +44,9 @@ export default function ThemeToggle({
   const checkedState = isControlled ? !!checked : localChecked;
 
   useEffect(() => {
-    if (!bodyRef.current) return;
+    const appElement = document.getElementById('app');
+    if (!appElement) return;
+    bodyRef.current = appElement;
 
     const theme = checkedState ? 'dark' : 'light';
 
@@ -55,15 +56,7 @@ export default function ThemeToggle({
       console.debug('ThemeToggle: failed to persist theme', e);
     }
 
-    bodyRef.current.dataset.theme = theme;
-
-    if (theme === 'dark') {
-      bodyRef.current.classList.add('dark');
-      bodyRef.current.classList.remove('light');
-    } else {
-      bodyRef.current.classList.add('light');
-      bodyRef.current.classList.remove('dark');
-    }
+    appElement.dataset.theme = theme;
   }, [checkedState]);
 
   const handleClick = () => {
@@ -75,11 +68,8 @@ export default function ThemeToggle({
   return (
     <div className="h-full text-white">
       <div
-        className="
-          h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center
-          [data-theme='dark']:bg-gray-800
-          [data-theme='light']:bg-gray-200
-        "
+        className="h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center"
+        style={{ backgroundColor: 'var(--toggle-bg)' }}
       >
         <div className="flex items-center justify-between w-full">
           <div>
