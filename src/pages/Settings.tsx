@@ -20,7 +20,6 @@ export default function Settings() {
           <div className="max-w-3xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <ThemeToggle />
-              <LanguageToggle />
             </div>
           </div>
         </div>
