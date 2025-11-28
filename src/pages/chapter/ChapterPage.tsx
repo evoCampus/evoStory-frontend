@@ -49,15 +49,14 @@ export default function ChapterPage() {
     }, [client, chapterId]);
 
     return (
-        <div className="flex-auto items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] pt-50 bg-cover bg-center">
-
+        <div className="flex flex-col items-center justify-center h-screen w-screen bg-[url(./assets/backgroundIMG.jpg)] bg-cover bg-center">
             {currentScene?.content?.text && (
                 <ChapterPageBox
                     text={currentScene.content.text}
                 />
             )}
 
-            <div className="flex items-center justify-evenly mt-4 flex-wrap">
+            <div className="flex items-center justify-evenly gap-4 mt-4 flex-wrap">
                 {currentScene?.choices && currentScene.choices.length > 0 ? (
                     currentScene.choices.map((choice) => (
                         <Button
