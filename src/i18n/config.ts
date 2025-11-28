@@ -163,11 +163,13 @@ i18n
     },
   });
 
-// Sync i18next language changes with document attributes
+// Sync i18next language changes with app element attributes
 i18n.on('languageChanged', (lng) => {
-  document.documentElement.dataset.language = lng;
-  document.documentElement.classList.remove('en', 'hu');
-  document.documentElement.classList.add(lng);
+  const appElement = document.getElementById('app');
+  if (appElement) {
+    appElement.dataset.language = lng;
+    appElement.setAttribute('lang', lng);
+  }
   try {
     localStorage.setItem('language', lng);
   } catch {
@@ -175,11 +177,18 @@ i18n.on('languageChanged', (lng) => {
   }
 });
 
-// Set initial document attributes
+// Set initial app element attributes
 const initialLang = i18n.language;
-document.documentElement.dataset.language = initialLang;
-document.documentElement.classList.remove('en', 'hu');
-document.documentElement.classList.add(initialLang);
+const setInitialLanguage = () => {
+  const appElement = document.getElementById('app');
+  if (appElement) {
+    appElement.dataset.language = initialLang;
+    appElement.setAttribute('lang', initialLang);
+  } else {
+    setTimeout(setInitialLanguage, 10);
+  }
+};
+setInitialLanguage();
 
 export default i18n;
 
