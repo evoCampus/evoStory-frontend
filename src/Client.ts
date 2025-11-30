@@ -25,7 +25,8 @@ export default class Client {
 
     constructor() {
         const axiosInstance = axios.create({
-            baseURL: "http://localhost:5006"
+            baseURL: "http://localhost:5006",
+            withCredentials: true
         });
         this.choiceAPI = new ChoiceApi(undefined, undefined, axiosInstance);
         this.sceneAPI = new SceneApi(undefined, undefined, axiosInstance);
@@ -122,4 +123,12 @@ export default class Client {
         return data;
     }
 
+    async getCurrentUser(): Promise<UserDTO> {
+        const { data } = await this.userAPI.getCurrentUser();
+        return data;
+    }
+
+    async logoutUser(): Promise<void> {
+        await this.userAPI.logout();
+    }
 }
