@@ -53,7 +53,6 @@ export default function ChapterPage() {
             {currentScene?.content?.text && (
                 <ChapterPageBox
                     text={currentScene.content.text}
-                    className="rounded-xl pr-1.5 pl-1.5 bg-gradient-to-t from-gray-800 to-black shadow-xl transition-all"
                 />
             )}
 

@@ -53,8 +53,8 @@ export default function DashboardPage({}: DashboardPageProps): JSX.Element {
     const displayProfilePicture = `https://ui-avatars.com/api/?name=${user?.userName?.charAt(0) || '?'}&background=random&color=fff&size=96&bold=true`;
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-t from-black to-gray-800">
-            <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg shadow-md">
+        <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
+            <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg shadow-md" style={{ backgroundColor: 'var(--box-bg)' }}>
                 <div className="flex flex-col gap-4 text-white text-center">
                     <h2 className="text-2xl font-bold mb-4">Információk:</h2>
                     {user ? (
