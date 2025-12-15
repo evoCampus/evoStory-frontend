@@ -18,14 +18,17 @@ export default function LanguageToggle({ className = '', value, onChange }: Read
 
   return (
     <div className="h-full text-white">
-      <div className={`h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center bg-gray-200 dark:bg-gray-800`}>
+      <div
+        className="h-full rounded-xl shadow-lg p-4 sm:p-6 flex items-center"
+        style={{ backgroundColor: 'var(--toggle-bg)' }}
+      >
         <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
               {t('language')}
             </div>
             <div className="text-sm text-gray-400">
-              {t('currentLanguage')}
+              {current === 'en' ? 'EN' : 'HU'}
             </div>
           </div>
 

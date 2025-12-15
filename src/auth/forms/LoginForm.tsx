@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useTranslation } from 'react-i18next';
 
-interface LoginFormProps {}
+interface LoginFormProps { }
 
-export default function LoginForm({}: LoginFormProps): JSX.Element {
-    const [username, setUsername] = useState<string>(''); 
-    const [password, setPassword] = useState<string>(''); 
-    const { login } = useAuth(); 
+export default function LoginForm({ }: LoginFormProps): JSX.Element {
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const { login } = useAuth();
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const handleSubmit = async (event: FormEvent) => { 
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setError(null);
 
@@ -22,19 +22,17 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
             return;
         }
 
-        try{
-        const loginSuccessful = await login(username, password);
+        try {
+            const loginSuccessful = await login(username, password);
 
-        if (loginSuccessful) {
-            navigate('/');
-        } else {
-            setError(t('invalidCredentials'));
-        }
-    }   catch (err: any) {
-
+            if (loginSuccessful) {
+                navigate('/');
+            } else {
+                setError(t('invalidCredentials'));
+            }
+        } catch (err: any) {
             console.error('Login API error:', err);
             setError(t('loginError'));
-
         }
     };
 
@@ -62,7 +60,7 @@ export default function LoginForm({}: LoginFormProps): JSX.Element {
                     required
                 />
             </div>
-             {error && (
+            {error && (
                 <div className="text-red-600 text-sm mt-2">
                     {error}
                 </div>

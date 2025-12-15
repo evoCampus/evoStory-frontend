@@ -33,7 +33,7 @@ try{
         } else {
             setError(t('registrationFailed'));
         }
-    } catch (err: any) {
+    } catch (err: unknown) {
             console.error('Register API error:', err);
             setError(t('registrationError'));
         }

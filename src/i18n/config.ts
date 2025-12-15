@@ -9,6 +9,13 @@ const resources = {
       language: 'Language',
       currentLanguage: 'English',
       switchLanguage: 'Switch language',
+      // ThemeToggle
+      theme: {
+        title: 'Theme',
+        dark: 'Dark',
+        light: 'Light',
+        switchTheme: 'Switch theme',
+      },
       // HomePage
       continue: 'Continue Game',
       newGame: 'New Game',
@@ -76,6 +83,11 @@ const resources = {
       language: 'Nyelv',
       currentLanguage: 'Magyar',
       switchLanguage: 'Nyelv váltása',
+      // ThemeToggle
+      theme: 'Téma',
+      dark: 'Sötét',
+      light: 'Világos',
+      switchTheme: 'Téma váltása',
       // HomePage
       continue: 'Játék folytatása',
       newGame: 'Új játék',

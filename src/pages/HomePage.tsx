@@ -51,9 +51,9 @@ export default function HomePage() {
 
   return (
     
-    <div className="flex flex-col items-center justify-center h-screen w-screen bg-linear-to-t from-black to-gray-800">
+    <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
       <p className="title antialiased italic fill-cyan-500 drop-shadow-lg drop-shadow-cyan-500/50"><b><strong>evo<a className="decoration-sky-600 noHover">Story</a></strong></b></p>
-      <div className="border-3 border-gray-400 p-8 mx-auto w-4/5 max-w-md bg-gray-700 rounded-lg fill-cyan-500 drop-shadow-lg drop-shadow-indigo-500/50">
+      <div className="border-3 border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg fill-cyan-500 drop-shadow-lg drop-shadow-indigo-500/50" style={{ backgroundColor: 'var(--box-bg-light)' }}>
         <div className="flex flex-col gap-4">
           <p><strong>{t('storyTitle')}</strong></p>
           <Button
