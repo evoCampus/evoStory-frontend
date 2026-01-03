@@ -1,51 +1,56 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthProvider from './auth/AuthContext';
+// src/App.tsx
+import { useState } from 'react';
+import QuickTimeEvent from './components/QuickTimeEvent';
+import './index.css';
 
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import DashboardPage from './pages/Dashboard';
-import ContinueGame from './pages/ContinueGame';
-import ChapterPage from './pages/chapter/ChapterPage';
-import EndingScreen from './pages/EndingScreen';
-import RegisterPage from './pages/RegisterPage';
-import RequireAuth from './auth/RequireAuth';
+function App() {
+  const [isQTEActive, setIsQTEActive] = useState(false);
 
-import { createContext, useMemo, JSX } from 'react';
-import Client from './Client';
-import Settings from './pages/Settings';
-import EditorPage from './pages/EditorPage';
+  const handleSuccess = () => {
+    console.log('QTE succeeded!');
+  };
 
-export const ClientContext = createContext<Client | undefined>(undefined);
+  const handleFailure = () => {
+    console.log('QTE failed!');
+  };
 
-export default function App(): JSX.Element {
-  const client = useMemo(() => new Client(), []);
+  const handleChoice = (choice: 'optionA' | 'optionB') => {
+    console.log(`User chose: ${choice}`);
+  };
 
   return (
-    <ClientContext.Provider value={client}>
-      <Router>
-        <AuthProvider>
-            <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/"
-              element={
-                <RequireAuth>
-                  <HomePage />
-                </RequireAuth>
-              }
-            />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/editor" element={<EditorPage />} />
-            <Route path="/chapter/:chapterId" element={<ChapterPage />} />
-            <Route path="/continue" element={<ContinueGame />} />
-            <Route path="/new" element={<ChapterPage />} />
-            <Route path="/ending" element={<EndingScreen />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="*" element={<div>404 - Oldal nem található</div>} />
-            </Routes>
-        </AuthProvider>
-      </Router>
-    </ClientContext.Provider>
+    <div className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 p-4 md:p-8">
+      <div className="max-w-4xl mx-auto">
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-primary mb-4">QTE Challenge</h1>
+          <p className="text-lg">Test your reflexes with Quick Time Events!</p>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <div className="flex flex-col items-center">
+              <div className="mb-6">
+                <button
+                  className={`btn ${isQTEActive ? 'btn-error' : 'btn-success'}`}
+                  onClick={() => setIsQTEActive(!isQTEActive)}
+                >
+                  {isQTEActive ? 'Deactivate QTE' : 'Activate QTE'}
+                </button>
+              </div>
+
+              <QuickTimeEvent
+                active={isQTEActive}
+                timeLimit={4}
+                onSuccess={handleSuccess}
+                onFailure={handleFailure}
+                onChoice={handleChoice}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+export default App;
