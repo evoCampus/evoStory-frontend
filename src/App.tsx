@@ -24,7 +24,7 @@ export default function App(): JSX.Element {
     <ClientContext.Provider value={client}>
       <Router>
         <AuthProvider>
-            <Routes>
+          <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route
@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
             <Route path="/ending" element={<EndingScreen />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<div>404 - Oldal nem található</div>} />
-            </Routes>
+          </Routes>
         </AuthProvider>
       </Router>
     </ClientContext.Provider>

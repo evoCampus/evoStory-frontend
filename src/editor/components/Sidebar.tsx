@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router";
 import { useFlow } from "../FlowContext";
-import { nanoid } from "nanoid";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Sidebar() {
   const { title, setTitle, setNodes, exportToJson, startSceneId, setStartSceneId, setEndSceneIds } = useFlow();
   const navigate = useNavigate();
 
   const addSceneNode = () => {
-    const nid = nanoid();
+    const nid = uuidv4();
     setNodes((nds) => [
       ...nds,
       {
@@ -28,7 +28,7 @@ export default function Sidebar() {
       alert("A start scene node already exists. Only one start scene is allowed.");
       return;
     }
-    const nid = nanoid();
+    const nid = uuidv4();
     setNodes((nds) => [
       ...nds,
       {
@@ -46,7 +46,7 @@ export default function Sidebar() {
   };
 
   const addEndSceneNode = () => {
-    const nid = nanoid();
+    const nid = uuidv4();
     setNodes((nds) => [
       ...nds,
       {
@@ -67,7 +67,7 @@ export default function Sidebar() {
     setNodes((nds) => [
       ...nds,
       {
-        id: nanoid(),
+        id: uuidv4(),
         type: "decisionNode",
         position: { x: Math.random() * 400 + 200, y: Math.random() * 300 },
         data: { choiceText: "New choice" },
@@ -97,20 +97,20 @@ export default function Sidebar() {
 
       <h2 className="text-lg font-bold mb-2">Add Nodes</h2>
 
-      <button className="btn btn-info btn-outline btn-sm" onClick={addSceneNode}>
-        + Scene Node
+      <button className="btn btn-info btn-outline btn-sm btn-plus" onClick={addSceneNode}>
+        Scene Node
       </button>
 
-      <button className="btn btn-success btn-sm" onClick={addStartSceneNode}>
-        + Add Start Scene Node
+      <button className="btn btn-success btn-sm btn-plus" onClick={addStartSceneNode}>
+        Add Start Scene Node
       </button>
 
-      <button className="btn btn-warning btn-outline btn-sm" onClick={addEndSceneNode}>
-        + Add End Scene Node
+      <button className="btn btn-warning btn-outline btn-sm btn-plus" onClick={addEndSceneNode}>
+        Add End Scene Node
       </button>
 
-      <button className="btn btn-secondary btn-sm" onClick={addDecisionNode}>
-        + Decision Node
+      <button className="btn btn-secondary btn-sm btn-plus" onClick={addDecisionNode}>
+        Decision Node
       </button>
 
       <div className="divider" />

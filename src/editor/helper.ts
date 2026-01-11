@@ -1,16 +1,19 @@
 import type { Edge } from "@xyflow/react";
 
-export function causesCycle(sourceId: string, targetId: string, edges: Edge[]) {
-  const visited = new Set<string>();
+export function causesCycle(
+  sourceId: string,
+  targetId: string,
+  edges: Edge[],
+  visited: Set<string> = new Set()
+): boolean {
+  if (targetId === sourceId) return true;
+  if (visited.has(targetId)) return false;
 
-  function dfs(nodeId: string): boolean {
-    if (nodeId === sourceId) return true;
-    if (visited.has(nodeId)) return false;
-    visited.add(nodeId);
+  visited.add(targetId);
 
-    const outgoing = edges.filter(e => e.source === nodeId);
-    return outgoing.some(e => dfs(e.target));
-  }
+  const outgoingEdges = edges.filter(edge => edge.source === targetId);
 
-  return dfs(targetId);
+  return outgoingEdges.some(edge =>
+    causesCycle(sourceId, edge.target, edges, visited)
+  );
 }

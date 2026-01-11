@@ -2,14 +2,14 @@ import { Handle, Position } from "@xyflow/react";
 import { useFlow } from "../FlowContext";
 import type { NodeProps } from "@xyflow/react";
 import type { DecisionNodeType } from "../types";
+import { useState } from "react";
 
 export default function DecisionNode({ id, data }: NodeProps<DecisionNodeType>) {
   const { updateNode, deleteNode } = useFlow();
-
-  const ringWrapperClass = "ring-4 ring-secondary/30 ring-offset-4 ring-offset-base-100 rounded-xl";
+  const [ choiceText, setChoiceText ] = useState(data.choiceText);
 
   return (
-    <div className={`${ringWrapperClass} transition-all duration-300 ease-in-out relative inline-block`}>
+    <div className='ring-4 ring-secondary/30 ring-offset-4 ring-offset-base-100 rounded-xl transition-all duration-300 ease-in-out relative inline-block'>
       <button
         aria-label="Delete node"
         title="Delete node"
@@ -27,8 +27,9 @@ export default function DecisionNode({ id, data }: NodeProps<DecisionNodeType>) 
           <label className="label p-0 mb-1 text-sm font-semibold">Decision</label>
           <input
             type="text"
-            value={data.choiceText}
-            onChange={(e) => updateNode(id, { choiceText: e.target.value })}
+            value={choiceText}
+            onChange={(e) => setChoiceText(e.target.value)}
+            onBlur={(e) => updateNode(id, { choiceText: e.target.value })}
             placeholder="Enter choice..."
             className="input input-bordered input-sm w-full"
           />

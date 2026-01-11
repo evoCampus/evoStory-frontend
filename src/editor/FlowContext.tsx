@@ -70,8 +70,10 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const onConnect: OnConnect = (connection) => {
-    const source = nodes.find((n) => n.id === connection.source);
-    const target = nodes.find((n) => n.id === connection.target);
+    const nodeMap = new Map(nodes.map(n => [n.id, n]));
+
+    const source = nodeMap.get(connection.source);
+    const target = nodeMap.get(connection.target);
 
     if (!source || !target) return;
 
@@ -115,7 +117,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     if (danglingDecisions.length > 0) {
       alert(
         "There are decision nodes that don't lead to any scene. Fix or remove them before exporting.\n\n" +
-          danglingDecisions.map((d) => ` - ${d.data.choiceText ?? d.id} (${d.id})`).join("\n"),
+        danglingDecisions.map((d) => ` - ${d.data.choiceText ?? d.id} (${d.id})`).join("\n"),
       );
       return;
     }

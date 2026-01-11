@@ -1,7 +1,8 @@
 import {
   ReactFlow,
   Background,
-  BackgroundVariant
+  BackgroundVariant,
+  NodeTypes
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -11,7 +12,7 @@ import DecisionNode from "../components/DecisionNode";
 import Sidebar from "../components/Sidebar";
 import { JSX } from "react";
 
-const nodeTypes = {
+const nodeTypes: NodeTypes = {
   sceneNode: SceneNode,
   decisionNode: DecisionNode,
 };
