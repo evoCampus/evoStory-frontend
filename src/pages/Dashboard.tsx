@@ -6,9 +6,8 @@ import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-interface DashboardPageProps { }
 
-export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
+export default function DashboardPage(): JSX.Element {
     const navigate = useNavigate();
     const { user, deleteUser } = useAuth();
 

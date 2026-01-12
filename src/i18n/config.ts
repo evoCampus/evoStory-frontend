@@ -1,13 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// Translation resources
 const resources = {
   en: {
     translation: {
       languageToggle:{
         title: 'Language',
-        currentLanguage: 'English',
+        currentLanguage: 'EN',
         switchLanguage: 'Switch language',
       },
       theme: {
@@ -98,7 +97,7 @@ const resources = {
     translation: {
       languageToggle:{
         title: 'Nyelv',
-        currentLanguage: 'Magyar',
+        currentLanguage: 'HU',
         switchLanguage: 'Nyelv váltása',
       },
       theme: {
@@ -187,15 +186,17 @@ const resources = {
   },
 };
 
-// Get saved language from localStorage or default to 'hu'
-const getInitialLanguage = (): string => {
+export type SupportedLanguage = keyof typeof resources;
+export const supportedLanguages = Object.keys(resources) as SupportedLanguage[];
+
+const getInitialLanguage = (): SupportedLanguage => {
   try {
     const saved = localStorage.getItem('language');
-    if (saved === 'en' || saved === 'hu') {
-      return saved;
+    if (saved && supportedLanguages.includes(saved as SupportedLanguage)) {
+      return saved as SupportedLanguage;
     }
-  } catch {
-    // ignore
+  } catch (error) {
+    console.error('Failed to load language from localStorage:', error);
   }
   return 'hu';
 };
@@ -207,11 +208,10 @@ i18n
     lng: getInitialLanguage(),
     fallbackLng: 'hu',
     interpolation: {
-      escapeValue: false, // React already escapes values
+      escapeValue: false,
     },
   });
 
-// Sync i18next language changes with app element attributes
 i18n.on('languageChanged', (lng) => {
   const appElement = document.getElementById('app');
   if (appElement) {
@@ -220,12 +220,11 @@ i18n.on('languageChanged', (lng) => {
   }
   try {
     localStorage.setItem('language', lng);
-  } catch {
-    // ignore
+  } catch (error) {
+    console.error('Failed to save language to localStorage:', error);
   }
 });
 
-// Set initial app element attributes
 const initialLang = i18n.language;
 const setInitialLanguage = () => {
   const appElement = document.getElementById('app');

@@ -1,17 +1,18 @@
 import { useTranslation } from 'react-i18next';
+import { SupportedLanguage } from '../i18n/config';
 
 interface Props {
   className?: string;
-  value?: 'en' | 'hu';
-  onChange?: (lang: 'en' | 'hu') => void;
+  value?: SupportedLanguage;
+  onChange?: (lang: SupportedLanguage) => void;
 }
 
 export default function LanguageToggle({ className = '', value, onChange }: Readonly<Props>) {
   const { i18n, t } = useTranslation();
-  const current = (value || i18n.language) as 'en' | 'hu';
+  const current = (value || i18n.language) as SupportedLanguage;
 
   const handleToggle = () => {
-    const next = current === 'en' ? 'hu' : 'en';
+    const next: SupportedLanguage = current === 'en' ? 'hu' : 'en';
     i18n.changeLanguage(next);
     onChange?.(next);
   };
@@ -28,7 +29,7 @@ export default function LanguageToggle({ className = '', value, onChange }: Read
               {t('languageToggle.title')}
             </div>
             <div className="text-sm text-gray-400">
-              {current === 'en' ? 'EN' : 'HU'}
+              {t('languageToggle.currentLanguage')}
             </div>
           </div>
 

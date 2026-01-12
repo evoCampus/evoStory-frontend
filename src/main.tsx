@@ -16,7 +16,8 @@ appElement.setAttribute('lang', initialLang);
 try {
   const saved = localStorage.getItem('theme');
   appElement.dataset.theme = saved === 'light' ? 'light' : 'dark';
-} catch {
+} catch (error) {
+  console.error('Failed to load theme from localStorage:', error);
   appElement.dataset.theme = 'dark';
 }
 
