@@ -76,7 +76,7 @@ export default function ThemeToggle({
         <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
-              {t('theme')}
+              {t('theme.title')}
             </div>
             <div className="text-sm text-gray-400">
               {checkedState ? t('theme.dark') : t('theme.light')}
@@ -87,11 +87,11 @@ export default function ThemeToggle({
             type="button"
             onClick={handleClick}
             aria-pressed={checkedState}
-            aria-label={t('switchTheme')}
+            aria-label={t('theme.switchTheme')}
             className={`inline-flex items-center ${className}`}
           >
             <span className="sr-only">
-              {t('switchTheme')}
+              {t('theme.switchTheme')}
             </span>
 
             <div

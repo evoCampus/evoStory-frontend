@@ -30,7 +30,7 @@ export default function ChapterPage() {
                 navigate("/ending");
                 localStorage.removeItem("lastSceneId");
             } else {
-                alert(t('errorLoadingScene'));
+                alert(t('chapter.errorLoadingScene'));
             }
         }
     };
@@ -78,7 +78,7 @@ export default function ChapterPage() {
                     ))
                 ) : (
                     <Button
-                        text={t('continueButton')}
+                        text={t('chapter.continue')}
                         className="mt-4"
                         onClick={() => {
                             navigate("/ending");
@@ -91,7 +91,7 @@ export default function ChapterPage() {
 
             <div className="flex justify-center mt-6">
                 <Button
-                    text={t('home')}
+                    text={t('chapter.home')}
                     className="mt-4"
                     onClick={() => {
                         navigate("/");

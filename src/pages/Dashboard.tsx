@@ -37,15 +37,15 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
             try {
                 await deleteUser(user.id);
 
-                setMessageModalTitle(t('success'));
-                setMessageModalContent(t('accountDeleted'));
+                setMessageModalTitle(t('modal.success'));
+                setMessageModalContent(t('dashboard.deleteSuccess'));
                 setMessageModalIsSuccess(true);
                 setShowMessageModal(true);
 
             } catch (error: any) {
-                console.error('Hiba a fiók törlésekor:', error);
-                setMessageModalTitle(t('error'));
-                setMessageModalContent(t('deleteError') + (error.message || 'Ismeretlen hiba'));
+                console.error(t('dashboard.deleteError'), error);
+                setMessageModalTitle(t('modal.error'));
+                setMessageModalContent(t('dashboard.deleteError') + (error.message || t('dashboard.unknownError')));
                 setMessageModalIsSuccess(false);
                 setShowMessageModal(true);
             }
@@ -58,38 +58,38 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
         <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
             <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg shadow-md" style={{ backgroundColor: 'var(--box-bg)' }}>
                 <div className="flex flex-col gap-4 text-white text-center">
-                    <h2 className="text-2xl font-bold mb-4">{t('info')}</h2>
+                    <h2 className="text-2xl font-bold mb-4">{t('dashboard.info')}</h2>
                     {user ? (
                         <>
                             <img
                                 src={displayProfilePicture}
-                                alt={t('profilePicture')}
+                                alt={t('dashboard.profilePicture')}
                                 className="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-gray-500 object-cover"
                             />
 
-                            <p className="text-lg">{t('welcome')}, {user.userName}!</p>
-                            <p className="text-md text-gray-300">{t('email')}: {user.email}</p>
+                            <p className="text-lg">{t('dashboard.welcome')}, {user.userName}!</p>
+                            <p className="text-md text-gray-300">{t('dashboard.email')}: {user.email}</p>
                             <div className="mt-6 flex flex-col gap-4">
                                 <LogoutButton />
                                 <Button
                                     onClick={handleNavigateToHome}
-                                    text={t('home')}
+                                    text={t('settings.home')}
                                     className="bg-gray-900 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                                 <Button
                                     onClick={requestDeleteAccount}
-                                    text={t('deleteAccount')}
+                                    text={t('dashboard.deleteAccount')}
                                     className="bg-blue-600 hover:bg-red-600 rounded-xl text-white font-bold py-3 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
                                 />
                             </div>
                         </>
                     ) : (
                         <>
-                            <p className="text-lg">{t('noUser')}</p>
+                            <p className="text-lg">{t('dashboard.noUser')}</p>
                             <div className="mt-6">
                                 <Button
                                     onClick={handleNavigateToLogin}
-                                    text={t('login')}
+                                    text={t('loginPage.login')}
                                     className="w-full py-3 bg-blue-600 hover:bg-teal-500 text-white font-medium rounded-lg transition-colors"
                                 />
                             </div>
@@ -101,16 +101,16 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
             <Modal
                 isOpen={showConfirmModal}
                 onClose={() => setShowConfirmModal(false)}
-                title={t('deleteAccountTitle')}
-                confirmText={t('deleteAccountConfirm')}
+                title={t('deleteAccountModal.title')}
+                confirmText={t('deleteAccountModal.confirm')}
                 onConfirm={confirmDeleteAccount}
-                cancelText={t('deleteAccountCancel')}
+                cancelText={t('deleteAccountModal.cancel')}
                 onCancel={() => setShowConfirmModal(false)}
                 showConfirmButton={true}
                 showCancelButton={true}
             >
-                <p>{t('deleteAccountQuestion')}</p>
-                <p className="text-sm text-yellow-400 mt-2">{t('deleteAccountWarning')}</p>
+                <p>{t('deleteAccountModal.question')}</p>
+                <p className="text-sm text-yellow-400 mt-2">{t('deleteAccountModal.warning')}</p>
             </Modal>
 
             <Modal
@@ -119,7 +119,7 @@ export default function DashboardPage({ }: DashboardPageProps): JSX.Element {
                 title={messageModalTitle}
                 showConfirmButton={true}
                 showCancelButton={false}
-                confirmText={t('ok')}
+                confirmText={t('modal.ok')}
                 onConfirm={() => setShowMessageModal(false)}
                 modalClassName={messageModalIsSuccess ? 'border-t-4 border-green-500' : 'border-t-4 border-red-500'}
             >

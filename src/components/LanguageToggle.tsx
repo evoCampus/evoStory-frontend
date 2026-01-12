@@ -25,7 +25,7 @@ export default function LanguageToggle({ className = '', value, onChange }: Read
         <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
-              {t('language')}
+              {t('languageToggle.title')}
             </div>
             <div className="text-sm text-gray-400">
               {current === 'en' ? 'EN' : 'HU'}
@@ -36,10 +36,10 @@ export default function LanguageToggle({ className = '', value, onChange }: Read
             type="button"
             onClick={handleToggle}
             aria-pressed={current === 'en'}
-            aria-label={t('switchLanguage')}
+            aria-label={t('languageToggle.switchLanguage')}
             className={`inline-flex items-center ${className}`}
           >
-            <span className="sr-only">{t('switchLanguage')}</span>
+            <span className="sr-only">{t('languageToggle.switchLanguage')}</span>
             <div className={`relative w-14 h-8 rounded-full transition-colors duration-200 ${current === 'en' ? 'bg-indigo-600' : 'bg-gray-300'}`}>
               <span className={`absolute top-0.5 left-0.5 w-7 h-7 bg-white rounded-full shadow transform transition-transform duration-200 ${current === 'en' ? 'translate-x-6' : 'translate-x-0'}`} />
             </div>

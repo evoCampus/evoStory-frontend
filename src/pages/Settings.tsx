@@ -14,7 +14,7 @@ export default function Settings() {
     <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
       <div className="flex flex-col w-full rounded-2xl items-center justify-center p-6" style={{ backgroundColor: 'var(--box-bg)' }}>
         <h1 className="font-bold text-center mb-6" style={{ color: 'var(--text-primary)' }}>
-          {t('settingsTitle')}
+          {t('settings.title')}
         </h1>
 
         <div className="w-full mb-6">
@@ -31,20 +31,20 @@ export default function Settings() {
             className="bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
             onClick={() => setShowControls((prev) => !prev)}
           >
-            {showControls ? t('hideControls') : t('showControls')}
+            {showControls ? t('settings.hideControls') : t('settings.showControls')}
           </button>
         </div>
         
         {showControls && (
           <div className="flex flex-col items-center justify-center w-full m-5 p-4 rounded" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
-            <h2 className="font-semibold mb-2">{t('controls')}</h2>
+            <h2 className="font-semibold mb-2">{t('settings.controls')}</h2>
             {/* Controls will be here */}
           </div>
         )}
         
         <div className="flex justify-center mt-6">
           <Button
-            text={t('home')}
+            text={t('settings.home')}
             className="mt-4"
             onClick={() => navigate("/")}
           />

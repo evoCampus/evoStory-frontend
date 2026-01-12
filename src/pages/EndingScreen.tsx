@@ -27,15 +27,15 @@ export default function EndingScreen() {
   return (
     <div className="flex items-center justify-center h-screen w-screen bg-black text-white">
       <div className="text-center">
-        <h1 className="font bold">{t('gameOver')}</h1>
+        <h1 className="font bold">{t('endingScreen.gameOver')}</h1>
         <Button
           onClick={() => navigate(`/chapter/${stories[0].startingSceneId}`)}
-          text={t('newGame')}
+          text={t('endingScreen.newGame')}
           className="w-full py-3 text-white font-medium rounded-lg transition-colors"
         />
         <div className="flex justify-center mt-6">
           <Button
-            text={t('home')}
+            text={t('endingScreen.home')}
             className="mt-4"
             onClick={() => {
               navigate("/");

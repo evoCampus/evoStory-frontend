@@ -13,10 +13,10 @@ export default function LoginPage({ }: LoginPageProps): React.JSX.Element {
         <div className="flex flex-col items-center justify-center h-screen w-screen" style={{ background: 'var(--page-bg)' }}>
             <div className="border border-gray-400 p-8 mx-auto w-4/5 max-w-md rounded-lg shadow-md" style={{ backgroundColor: 'var(--box-bg-light)' }}>
                 <div className="flex flex-col gap-4">
-                    <p><strong>{t('login')}</strong></p>
+                    <p><strong>{t('loginPage.login')}</strong></p>
                     <LoginForm />
                     <p className="text-center text-gray-400">
-                        {t('noAccount')} <Link to="/register" className="text-blue-500 hover:underline">{t('register')}</Link>
+                        {t('loginPage.noAccount')} <Link to="/register" className="text-blue-500 hover:underline">{t('loginPage.register')}</Link>
                     </p>
                 </div>
             </div>
