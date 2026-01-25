@@ -7,6 +7,7 @@ import {
 } from "@xyflow/react";
 import type { FlowNode, FlowEdge, FlowContextType } from "./types";
 import { causesCycle } from "./helper";
+import Modal from "../components/Modal";
 
 const FlowContext = createContext<FlowContextType | undefined>(undefined);
 
@@ -17,6 +18,18 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
   const [endSceneIds, setEndSceneIds] = useState<string[]>([]);
 
   const [title, setTitle] = useState<string>("Untitled Story");
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertTitle, setAlertTitle] = useState<string>("");
+  const [alertContent, setAlertContent] = useState<string>("");
+  const [alertIsSuccess, setAlertIsSuccess] = useState<boolean>(false);
+
+  const showAlert = (title: string, content: string, isSuccess = false) => {
+    setAlertTitle(title);
+    setAlertContent(content);
+    setAlertIsSuccess(isSuccess);
+    setAlertOpen(true);
+  };
 
   useEffect(() => {
     const sceneNodeIds = nodes.filter((n) => n.type === "sceneNode").map((n) => n.id);
@@ -80,13 +93,13 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     if (source.type === "decisionNode") {
       const parentEdge = edges.find((e) => e.target === source.id);
       if (parentEdge && parentEdge.source === target.id) {
-        alert("These nodes are already connected!");
+        showAlert("Connection error", "These nodes are already connected!");
         return;
       }
     }
 
     if (causesCycle(connection.source, connection.target, edges)) {
-      alert("This connection would create a cycle!");
+      showAlert("Connection error", "This connection would create a cycle!");
       return;
     }
 
@@ -95,7 +108,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
       (source.type === "decisionNode" && target.type === "sceneNode");
 
     if (!isValid) {
-      alert("Only Scene - Decision connections are allowed!");
+      showAlert("Connection error", "Only Scene - Decision connections are allowed!");
       return;
     }
 
@@ -115,10 +128,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     });
 
     if (danglingDecisions.length > 0) {
-      alert(
-        "There are decision nodes that don't lead to any scene. Fix or remove them before exporting.\n\n" +
-        danglingDecisions.map((d) => ` - ${d.data.choiceText ?? d.id} (${d.id})`).join("\n"),
-      );
+      showAlert("Connection error","There are decision nodes that don't lead to any scene. Fix or remove them before exporting.");
       return;
     }
     nodes
@@ -159,12 +169,12 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
       });
 
     if (!startSceneId) {
-      alert("Please select a START scene before exporting!");
+      showAlert("Export error", "Please select a START scene before exporting!");
       return;
     }
 
     if (endSceneIds.length === 0) {
-      alert("Please mark at least one ENDING scene!");
+      showAlert("Export error", "Please mark at least one ENDING scene!");
       return;
     }
 
@@ -175,7 +185,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     });
 
     if (unconnectedScenes.length > 0) {
-      alert("Some scenes have no choices and are not marked as ending scenes!\n\n");
+      showAlert("Export error", "Some scenes have no choices and are not marked as ending scenes!");
       return;
     }
 
@@ -242,6 +252,19 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
+
+      <Modal
+        isOpen={alertOpen}
+        onClose={() => setAlertOpen(false)}
+        title={alertTitle}
+        showConfirmButton={true}
+        showCancelButton={false}
+        confirmText="OK"
+        onConfirm={() => setAlertOpen(false)}
+        modalClassName={alertIsSuccess ? 'border-t-4 border-green-500' : 'border-t-4 border-red-500'}
+      >
+        <div className="whitespace-pre-wrap text-gray-200">{alertContent}</div>
+      </Modal>
     </FlowContext.Provider>
   );
 };
