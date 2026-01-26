@@ -1,6 +1,7 @@
 import { useState, FormEvent, JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useTranslation } from 'react-i18next';
 
 interface LoginFormProps { }
 
@@ -10,13 +11,14 @@ export default function LoginForm({ }: LoginFormProps): JSX.Element {
     const { login } = useAuth();
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setError(null);
 
         if (!username || !password) {
-            setError('Kérjük, töltse ki az összes mezőt.');
+            setError(t('authForms.fillAllFields'));
             return;
         }
 
@@ -26,20 +28,18 @@ export default function LoginForm({ }: LoginFormProps): JSX.Element {
             if (loginSuccessful) {
                 navigate('/');
             } else {
-                setError('Hibás felhasználónév vagy jelszó. Kérjük, próbálja újra.');
+                setError(t('authForms.invalidCredentials'));
             }
         } catch (err: any) {
-
             console.error('Login API error:', err);
-            setError('Hiba történt a bejelentkezés során. Kérjük, próbálja meg később.');
-
+            setError(t('authForms.loginError'));
         }
     };
 
     return (
         <form onSubmit={handleSubmit} className='space-y-4'>
             <div className='mb-5 mr-5'>
-                <label htmlFor="username">Felhasználónév:</label>
+                <label htmlFor="username">{t('authForms.username')}:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="text"
@@ -50,7 +50,7 @@ export default function LoginForm({ }: LoginFormProps): JSX.Element {
                 />
             </div>
             <div className='mb-5 mr-5'>
-                <label htmlFor="password">Jelszó:</label>
+                <label htmlFor="password">{t('authForms.password')}:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="password"
@@ -68,7 +68,7 @@ export default function LoginForm({ }: LoginFormProps): JSX.Element {
             <button
                 className='bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-green-500'
                 type="submit">
-                Bejelentkezés
+                {t('authForms.loginButton')}
             </button>
         </form>
     );
