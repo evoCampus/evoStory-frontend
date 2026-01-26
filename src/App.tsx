@@ -13,6 +13,7 @@ import Settings from './pages/Settings';
 import NotFoundPage from './pages/NotFoundPage';
 import { createContext, useMemo, JSX } from 'react';
 import Client from './Client';
+import EditorPage from './pages/EditorPage';
 
 export const ClientContext = createContext<Client | undefined>(undefined);
 
@@ -35,6 +36,7 @@ export default function App(): JSX.Element {
               }
             />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/editor" element={<EditorPage />} />
             <Route path="/chapter/:chapterId" element={<ChapterPage />} />
             <Route path="/continue" element={<ContinueGame />} />
             <Route path="/new" element={<ChapterPage />} />
