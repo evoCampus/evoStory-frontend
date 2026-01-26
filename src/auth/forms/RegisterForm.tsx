@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const RegisterForm: React.FC = () => {
     const [username, setUsername] = useState<string>('');
@@ -10,6 +11,7 @@ const RegisterForm: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -17,23 +19,23 @@ const RegisterForm: React.FC = () => {
         setSuccessMessage(null);
 
         if (!username || !email || !password) {
-            setError('Kérjük, töltse ki az összes mezőt.');
+            setError(t('authForms.fillAllFields'));
             return;
         }
 
         const registrationSuccessful = await register(username, password, email);
 try{
         if (registrationSuccessful) {
-            setSuccessMessage('Sikeres regisztráció! Most már bejelentkezhetsz.');
+            setSuccessMessage(t('authForms.registrationSuccess'));
             setTimeout(() => {
             navigate('/login');
             }, 2000);
         } else {
-            setError('Sikertelen regisztráció. Kérjük, próbálja újra.');
+            setError(t('authForms.registrationFailed'));
         }
     } catch (err: unknown) {
             console.error('Register API error:', err);
-            setError('Hiba történt a regisztráció során. Kérjük, próbálja meg később.');
+            setError(t('authForms.registrationError'));
         }
     };
 
@@ -41,7 +43,7 @@ try{
         <div>
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="reg-username">Felhasználónév:</label>
+                <label htmlFor="reg-username">{t('authForms.username')}:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="text"
@@ -52,7 +54,7 @@ try{
                 />
             </div>
             <div>
-                <label htmlFor="reg-email">Email:</label>
+                <label htmlFor="reg-email">{t('authForms.email')}:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="email"
@@ -63,7 +65,7 @@ try{
                 />
             </div>
             <div>
-                <label htmlFor="reg-password">Jelszó:</label>
+                <label htmlFor="reg-password">{t('authForms.password')}:</label>
                 <input
                     className='peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm border-3'
                     type="password"
@@ -86,7 +88,7 @@ try{
                 <button
                 className='mt-2 ml-2 items-center bg-gray-900 rounded-xl text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outlinetransition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-green-500'
                 type='submit'>
-                Regisztráció
+                {t('authForms.registerButton')}
                 </button>
             
         </form>

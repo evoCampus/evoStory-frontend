@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   className?: string;
@@ -11,6 +12,7 @@ export default function ThemeToggle({
   checked,
   onClick,
 }: Readonly<Props>) {
+  const { t } = useTranslation();
   const isControlled = typeof checked === 'boolean';
   const bodyRef = useRef<HTMLElement | null>(null);
 
@@ -74,10 +76,10 @@ export default function ThemeToggle({
         <div className="flex items-center justify-between w-full">
           <div>
             <div className="text-lg sm:text-xl font-medium text-gray-300">
-              Theme
+              {t('theme.title')}
             </div>
             <div className="text-sm text-gray-400">
-              {checkedState ? 'Dark' : 'Light'}
+              {checkedState ? t('theme.dark') : t('theme.light')}
             </div>
           </div>
 
@@ -85,13 +87,11 @@ export default function ThemeToggle({
             type="button"
             onClick={handleClick}
             aria-pressed={checkedState}
-            aria-label={
-              checkedState ? 'Switch to light theme' : 'Switch to dark theme'
-            }
+            aria-label={t('theme.switchTheme')}
             className={`inline-flex items-center ${className}`}
           >
             <span className="sr-only">
-              {checkedState ? 'Switch to light theme' : 'Switch to dark theme'}
+              {t('theme.switchTheme')}
             </span>
 
             <div
