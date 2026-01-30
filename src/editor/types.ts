@@ -35,6 +35,7 @@ export interface FlowContextType {
 
   exportToJson: () => void;
   importFromJson: (file: File) => void;
+  relayout: (nodes?: FlowNode[], edges?: FlowEdge[]) => Promise<void>;
 }
 
 export type SceneNodeType = Node<SceneData, 'sceneNode'>;

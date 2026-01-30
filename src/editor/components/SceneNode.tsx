@@ -36,7 +36,7 @@ export default function SceneNode({ id, data }: NodeProps<SceneNodeType>) {
       >
         ✕
       </button>
-      <div className="card border border-base-300 rounded-xl shadow-md w-64 overflow-hidden">
+      <div className="card border border-base-300 rounded-xl shadow-md w-64 min-w-64 overflow-hidden">
         <div className="card-body p-4 bg-base-100 text-base-content">
 
           <input

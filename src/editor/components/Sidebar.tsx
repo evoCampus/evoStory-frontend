@@ -3,7 +3,7 @@ import { useFlow } from "../FlowContext";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Sidebar() {
-  const { title, setTitle, setNodes, exportToJson, importFromJson, startSceneId, setStartSceneId, setEndSceneIds } = useFlow();
+  const { title, setTitle, setNodes, exportToJson, importFromJson, startSceneId, setStartSceneId, setEndSceneIds, relayout } = useFlow();
   const navigate = useNavigate();
 
   const addSceneNode = () => {
@@ -124,6 +124,10 @@ export default function Sidebar() {
 
       <button className="btn btn-secondary btn-sm btn-plus" onClick={addDecisionNode}>
         Decision Node
+      </button>
+
+      <button className="btn btn-outline btn-sm" onClick={() => relayout()}>
+        Auto layout
       </button>
 
       <div className="divider" />

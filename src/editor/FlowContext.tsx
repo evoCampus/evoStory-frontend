@@ -12,10 +12,12 @@ import {
   type OnConnect,
 } from "@xyflow/react";
 import { v4 as uuidv4 } from "uuid";
+import ELK from "elkjs/lib/elk.bundled.js";
 import type { FlowNode, FlowEdge, FlowContextType } from "./types";
 import { causesCycle } from "./helper";
 import Modal from "../components/Modal";
 
+const elk = new ELK();
 const FlowContext = createContext<FlowContextType | undefined>(undefined);
 
 export const FlowProvider = ({ children }: { children: ReactNode }) => {
@@ -36,6 +38,51 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
     setAlertContent(content);
     setAlertIsSuccess(isSuccess);
     setAlertOpen(true);
+  };
+
+  const relayout = async (nodesParam?: FlowNode[], edgesParam?: FlowEdge[]) => {
+    const layoutNodes = nodesParam ?? nodes;
+    const layoutEdges = edgesParam ?? edges;
+
+    if (!layoutNodes.length) return;  
+
+    const elkGraph = {
+      id: "root",
+      layoutOptions: {
+        "elk.algorithm": "layered",
+        "elk.direction": "DOWN",
+        "elk.spacing.nodeNode": "50",
+        "elk.layered.spacing.nodeNodeBetweenLayers": "80",
+      },
+      children: layoutNodes.map((n) => ({
+        id: n.id,
+        width: 256,
+        height: n.type === "sceneNode" ? 120 : 60,
+      })),
+      edges: layoutEdges.map((e) => ({
+        id: e.id,
+        sources: [e.source],
+        targets: [e.target],
+      })),
+    };
+
+    const layout = await elk.layout(elkGraph);
+
+    const positionedNodes = layoutNodes.map((n) => {
+      const elkNode = layout.children?.find((c) => c.id === n.id);
+      if (!elkNode) return n;
+
+      return {
+        ...n,
+        position: {
+          x: elkNode.x ?? 0,
+          y: elkNode.y ?? 0,
+        },
+      };
+    });
+
+    setNodes(positionedNodes);
+    if (edgesParam) setEdges(layoutEdges);
   };
 
   useEffect(() => {
@@ -264,7 +311,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
 
   const importFromJson = (file: File) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const content = e.target?.result as string;
         const storyData = JSON.parse(content);
@@ -360,9 +407,8 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
           showAlert("Import error", "Starting scene not found!");
           return;
         }
-
-        setNodes(importedNodes);
-        setEdges(importedEdges);
+        
+        await relayout(importedNodes, importedEdges);
 
         if (startSceneNodeId) {
           setStartSceneId(startSceneNodeId);
@@ -411,6 +457,7 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
         setEndSceneIds,
         exportToJson,
         importFromJson,
+        relayout,
       }}
     >
       {children}

@@ -22,7 +22,7 @@ export default function DecisionNode({ id, data }: NodeProps<DecisionNodeType>) 
       >
         ✕
       </button>
-      <div className="card border border-base-300 rounded-xl shadow-md w-56 overflow-hidden">
+      <div className="card border border-base-300 rounded-xl shadow-md w-64 min-w-64 overflow-hidden">
         <div className="card-body p-4 bg-base-100 text-base-content">
           <label className="label p-0 mb-1 text-sm font-semibold">Decision</label>
           <input
