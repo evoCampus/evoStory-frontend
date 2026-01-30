@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **sceneId** | **string** |  | [optional] [default to undefined]
 **nextSceneId** | **string** |  | [optional] [default to undefined]
 **choiceText** | **string** |  | [optional] [default to undefined]
+**requiredItemId** | **string** |  | [optional] [default to undefined]
+**rewardItemName** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +20,8 @@ const instance: CreateChoiceDTO = {
     sceneId,
     nextSceneId,
     choiceText,
+    requiredItemId,
+    rewardItemName,
 };
 ```
 

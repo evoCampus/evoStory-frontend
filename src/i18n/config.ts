@@ -16,7 +16,7 @@ const resources = {
         switchTheme: 'Switch theme',
       },
       homePage:{
-        title: 'Faded Memories',
+        title: 'Choose a story',
         continue: 'Continue Game',
         newGame: 'New Game',
         dashboard: 'Dashboard',
@@ -107,7 +107,7 @@ const resources = {
         switchTheme: 'Téma váltása',
       },
       homePage:{
-        title: 'Halvány emlékek',
+        title: 'Válassz egy Sztorit',
         continue: 'Játék folytatása',
         newGame: 'Új játék',
         dashboard: 'Felhasználói felület',

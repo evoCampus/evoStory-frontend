@@ -26,6 +26,31 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface AddToInventoryDTO
+ */
+export interface AddToInventoryDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof AddToInventoryDTO
+     */
+    'sessionId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AddToInventoryDTO
+     */
+    'itemId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddToInventoryDTO
+     */
+    'quantity'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ChoiceDTO
  */
 export interface ChoiceDTO {
@@ -47,6 +72,12 @@ export interface ChoiceDTO {
      * @memberof ChoiceDTO
      */
     'choiceText'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChoiceDTO
+     */
+    'requiredItemId'?: string | null;
 }
 /**
  * 
@@ -103,6 +134,18 @@ export interface CreateChoiceDTO {
      * @memberof CreateChoiceDTO
      */
     'choiceText'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateChoiceDTO
+     */
+    'requiredItemId'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateChoiceDTO
+     */
+    'rewardItemName'?: string | null;
 }
 /**
  * 
@@ -128,6 +171,37 @@ export interface CreateContentDTO {
      * @memberof CreateContentDTO
      */
     'soundId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateItemDTO
+ */
+export interface CreateItemDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateItemDTO
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateItemDTO
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateItemDTO
+     */
+    'isStackable'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateItemDTO
+     */
+    'storyId': string;
 }
 /**
  * 
@@ -178,6 +252,12 @@ export interface CreateStoryDTO {
      * @memberof CreateStoryDTO
      */
     'startingSceneId'?: string | null;
+    /**
+     * 
+     * @type {Array<CreateItemDTO>}
+     * @memberof CreateStoryDTO
+     */
+    'items'?: Array<CreateItemDTO> | null;
 }
 /**
  * 
@@ -234,6 +314,68 @@ export interface EditStoryDTO {
      * @memberof EditStoryDTO
      */
     'scenes'?: Array<SceneDTO> | null;
+}
+/**
+ * 
+ * @export
+ * @interface InventoryItemDTO
+ */
+export interface InventoryItemDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof InventoryItemDTO
+     */
+    'itemId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InventoryItemDTO
+     */
+    'itemName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InventoryItemDTO
+     */
+    'itemDescription'?: string | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof InventoryItemDTO
+     */
+    'quantity'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ItemDTO
+ */
+export interface ItemDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemDTO
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemDTO
+     */
+    'name'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ItemDTO
+     */
+    'description'?: string | null;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ItemDTO
+     */
+    'isStackable'?: boolean;
 }
 /**
  * 
@@ -377,6 +519,73 @@ export const ChoiceApiAxiosParamCreator = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @param {string} sceneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiChoiceSceneSceneIdAvailableGet: async (sceneId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sceneId' is not null or undefined
+            assertParamExists('apiChoiceSceneSceneIdAvailableGet', 'sceneId', sceneId)
+            const localVarPath = `/api/Choice/scene/{sceneId}/available`
+                .replace(`{${"sceneId"}}`, encodeURIComponent(String(sceneId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [choiceId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiChoiceSelectPost: async (choiceId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Choice/select`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (choiceId !== undefined) {
+                localVarQueryParameter['choiceId'] = choiceId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CreateChoiceDTO} [createChoiceDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -515,6 +724,30 @@ export const ChoiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} sceneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiChoiceSceneSceneIdAvailableGet(sceneId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ChoiceDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiChoiceSceneSceneIdAvailableGet(sceneId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChoiceApi.apiChoiceSceneSceneIdAvailableGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [choiceId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiChoiceSelectPost(choiceId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ChoiceApi.apiChoiceSelectPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {CreateChoiceDTO} [createChoiceDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -572,6 +805,24 @@ export const ChoiceApiFactory = function (configuration?: Configuration, basePat
     return {
         /**
          * 
+         * @param {string} sceneId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiChoiceSceneSceneIdAvailableGet(sceneId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<ChoiceDTO>> {
+            return localVarFp.apiChoiceSceneSceneIdAvailableGet(sceneId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [choiceId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiChoiceSelectPost(choiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CreateChoiceDTO} [createChoiceDTO] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -617,6 +868,28 @@ export const ChoiceApiFactory = function (configuration?: Configuration, basePat
 export class ChoiceApi extends BaseAPI {
     /**
      * 
+     * @param {string} sceneId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChoiceApi
+     */
+    public apiChoiceSceneSceneIdAvailableGet(sceneId: string, options?: RawAxiosRequestConfig) {
+        return ChoiceApiFp(this.configuration).apiChoiceSceneSceneIdAvailableGet(sceneId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [choiceId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChoiceApi
+     */
+    public apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig) {
+        return ChoiceApiFp(this.configuration).apiChoiceSelectPost(choiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {CreateChoiceDTO} [createChoiceDTO] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -656,6 +929,356 @@ export class ChoiceApi extends BaseAPI {
      */
     public getChoices(options?: RawAxiosRequestConfig) {
         return ChoiceApiFp(this.configuration).getChoices(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * InventoryApi - axios parameter creator
+ * @export
+ */
+export const InventoryApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryClearPost: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Inventory/clear`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CreateItemDTO} [createItemDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryCreateItemPost: async (createItemDTO?: CreateItemDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Inventory/createItem`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createItemDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryMyInventoryGet: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Inventory/my-inventory`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {AddToInventoryDTO} [addToInventoryDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryPickupItemPost: async (addToInventoryDTO?: AddToInventoryDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Inventory/pickupItem`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addToInventoryDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} storyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryStoryStoryIdAllItemsGet: async (storyId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storyId' is not null or undefined
+            assertParamExists('apiInventoryStoryStoryIdAllItemsGet', 'storyId', storyId)
+            const localVarPath = `/api/Inventory/story/{storyId}/allItems`
+                .replace(`{${"storyId"}}`, encodeURIComponent(String(storyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InventoryApi - functional programming interface
+ * @export
+ */
+export const InventoryApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = InventoryApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiInventoryClearPost(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiInventoryClearPost(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.apiInventoryClearPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CreateItemDTO} [createItemDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiInventoryCreateItemPost(createItemDTO?: CreateItemDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ItemDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiInventoryCreateItemPost(createItemDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.apiInventoryCreateItemPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiInventoryMyInventoryGet(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InventoryItemDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiInventoryMyInventoryGet(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.apiInventoryMyInventoryGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {AddToInventoryDTO} [addToInventoryDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiInventoryPickupItemPost(addToInventoryDTO?: AddToInventoryDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiInventoryPickupItemPost(addToInventoryDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.apiInventoryPickupItemPost']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} storyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiInventoryStoryStoryIdAllItemsGet(storyId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ItemDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiInventoryStoryStoryIdAllItemsGet(storyId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.apiInventoryStoryStoryIdAllItemsGet']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * InventoryApi - factory interface
+ * @export
+ */
+export const InventoryApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = InventoryApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryClearPost(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiInventoryClearPost(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CreateItemDTO} [createItemDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryCreateItemPost(createItemDTO?: CreateItemDTO, options?: RawAxiosRequestConfig): AxiosPromise<ItemDTO> {
+            return localVarFp.apiInventoryCreateItemPost(createItemDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryMyInventoryGet(options?: RawAxiosRequestConfig): AxiosPromise<Array<InventoryItemDTO>> {
+            return localVarFp.apiInventoryMyInventoryGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AddToInventoryDTO} [addToInventoryDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryPickupItemPost(addToInventoryDTO?: AddToInventoryDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.apiInventoryPickupItemPost(addToInventoryDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} storyId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiInventoryStoryStoryIdAllItemsGet(storyId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<ItemDTO>> {
+            return localVarFp.apiInventoryStoryStoryIdAllItemsGet(storyId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * InventoryApi - object-oriented interface
+ * @export
+ * @class InventoryApi
+ * @extends {BaseAPI}
+ */
+export class InventoryApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public apiInventoryClearPost(options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).apiInventoryClearPost(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CreateItemDTO} [createItemDTO] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public apiInventoryCreateItemPost(createItemDTO?: CreateItemDTO, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).apiInventoryCreateItemPost(createItemDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public apiInventoryMyInventoryGet(options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).apiInventoryMyInventoryGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AddToInventoryDTO} [addToInventoryDTO] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public apiInventoryPickupItemPost(addToInventoryDTO?: AddToInventoryDTO, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).apiInventoryPickupItemPost(addToInventoryDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} storyId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InventoryApi
+     */
+    public apiInventoryStoryStoryIdAllItemsGet(storyId: string, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).apiInventoryStoryStoryIdAllItemsGet(storyId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1560,7 +2183,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(createUserDTO?: CreateUserDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createUser(createUserDTO?: CreateUserDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(createUserDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.createUser']?.[localVarOperationServerIndex]?.url;
@@ -1583,7 +2206,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCurrentUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
+        async getCurrentUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCurrentUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.getCurrentUser']?.[localVarOperationServerIndex]?.url;
@@ -1651,7 +2274,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(createUserDTO?: CreateUserDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createUser(createUserDTO?: CreateUserDTO, options?: RawAxiosRequestConfig): AxiosPromise<UserDTO> {
             return localVarFp.createUser(createUserDTO, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1668,7 +2291,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<UserDTO> {
+        getCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCurrentUser(options).then((request) => request(axios, basePath));
         },
         /**

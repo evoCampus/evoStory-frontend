@@ -14,10 +14,17 @@ export default function ChapterPage() {
     const [currentScene, setCurrentScene] = useState<SceneDTO | null>(null);
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const [inventory, setInventory] = useState<any[]>([]);
 
-    const handleChoiceClick = async (nextSceneId: string) => {
+    const handleChoiceClick = async (choiceId: string) => {
         try {
+            const nextSceneId = await client.selectChoice(choiceId);
+
+            const items = await client.getInventory();
+            setInventory(items);
+
             const nextScene = await client.getSceneById(nextSceneId);
+
             if (!nextScene) {
                 navigate("/ending");
                 return;
@@ -41,6 +48,8 @@ export default function ChapterPage() {
                 if (chapterId) {
                     const scene = await client.getSceneById(chapterId);
                     setCurrentScene(scene);
+                    const items = await client.getInventory();
+                    setInventory(items);
                 }
             } catch (error) {
                 console.error("Error while loading first scene:", error);
@@ -60,22 +69,33 @@ export default function ChapterPage() {
 
             <div className="flex items-center justify-evenly gap-4 mt-4 flex-wrap">
                 {currentScene?.choices && currentScene.choices.length > 0 ? (
-                    currentScene.choices.map((choice) => (
-                        <Button
-                            key={choice.id}
-                            text={choice.choiceText ?? ""}
-                            className="mt-4"
-                            onClick={() => {
-                                if (choice.nextSceneId) {
-                                    handleChoiceClick(choice.nextSceneId);
-                                } else {
-                                    navigate("/ending");
-                                    localStorage.removeItem("lastSceneId");
-                                }
-                            }}
-                        />
+                    currentScene.choices.map((choice) => {
+                        console.log("GOMB:", choice.choiceText);
+                        console.log(" - Szükséges Tárgy ID:", choice.requiredItemId);
+                        console.log(" - Nálam lévő tárgyak:", inventory);
+                        
+                        const isLocked = choice.requiredItemId && !inventory.some((i: any) => i.itemId === choice.requiredItemId);
 
-                    ))
+                        return (
+                            <Button
+                                key={choice.id}
+                                text={choice.choiceText ?? ""}
+                                
+                                className={`mt-4 ${isLocked ? "opacity-50 cursor-not-allowed" : ""}`}
+                                
+                                onClick={() => {
+                                    if (isLocked) return; 
+
+                                    if (choice.nextSceneId) {
+                                        handleChoiceClick(choice.id);
+                                    } else {
+                                        navigate("/ending");
+                                        localStorage.removeItem("lastSceneId");
+                                    }
+                                }}
+                            />
+                        );
+                    })
                 ) : (
                     <Button
                         text={t('chapter.continue')}

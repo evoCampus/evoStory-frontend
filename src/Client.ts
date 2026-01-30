@@ -12,7 +12,8 @@ import {
     StoryApi,
     StoryDTO,
     UserApi,
-    UserDTO
+    UserDTO,
+    InventoryApi
 } from "./api";
 
 
@@ -21,6 +22,7 @@ export default class Client {
     private readonly sceneAPI: SceneApi;
     private readonly storyAPI: StoryApi;
     private readonly userAPI: UserApi;
+    private readonly inventoryAPI: InventoryApi;
 
 
     constructor() {
@@ -32,6 +34,7 @@ export default class Client {
         this.sceneAPI = new SceneApi(undefined, undefined, axiosInstance);
         this.storyAPI = new StoryApi(undefined, undefined, axiosInstance);
         this.userAPI = new UserApi(undefined, undefined, axiosInstance);
+        this.inventoryAPI = new InventoryApi(undefined, undefined, axiosInstance);
     }
 
     async getChoices(): Promise<ChoiceDTO[]> {
@@ -125,10 +128,33 @@ export default class Client {
 
     async getCurrentUser(): Promise<UserDTO> {
         const { data } = await this.userAPI.getCurrentUser();
-        return data;
+        return data as any;
     }
 
     async logoutUser(): Promise<void> {
         await this.userAPI.logout();
+    }
+
+    async selectChoice(choiceId: string): Promise<string> { 
+        const response = await this.choiceAPI.apiChoiceSelectPost(choiceId);
+        
+        const data = response.data as any;
+        return data.nextSceneId || data.id || data;
+    }
+
+    async addItem(itemId: string): Promise<void> {
+        await this.inventoryAPI.apiInventoryClearPost({
+            itemId: itemId,
+            quantity: 1
+        } as any);
+    }
+
+    async clearInventory(): Promise<void> {
+        await this.inventoryAPI.apiInventoryClearPost();
+    }
+
+    async getInventory(): Promise<any[]> {
+        const response = await this.inventoryAPI.apiInventoryMyInventoryGet();
+        return response.data;
     }
 }
