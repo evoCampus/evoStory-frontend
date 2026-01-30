@@ -3,7 +3,7 @@ import { useFlow } from "../FlowContext";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Sidebar() {
-  const { title, setTitle, setNodes, exportToJson, startSceneId, setStartSceneId, setEndSceneIds } = useFlow();
+  const { title, setTitle, setNodes, exportToJson, importFromJson, startSceneId, setStartSceneId, setEndSceneIds } = useFlow();
   const navigate = useNavigate();
 
   const addSceneNode = () => {
@@ -79,6 +79,19 @@ export default function Sidebar() {
     navigate("/");
   };
 
+  const handleImportClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        importFromJson(file);
+      }
+    };
+    input.click();
+  };
+
   return (
     <aside className="w-64 h-screen bg-base-200 border-r border-base-300 p-4 flex flex-col gap-4">
 
@@ -117,6 +130,10 @@ export default function Sidebar() {
 
       <button className="btn btn-primary btn-sm" onClick={exportToJson}>
         Export JSON
+      </button>
+
+      <button className="btn btn-accent btn-sm" onClick={handleImportClick}>
+        Import JSON
       </button>
 
       <div className="divider" />
