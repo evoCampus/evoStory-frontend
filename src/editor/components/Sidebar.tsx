@@ -1,10 +1,34 @@
 import { useNavigate } from "react-router";
 import { useFlow } from "../FlowContext";
+import Modal from "../../components/Modal";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Sidebar() {
-  const { title, setTitle, setNodes, exportToJson, importFromJson, startSceneId, setStartSceneId, setEndSceneIds, relayout } = useFlow();
+  const {
+    title,
+    setTitle,
+    setNodes,
+    exportToJson,
+    importFromJson,
+    startSceneId,
+    setStartSceneId,
+    setEndSceneIds,
+    relayout,
+  } = useFlow();
   const navigate = useNavigate();
+
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertTitle, setAlertTitle] = useState<string>("");
+  const [alertContent, setAlertContent] = useState<string>("");
+  const [alertIsSuccess, setAlertIsSuccess] = useState<boolean>(false);
+
+  const showAlert = (title: string, content: string, isSuccess = false) => {
+    setAlertTitle(title);
+    setAlertContent(content);
+    setAlertIsSuccess(isSuccess);
+    setAlertOpen(true);
+  };
 
   const addSceneNode = () => {
     const nid = uuidv4();
@@ -25,7 +49,10 @@ export default function Sidebar() {
 
   const addStartSceneNode = () => {
     if (startSceneId) {
-      alert("A start scene node already exists. Only one start scene is allowed.");
+      showAlert(
+        "Duplication error",
+        "A start scene node already exists. Only one start scene is allowed.",
+      );
       return;
     }
     const nid = uuidv4();
@@ -94,7 +121,6 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 h-screen bg-base-200 border-r border-base-300 p-4 flex flex-col gap-4">
-
       <h2 className="text-lg font-bold mb-1">Story Settings</h2>
 
       <label className="label p-0 text-sm font-semibold">Story Title</label>
@@ -110,19 +136,31 @@ export default function Sidebar() {
 
       <h2 className="text-lg font-bold mb-2">Add Nodes</h2>
 
-      <button className="btn btn-info btn-outline btn-sm btn-plus" onClick={addSceneNode}>
+      <button
+        className="btn btn-info btn-outline btn-sm btn-plus"
+        onClick={addSceneNode}
+      >
         Scene Node
       </button>
 
-      <button className="btn btn-success btn-sm btn-plus" onClick={addStartSceneNode}>
+      <button
+        className="btn btn-success btn-sm btn-plus"
+        onClick={addStartSceneNode}
+      >
         Add Start Scene Node
       </button>
 
-      <button className="btn btn-warning btn-outline btn-sm btn-plus" onClick={addEndSceneNode}>
+      <button
+        className="btn btn-warning btn-outline btn-sm btn-plus"
+        onClick={addEndSceneNode}
+      >
         Add End Scene Node
       </button>
 
-      <button className="btn btn-secondary btn-sm btn-plus" onClick={addDecisionNode}>
+      <button
+        className="btn btn-secondary btn-sm btn-plus"
+        onClick={addDecisionNode}
+      >
         Decision Node
       </button>
 
@@ -141,11 +179,27 @@ export default function Sidebar() {
       </button>
 
       <div className="divider" />
-      
-      <button className="btn btn-ghost btn-sm"
-        onClick={handleNavigateBack}>
+
+      <button className="btn btn-ghost btn-sm" onClick={handleNavigateBack}>
         Back to Game
       </button>
+
+      <Modal
+        isOpen={alertOpen}
+        onClose={() => setAlertOpen(false)}
+        title={alertTitle}
+        showConfirmButton={true}
+        showCancelButton={false}
+        confirmText="OK"
+        onConfirm={() => setAlertOpen(false)}
+        modalClassName={
+          alertIsSuccess
+            ? "border-t-4 border-green-500"
+            : "border-t-4 border-red-500"
+        }
+      >
+        <div className="whitespace-pre-wrap text-gray-200">{alertContent}</div>
+      </Modal>
     </aside>
   );
 }

@@ -52,12 +52,15 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
         "elk.algorithm": "layered",
         "elk.direction": "DOWN",
         "elk.spacing.nodeNode": "50",
-        "elk.layered.spacing.nodeNodeBetweenLayers": "80",
+        "elk.layered.spacing.nodeNodeBetweenLayers": "150",
+        "elk.edgeRouting": "ORTHOGONAL",
+        "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+        "elk.padding": "[top=50,left=50,bottom=50,right=50]",
       },
       children: layoutNodes.map((n) => ({
         id: n.id,
-        width: 256,
-        height: n.type === "sceneNode" ? 120 : 60,
+        width: 280,
+        height: n.type === "sceneNode" ? 150 : 80,
       })),
       edges: layoutEdges.map((e) => ({
         id: e.id,
@@ -215,18 +218,18 @@ export const FlowProvider = ({ children }: { children: ReactNode }) => {
 
       const Choices =
         outgoingDecisions.length > 0
-          ? outgoingDecisions.map((decNode) => {
-              const outgoing = edges.find((e) => e.source === decNode!.id);
+          ? outgoingDecisions.flatMap((decNode) => {
+              const outgoing = edges.filter((e) => e.source === decNode!.id);
 
-              const nextScene = outgoing
-                ? parseInt(sceneMap.get(outgoing.target!) ?? "0", 10)
-                : null;
+              return outgoing.map((edge) => {
+                const nextScene = parseInt(sceneMap.get(edge.target!) ?? "0", 10);
 
               return {
                 ChoiceText: decNode!.data.choiceText || "Choice",
                 NextSceneId: nextScene,
               };
-            })
+            });
+          })
           : null;
 
       return { SceneId, Content, Choices };
