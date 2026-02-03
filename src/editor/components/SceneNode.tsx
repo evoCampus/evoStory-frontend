@@ -3,11 +3,13 @@ import { useFlow } from "../FlowContext";
 import type { NodeProps } from "@xyflow/react";
 import type { SceneNodeType } from "../types";
 import { useState } from "react";
+import Modal from "../../components/Modal";
 
 export default function SceneNode({ id, data }: NodeProps<SceneNodeType>) {
   const { updateNode, startSceneId, endSceneIds, deleteNode } = useFlow();
   const [ title, setTitle ] = useState(data.title);
   const [ text, setText ] = useState(data.text);
+  const [ deleteModalOpen, setDeleteModalOpen ] = useState(false);
   const isEnd = endSceneIds.includes(id);
 
   const getRingWrapperClass = () => {
@@ -27,16 +29,12 @@ export default function SceneNode({ id, data }: NodeProps<SceneNodeType>) {
       <button
         aria-label="Delete node"
         title="Delete node"
-        onClick={() => {
-          if (confirm("Delete this node? This will also remove attached edges.")) {
-            deleteNode(id);
-          }
-        }}
+        onClick={() => setDeleteModalOpen(true)}
         className="btn btn-ghost btn-sm btn-circle absolute top-4 right-4 z-20"
       >
         ✕
       </button>
-      <div className="card border border-base-300 rounded-xl shadow-md w-64 overflow-hidden">
+      <div className="card border border-base-300 rounded-xl shadow-md w-64 min-w-64 overflow-hidden">
         <div className="card-body p-4 bg-base-100 text-base-content">
 
           <input
@@ -71,6 +69,19 @@ export default function SceneNode({ id, data }: NodeProps<SceneNodeType>) {
         position={Position.Bottom}
         className="absolute"
       />
+      <Modal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        title="Delete Node"
+        showConfirmButton={true}
+        showCancelButton={true}
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={() => deleteNode(id)}
+        modalClassName="border-t-4 border-red-500"
+      >
+        <div className="whitespace-pre-wrap text-gray-200">Delete this node? This will also remove attached edges.</div>
+      </Modal>
     </div>
   );
 }
