@@ -21,6 +21,7 @@ const resources = {
         newGame: 'New Game',
         dashboard: 'Dashboard',
         settings: 'Settings',
+        loading: 'Loading Stories'
       },
       settings:{
         title: 'Settings',
@@ -112,6 +113,7 @@ const resources = {
         newGame: 'Új játék',
         dashboard: 'Felhasználói felület',
         settings: 'Beállítások',
+        loading: "Történetek betöltése"
       },
       settings:{
         title: 'Beállítások',

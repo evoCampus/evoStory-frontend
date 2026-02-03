@@ -740,7 +740,7 @@ export const ChoiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiChoiceSelectPost(choiceId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ChoiceApi.apiChoiceSelectPost']?.[localVarOperationServerIndex]?.url;
@@ -818,7 +818,7 @@ export const ChoiceApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        apiChoiceSelectPost(choiceId?: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.apiChoiceSelectPost(choiceId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2206,7 +2206,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCurrentUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getCurrentUser(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCurrentUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserApi.getCurrentUser']?.[localVarOperationServerIndex]?.url;
@@ -2291,7 +2291,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<UserDTO> {
             return localVarFp.getCurrentUser(options).then((request) => request(axios, basePath));
         },
         /**

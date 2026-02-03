@@ -128,7 +128,7 @@ export default class Client {
 
     async getCurrentUser(): Promise<UserDTO> {
         const { data } = await this.userAPI.getCurrentUser();
-        return data as any;
+        return data;
     }
 
     async logoutUser(): Promise<void> {
@@ -137,16 +137,22 @@ export default class Client {
 
     async selectChoice(choiceId: string): Promise<string> { 
         const response = await this.choiceAPI.apiChoiceSelectPost(choiceId);
-        
-        const data = response.data as any;
-        return data.nextSceneId || data.id || data;
+        const data: any = response.data;
+        return data.nextSceneId;
     }
 
-    async addItem(itemId: string): Promise<void> {
-        await this.inventoryAPI.apiInventoryClearPost({
+    async addItem(itemId: string, quantity: number = 1): Promise<void> {
+    const mySessionId = localStorage.getItem("userId") || localStorage.getItem("sessionId");
+
+    if (!mySessionId) {
+        console.error("No session id!");
+        return;
+    }
+        await this.inventoryAPI.apiInventoryPickupItemPost({
             itemId: itemId,
-            quantity: 1
-        } as any);
+            quantity: quantity,
+            sessionId: mySessionId
+        });
     }
 
     async clearInventory(): Promise<void> {
