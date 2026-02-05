@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **title** | **string** |  | [default to undefined]
 **scenes** | [**Array&lt;CreateSceneDTO&gt;**](CreateSceneDTO.md) |  | [optional] [default to undefined]
 **startingSceneId** | **string** |  | [optional] [default to undefined]
+**items** | [**Array&lt;CreateItemDTO&gt;**](CreateItemDTO.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: CreateStoryDTO = {
     title,
     scenes,
     startingSceneId,
+    items,
 };
 ```
 

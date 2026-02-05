@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **id** | **string** |  | [default to undefined]
 **nextSceneId** | **string** |  | [optional] [default to undefined]
 **choiceText** | **string** |  | [optional] [default to undefined]
+**requiredItemId** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,6 +19,7 @@ const instance: ChoiceDTO = {
     id,
     nextSceneId,
     choiceText,
+    requiredItemId,
 };
 ```
 

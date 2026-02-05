@@ -13,7 +13,7 @@ All URIs are relative to *http://localhost*
 |[**logout**](#logout) | **POST** /api/User/logout | |
 
 # **createUser**
-> createUser()
+> UserDTO createUser()
 
 
 ### Example
@@ -44,7 +44,7 @@ const { status, data } = await apiInstance.createUser(
 
 ### Return type
 
-void (empty response body)
+**UserDTO**
 
 ### Authorization
 
@@ -116,7 +116,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getCurrentUser**
-> UserDTO getCurrentUser()
+> getCurrentUser()
 
 
 ### Example
@@ -139,7 +139,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**UserDTO**
+void (empty response body)
 
 ### Authorization
 
@@ -154,7 +154,6 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
 |**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
